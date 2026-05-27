@@ -1,0 +1,268 @@
+import { CheckCircle2, Copy, CreditCard, Mail, QrCode, Sparkles, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+import Badge from "../components/Badge";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import PageHeader from "../components/PageHeader";
+import { useAuth } from "../context/AuthContext";
+import { billingService } from "../services/billingService";
+import { creditsForPlan, plans, priceForPlan } from "../utils/plans";
+
+const defaultSettings = {
+  upiId: "boostpilot@upi",
+  barcodeImageUrl: "",
+  qrImageUrl: "",
+  hasQrImage: false,
+  paymentEmail: "boostpilot@ai.in",
+  paymentMessage:
+    "After completing payment, send your payment number, UTR, or transaction number to boostpilot@ai.in."
+};
+
+const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
+  const amount = priceForPlan(plan, billingCycle);
+  const credits = creditsForPlan(plan, billingCycle);
+  const details = settings || defaultSettings;
+  const displayQrSrc = qrSrc || details.barcodeImageUrl;
+
+  const copyText = `${plan.name} ${billingCycle} payment\nAmount: ${amount}\nUPI: ${details.upiId}\nSend payment number / UTR / transaction number to ${details.paymentEmail}`;
+
+  const copyDetails = async () => {
+    await navigator.clipboard.writeText(copyText);
+    toast.success("Payment details copied");
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-zinc-950/65 px-3 py-4 backdrop-blur-sm sm:px-4">
+      <div className="flex min-h-full items-center justify-center">
+        <Card className="max-h-[calc(100vh-2rem)] w-full max-w-3xl overflow-y-auto p-0">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="min-w-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 p-5 text-white sm:p-6">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <Badge className="bg-white/10 text-white ring-white/15" variant="neutral">
+                  Payment request
+                </Badge>
+                <h2 className="mt-5 break-words text-3xl font-extrabold tracking-tight">{plan.name} plan</h2>
+                <p className="mt-2 text-sm capitalize text-zinc-300">{billingCycle} billing</p>
+              </div>
+              <button
+                className="grid h-10 w-10 place-items-center rounded-lg bg-white/10 text-white hover:bg-white/15"
+                onClick={onClose}
+                type="button"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="mt-7 rounded-lg border border-white/10 bg-white/10 p-5">
+              <p className="text-sm text-zinc-300">Amount</p>
+              <p className="mt-2 text-4xl font-extrabold">{amount}</p>
+              <p className="mt-2 text-sm text-zinc-300">{credits} analysis credits</p>
+            </div>
+            <p className="mt-5 text-sm leading-6 text-zinc-300">
+              Your plan will not activate automatically. Admin will update your plan and credits after payment
+              verification.
+            </p>
+          </div>
+
+          <div className="min-w-0 p-5 sm:p-6">
+            <div className="grid gap-4 sm:grid-cols-[180px_minmax(0,1fr)]">
+              <div className="grid min-h-44 place-items-center rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+                {displayQrSrc ? (
+                  <img
+                    alt="Payment barcode"
+                    className="max-h-40 max-w-full rounded-md object-contain"
+                    src={displayQrSrc}
+                  />
+                ) : (
+                  <div className="grid h-36 w-36 place-items-center rounded-lg border border-dashed border-zinc-300 bg-zinc-50 text-center text-xs font-bold uppercase tracking-[0.12em] text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900">
+                    <QrCode size={42} />
+                    Add barcode in admin
+                  </div>
+                )}
+              </div>
+              <div className="min-w-0 space-y-3">
+                <div className="rounded-lg border border-zinc-200 bg-white/72 p-4 dark:border-zinc-800 dark:bg-zinc-950/55">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">UPI ID</p>
+                  <p className="mt-2 break-all text-lg font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
+                    {details.upiId}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-zinc-200 bg-white/72 p-4 dark:border-zinc-800 dark:bg-zinc-950/55">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">Send proof to</p>
+                  <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
+                    {details.paymentEmail}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 break-words rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900 [overflow-wrap:anywhere] dark:border-amber-900/50 dark:bg-amber-950/35 dark:text-amber-100">
+              {details.paymentMessage}
+            </div>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <Button className="flex-1" icon={Copy} onClick={copyDetails} variant="secondary">
+                Copy payment details
+              </Button>
+              <Button as="a" className="flex-1" href={`mailto:${details.paymentEmail}`} icon={Mail} variant="accent">
+                Email payment proof
+              </Button>
+            </div>
+          </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+const PricingPage = () => {
+  const { user } = useAuth();
+  const [billingCycle, setBillingCycle] = useState("monthly");
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [settings, setSettings] = useState(defaultSettings);
+  const [qrObjectUrl, setQrObjectUrl] = useState("");
+  const [loadingPlan, setLoadingPlan] = useState("");
+
+  useEffect(() => {
+    billingService
+      .settings()
+      .then((data) => setSettings({ ...defaultSettings, ...(data.settings || {}) }))
+      .catch(() => setSettings(defaultSettings));
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    let objectUrl = "";
+
+    if (!settings.hasQrImage) {
+      setQrObjectUrl("");
+      return undefined;
+    }
+
+    billingService
+      .qrBlob()
+      .then((blob) => {
+        objectUrl = URL.createObjectURL(blob);
+
+        if (cancelled) {
+          URL.revokeObjectURL(objectUrl);
+          return;
+        }
+
+        setQrObjectUrl(objectUrl);
+      })
+      .catch(() => setQrObjectUrl(""));
+
+    return () => {
+      cancelled = true;
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [settings.hasQrImage, settings.updatedAt]);
+
+  const handleUpgrade = async (plan) => {
+    setLoadingPlan(plan.name);
+
+    try {
+      const data = await billingService.requestUpgrade({ plan: plan.name, billingCycle });
+      setSettings({ ...defaultSettings, ...(data.settings || settings) });
+      setSelectedPlan(plan);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Unable to load payment details");
+    } finally {
+      setLoadingPlan("");
+    }
+  };
+
+  return (
+    <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 10 }}>
+      <PageHeader
+        action={
+          <div className="inline-flex rounded-lg border border-zinc-200 bg-white/78 p-1 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/70">
+            {["monthly", "yearly"].map((cycle) => (
+              <button
+                className={`rounded-md px-4 py-2 text-sm font-bold capitalize transition ${
+                  billingCycle === cycle
+                    ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950"
+                    : "text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+                }`}
+                key={cycle}
+                onClick={() => setBillingCycle(cycle)}
+                type="button"
+              >
+                {cycle}
+              </button>
+            ))}
+          </div>
+        }
+        description="Choose a plan, pay through UPI/barcode, then send the UTR or transaction number for admin activation."
+        eyebrow="Pricing"
+        title="Choose your BoostPilot plan"
+      />
+
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        {plans.map((plan) => {
+          const isCurrent = user?.plan === plan.name && (user?.billingCycle || "monthly") === billingCycle;
+          const isFree = plan.name === "Free";
+
+          return (
+            <Card
+              className={isCurrent ? "border-brand-300 shadow-glow dark:border-brand-700" : ""}
+              key={plan.name}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-extrabold text-zinc-950 dark:text-white">{plan.name}</p>
+                  <p className="mt-2 text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+                    {priceForPlan(plan, billingCycle)}
+                  </p>
+                </div>
+                {isCurrent && <Badge variant="success">Current</Badge>}
+              </div>
+              <p className="mt-3 text-sm leading-6 text-zinc-500 dark:text-zinc-400">{plan.audience}</p>
+              <div className="mt-5 rounded-lg border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-950/55">
+                <div className="flex items-center gap-2 font-bold text-zinc-950 dark:text-white">
+                  <CreditCard size={18} />
+                  {creditsForPlan(plan, billingCycle)} analyses/{billingCycle === "yearly" ? "year" : "month"}
+                </div>
+              </div>
+              <ul className="mt-5 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
+                {["AI media analysis", "History and PDF reports", "Technical quality scoring"].map((item) => (
+                  <li className="flex gap-2" key={item}>
+                    <CheckCircle2 className="mt-0.5 text-emerald-500" size={16} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Button
+                className="mt-6 w-full"
+                disabled={isCurrent || isFree}
+                icon={Sparkles}
+                loading={loadingPlan === plan.name}
+                onClick={() => handleUpgrade(plan)}
+                variant={isCurrent || isFree ? "secondary" : "accent"}
+              >
+                {isCurrent ? "Active plan" : isFree ? "Free included" : "View payment details"}
+              </Button>
+            </Card>
+          );
+        })}
+      </div>
+
+      {selectedPlan && (
+        <PaymentModal
+          billingCycle={billingCycle}
+          onClose={() => setSelectedPlan(null)}
+          plan={selectedPlan}
+          qrSrc={qrObjectUrl}
+          settings={settings}
+        />
+      )}
+    </motion.div>
+  );
+};
+
+export default PricingPage;
