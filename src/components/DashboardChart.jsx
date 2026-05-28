@@ -51,7 +51,7 @@ export const ScoreTrendChart = ({ data = [] }) => {
         <h2 className="truncate text-base font-extrabold tracking-tight text-zinc-950 dark:text-white">
           Score momentum
         </h2>
-        <p className="truncate text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="truncate text-sm font-medium text-zinc-600 dark:text-zinc-300">
           Recent analysis quality
         </p>
       </div>
@@ -110,7 +110,7 @@ export const PlatformBarChart = ({ data = [] }) => {
         <h2 className="truncate text-base font-extrabold tracking-tight text-zinc-950 dark:text-white">
           Platform mix
         </h2>
-        <p className="truncate text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="truncate text-sm font-medium text-zinc-600 dark:text-zinc-300">
           Analysis distribution
         </p>
       </div>

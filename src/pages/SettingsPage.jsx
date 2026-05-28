@@ -99,7 +99,7 @@ const SettingsPage = () => {
               Default platform
             </span>
             <select
-              className="h-12 w-full rounded-lg border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-950 outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-100 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white dark:focus:ring-brand-900/30"
+              className="h-12 w-full rounded-lg border border-zinc-300 bg-white px-4 text-sm font-semibold text-zinc-950 outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:border-brand-400 dark:focus:ring-brand-400/25"
               onChange={(event) =>
                 setForm((current) => ({ ...current, defaultPlatform: event.target.value }))
               }
@@ -112,17 +112,17 @@ const SettingsPage = () => {
               ))}
             </select>
           </label>
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="font-bold text-zinc-950 dark:text-white">Dark mode</p>
-                <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                <p className="mt-1 text-sm font-medium text-zinc-600 dark:text-zinc-300">
                   Switch the dashboard between light and dark appearances.
                 </p>
               </div>
               <button
                 aria-pressed={isDark}
-                className={`relative h-7 w-12 rounded-full transition ${
+                className={`relative h-7 w-12 rounded-full transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25 ${
                   isDark ? "bg-brand-500" : "bg-zinc-300"
                 }`}
                 onClick={toggleTheme}
@@ -149,8 +149,8 @@ const SettingsPage = () => {
             <h2 className="mt-3 break-words text-2xl font-extrabold text-zinc-950 dark:text-white">
               {user?.name}
             </h2>
-            <p className="mt-2 break-all text-sm text-zinc-500 dark:text-zinc-400">{user?.email}</p>
-            <div className="mt-5 rounded-lg bg-zinc-50 p-4 text-sm leading-6 text-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-400">
+            <p className="mt-2 break-all text-sm font-medium text-zinc-600 dark:text-zinc-300">{user?.email}</p>
+            <div className="mt-5 rounded-lg bg-zinc-50 p-4 text-sm font-medium leading-6 text-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-300">
               JWT authentication protects every analysis route. User settings are stored on the
               MongoDB user document.
             </div>
@@ -158,12 +158,12 @@ const SettingsPage = () => {
 
           <Card as="form" className="h-fit space-y-4" onSubmit={handlePasswordSubmit}>
             <div className="flex items-start gap-3">
-              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-zinc-200 bg-white text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-zinc-200 bg-white text-zinc-800 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
                 <KeyRound size={18} />
               </div>
               <div>
                 <p className="font-extrabold text-zinc-950 dark:text-white">Change password</p>
-                <p className="mt-1 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                <p className="mt-1 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
                   Passwords are saved in MongoDB as bcrypt hashes.
                 </p>
               </div>

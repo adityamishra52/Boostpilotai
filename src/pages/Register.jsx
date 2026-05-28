@@ -38,7 +38,7 @@ const Register = () => {
         <h1 className="mt-3 text-3xl font-extrabold text-zinc-950 dark:text-white">
           Build your AI content desk
         </h1>
-        <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+        <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
           Create an account and save every analysis to your private history.
         </p>
       </div>
@@ -79,9 +79,9 @@ const Register = () => {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-6 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
         Already have an account?{" "}
-        <Link className="font-bold text-brand-600 hover:text-brand-700 dark:text-brand-300" to="/login">
+        <Link className="rounded font-bold text-brand-700 hover:text-brand-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:text-brand-200 dark:hover:text-brand-100 dark:focus-visible:ring-brand-400/25" to="/login">
           Sign in
         </Link>
       </p>

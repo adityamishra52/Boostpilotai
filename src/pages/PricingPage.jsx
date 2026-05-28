@@ -46,10 +46,10 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
                   Payment request
                 </Badge>
                 <h2 className="mt-5 break-words text-3xl font-extrabold tracking-tight">{plan.name} plan</h2>
-                <p className="mt-2 text-sm capitalize text-zinc-300">{billingCycle} billing</p>
+                <p className="mt-2 text-sm font-medium capitalize text-zinc-200">{billingCycle} billing</p>
               </div>
               <button
-                className="grid h-10 w-10 place-items-center rounded-lg bg-white/10 text-white hover:bg-white/15"
+                className="grid h-10 w-10 place-items-center rounded-lg bg-white/10 text-white transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/25"
                 onClick={onClose}
                 type="button"
               >
@@ -57,11 +57,11 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
               </button>
             </div>
             <div className="mt-7 rounded-lg border border-white/10 bg-white/10 p-5">
-              <p className="text-sm text-zinc-300">Amount</p>
+              <p className="text-sm font-medium text-zinc-200">Amount</p>
               <p className="mt-2 text-4xl font-extrabold">{amount}</p>
-              <p className="mt-2 text-sm text-zinc-300">{credits} analysis credits</p>
+              <p className="mt-2 text-sm font-medium text-zinc-200">{credits} analysis credits</p>
             </div>
-            <p className="mt-5 text-sm leading-6 text-zinc-300">
+            <p className="mt-5 text-sm font-medium leading-6 text-zinc-200">
               Your plan will not activate automatically. Admin will update your plan and credits after payment
               verification.
             </p>
@@ -84,14 +84,14 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
                 )}
               </div>
               <div className="min-w-0 space-y-3">
-                <div className="rounded-lg border border-zinc-200 bg-white/72 p-4 dark:border-zinc-800 dark:bg-zinc-950/55">
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">UPI ID</p>
+                <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">UPI ID</p>
                   <p className="mt-2 break-all text-lg font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
                     {details.upiId}
                   </p>
                 </div>
-                <div className="rounded-lg border border-zinc-200 bg-white/72 p-4 dark:border-zinc-800 dark:bg-zinc-950/55">
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">Send proof to</p>
+                <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">Send proof to</p>
                   <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
                     {details.paymentEmail}
                   </p>
@@ -181,13 +181,13 @@ const PricingPage = () => {
     <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 10 }}>
       <PageHeader
         action={
-          <div className="inline-flex rounded-lg border border-zinc-200 bg-white/78 p-1 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/70">
+          <div className="inline-flex rounded-lg border border-zinc-300 bg-white p-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             {["monthly", "yearly"].map((cycle) => (
               <button
-                className={`rounded-md px-4 py-2 text-sm font-bold capitalize transition ${
+                className={`rounded-md px-4 py-2 text-sm font-bold capitalize transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25 ${
                   billingCycle === cycle
-                    ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950"
-                    : "text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
+                    ? "bg-zinc-950 text-white dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
+                    : "text-zinc-700 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
                 }`}
                 key={cycle}
                 onClick={() => setBillingCycle(cycle)}
@@ -222,8 +222,8 @@ const PricingPage = () => {
                 </div>
                 {isCurrent && <Badge variant="success">Current</Badge>}
               </div>
-              <p className="mt-3 text-sm leading-6 text-zinc-500 dark:text-zinc-400">{plan.audience}</p>
-              <div className="mt-5 rounded-lg border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-950/55">
+              <p className="mt-3 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">{plan.audience}</p>
+              <div className="mt-5 rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
                 <div className="flex items-center gap-2 font-bold text-zinc-950 dark:text-white">
                   <CreditCard size={18} />
                   {creditsForPlan(plan, billingCycle)} analyses/{billingCycle === "yearly" ? "year" : "month"}

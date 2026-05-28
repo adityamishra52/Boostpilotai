@@ -64,7 +64,7 @@ const AdminAnalyses = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[920px] text-left text-sm">
-              <thead className="text-xs uppercase tracking-[0.14em] text-zinc-500">
+              <thead className="text-xs uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
                 <tr>
                   <th className="px-3 py-2">Preview</th>
                   <th className="px-3 py-2">File</th>
@@ -97,7 +97,7 @@ const AdminAnalyses = () => {
                       </td>
                       <td className="px-3 py-3 text-zinc-600 dark:text-zinc-300">
                         <div className="font-semibold text-zinc-950 dark:text-white">{item.user?.name || "Deleted"}</div>
-                        <div className="text-xs text-zinc-500">{item.user?.email}</div>
+                        <div className="text-xs font-medium text-zinc-600 dark:text-zinc-300">{item.user?.email}</div>
                       </td>
                       <td className="px-3 py-3">
                         <Badge variant="neutral">

@@ -9,7 +9,7 @@ const ThemeToggle = () => {
   return (
     <button
       aria-label="Toggle theme"
-      className="group inline-flex h-12 min-w-12 items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 sm:h-10 sm:min-w-0"
+      className="group inline-flex h-12 min-w-12 items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:focus-visible:ring-brand-400/25 sm:h-10 sm:min-w-0"
       onClick={toggleTheme}
       type="button"
     >

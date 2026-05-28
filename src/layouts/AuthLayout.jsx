@@ -16,7 +16,7 @@ const AuthLayout = () => {
             <h1 className="text-5xl font-extrabold leading-tight">
               Convert every creative asset into a sharper growth play.
             </h1>
-            <p className="mt-5 text-base leading-7 text-zinc-600 dark:text-zinc-400">
+            <p className="mt-5 text-base font-medium leading-7 text-zinc-700 dark:text-zinc-300">
               Upload a video or image, choose a platform, and get captions, hooks, tags,
               titles, CTAs, engagement guidance and a score saved to your workspace.
             </p>
@@ -24,11 +24,11 @@ const AuthLayout = () => {
           <div className="grid grid-cols-3 gap-3">
             {["Captions", "Hooks", "Scores"].map((item, index) => (
               <div
-                className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-950/60"
+                className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-900/82"
                 key={item}
               >
                 <p className="text-2xl font-extrabold">{index === 0 ? "8x" : index === 1 ? "12" : "94"}</p>
-                <p className="mt-1 text-xs font-semibold text-zinc-500 dark:text-zinc-400">{item}</p>
+                <p className="mt-1 text-xs font-bold text-zinc-600 dark:text-zinc-300">{item}</p>
               </div>
             ))}
           </div>

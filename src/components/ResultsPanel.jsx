@@ -37,7 +37,7 @@ const ListBlock = ({ items, numbered = false }) => {
   const values = listValue(items);
 
   if (!values.length) {
-    return <p className="text-sm text-zinc-500 dark:text-zinc-400">No items available.</p>;
+    return <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300">No items available.</p>;
   }
 
   return (
@@ -47,7 +47,7 @@ const ListBlock = ({ items, numbered = false }) => {
           className="flex gap-3 rounded-lg border border-zinc-200 bg-white/88 p-3 text-sm leading-6 text-zinc-800 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100"
           key={`${item}-${index}`}
         >
-          <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-zinc-950 text-[11px] font-bold text-white dark:bg-white dark:text-zinc-950">
+          <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-zinc-950 text-[11px] font-bold text-white dark:bg-brand-400/20 dark:text-white dark:ring-1 dark:ring-brand-300/35">
             {numbered ? index + 1 : "*"}
           </span>
           <span>{item}</span>
@@ -68,7 +68,7 @@ const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
   <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82">
     <div className="flex items-start justify-between gap-3">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">{label}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">{label}</p>
         <p className="mt-2 text-lg font-extrabold tracking-tight text-zinc-950 dark:text-white">{value}</p>
       </div>
       {Icon && (
@@ -87,7 +87,7 @@ const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
 const EngagementMetric = ({ label, value }) => (
   <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82">
     <div className="flex items-center justify-between gap-3">
-      <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">{label}</p>
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">{label}</p>
       <p className="text-lg font-extrabold text-zinc-950 dark:text-white">{Number(value) || 0}</p>
     </div>
     <ProgressBar className="mt-3" tone={healthFromValue(value)} value={Number(value) || 0} />

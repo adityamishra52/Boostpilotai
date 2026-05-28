@@ -11,7 +11,7 @@ const EmptyState = ({ title, description, actionLabel = "Analyze content", to = 
         <Sparkles size={24} />
       </div>
       <h2 className="mt-5 text-xl font-extrabold text-zinc-950 dark:text-white">{title}</h2>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+      <p className="mx-auto mt-2 max-w-md text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
         {description}
       </p>
       <Button as={Link} className="mt-6" to={to} variant="accent">

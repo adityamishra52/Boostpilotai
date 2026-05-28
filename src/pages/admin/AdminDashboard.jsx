@@ -57,7 +57,7 @@ const AdminDashboard = () => {
             ) : (
               (analytics?.platformUsage || []).map((item) => (
                 <div
-                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/70 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950/55"
+                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900/82"
                   key={item.platform}
                 >
                   <span className="font-bold text-zinc-950 dark:text-white">{item.platform}</span>
@@ -75,7 +75,7 @@ const AdminDashboard = () => {
             ) : (
               (analytics?.planUsage || []).map((item) => (
                 <div
-                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/70 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950/55"
+                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900/82"
                   key={item.plan}
                 >
                   <span className="font-bold text-zinc-950 dark:text-white">{item.plan}</span>
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
       <SectionContainer className="mt-5" icon={UploadCloud} title="Recent uploaded files">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[720px] text-left text-sm">
-            <thead className="text-xs uppercase tracking-[0.14em] text-zinc-500">
+            <thead className="text-xs uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
               <tr>
                 <th className="px-3 py-2">File</th>
                 <th className="px-3 py-2">Target</th>

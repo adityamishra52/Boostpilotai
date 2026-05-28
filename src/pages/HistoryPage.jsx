@@ -78,10 +78,10 @@ const HistoryPage = () => {
 
       <Card className="mb-5">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div className="flex h-11 flex-1 items-center gap-3 rounded-lg border border-zinc-200 bg-white/82 px-4 text-zinc-500 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/72">
+          <div className="flex h-11 flex-1 items-center gap-3 rounded-lg border border-zinc-300 bg-white px-4 text-zinc-600 shadow-sm focus-within:border-brand-400 focus-within:ring-4 focus-within:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:focus-within:ring-brand-400/25">
             <Search size={18} />
             <input
-              className="w-full bg-transparent text-sm text-zinc-950 outline-none placeholder:text-zinc-400 dark:text-white"
+              className="w-full bg-transparent text-sm text-zinc-950 outline-none placeholder:text-zinc-500 dark:text-white dark:placeholder:text-zinc-400"
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search file, caption, platform, or content type"
               value={query}
@@ -90,10 +90,10 @@ const HistoryPage = () => {
           <div className="flex flex-wrap gap-2">
             {platforms.map((item) => (
               <button
-                className={`rounded-lg px-3 py-2 text-sm font-bold transition ${
+                className={`rounded-lg px-3 py-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25 ${
                   platform === item
-                    ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950"
-                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                    ? "bg-zinc-950 text-white dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
+                    : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
                 }`}
                 key={item}
                 onClick={() => setPlatform(item)}
@@ -164,11 +164,11 @@ const HistoryPage = () => {
                               </Badge>
                             )}
                           </div>
-                          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                          <p className="mt-1 text-sm font-medium text-zinc-600 dark:text-zinc-300">
                             {formatDate(item.createdAt)} - {formatFileSize(file.size)}
                             {tech.width ? ` - ${tech.width}x${tech.height}` : ""}
                           </p>
-                          <p className="mt-3 line-clamp-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                          <p className="mt-3 line-clamp-2 text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">
                             {output.viralCaption}
                           </p>
                         </div>

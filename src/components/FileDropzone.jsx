@@ -9,6 +9,7 @@ const FileDropzone = ({ file, onFile }) => {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
 
   useEffect(() => {
     if (!file) {
@@ -36,14 +37,28 @@ const FileDropzone = ({ file, onFile }) => {
     <>
       <div
         className={clsx(
-          "relative overflow-hidden rounded-lg border border-dashed p-4 transition duration-200",
+          "relative overflow-hidden rounded-lg border border-dashed p-4 transition duration-200 focus-within:outline-none focus-within:ring-4 focus-within:ring-brand-300/45 dark:focus-within:ring-brand-400/35",
           file
-            ? "border-brand-300 bg-brand-50/70 dark:border-brand-800 dark:bg-brand-950/20"
-            : "border-zinc-300 bg-white/72 hover:border-brand-400 hover:bg-white dark:border-zinc-800 dark:bg-zinc-950/58 dark:hover:border-brand-600"
+            ? "border-brand-400 bg-brand-50/90 text-zinc-950 dark:border-brand-400/55 dark:bg-brand-400/10 dark:text-white"
+            : dragActive
+              ? "border-brand-400 bg-brand-50/95 text-zinc-950 shadow-glow dark:border-brand-300/70 dark:bg-brand-400/14 dark:text-white"
+              : "border-zinc-300 bg-zinc-50/92 text-zinc-950 hover:border-brand-400 hover:bg-brand-50/70 dark:border-zinc-700 dark:bg-zinc-900/78 dark:text-zinc-100 dark:hover:border-brand-400/70 dark:hover:bg-zinc-900"
         )}
-        onDragOver={(event) => event.preventDefault()}
+        onDragEnter={(event) => {
+          event.preventDefault();
+          setDragActive(true);
+        }}
+        onDragLeave={(event) => {
+          event.preventDefault();
+          setDragActive(false);
+        }}
+        onDragOver={(event) => {
+          event.preventDefault();
+          setDragActive(true);
+        }}
         onDrop={(event) => {
           event.preventDefault();
+          setDragActive(false);
           handleFiles(event.dataTransfer.files);
         }}
       >
@@ -67,11 +82,11 @@ const FileDropzone = ({ file, onFile }) => {
               </div>
             </div>
             <div>
-              <div className="mb-3 grid h-11 w-11 place-items-center rounded-lg bg-zinc-950 text-white dark:bg-white dark:text-zinc-950">
+              <div className="mb-3 grid h-11 w-11 place-items-center rounded-lg bg-zinc-950 text-white shadow-sm dark:bg-zinc-800 dark:text-zinc-100">
                 {file.type.startsWith("video") ? <FileVideo size={20} /> : <Image size={20} />}
               </div>
               <h2 className="break-words text-lg font-extrabold text-zinc-950 dark:text-white">{file.name}</h2>
-              <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">{file.type}</p>
+              <p className="mt-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">{file.type}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <Button icon={Eye} onClick={() => setPreviewOpen(true)} variant="secondary">
                   Preview
@@ -83,14 +98,14 @@ const FileDropzone = ({ file, onFile }) => {
             </div>
           </div>
         ) : (
-          <div className="py-10 text-center">
-            <div className="mx-auto grid h-14 w-14 place-items-center rounded-lg bg-zinc-950 text-white shadow-glow dark:bg-white dark:text-zinc-950">
+          <div className="py-10 text-center sm:py-12">
+            <div className="mx-auto grid h-14 w-14 place-items-center rounded-lg bg-zinc-950 text-white shadow-glow dark:bg-zinc-800 dark:text-zinc-100 dark:ring-1 dark:ring-zinc-700">
               <UploadCloud size={25} />
             </div>
             <h2 className="mt-5 text-xl font-extrabold text-zinc-950 dark:text-white">
               Drop your creative asset
             </h2>
-            <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+            <p className="mx-auto mt-2 max-w-lg text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
               JPG, PNG, WebP, MP4, MOV, or WebM up to 100 MB.
             </p>
             <div className="mt-6 flex justify-center">

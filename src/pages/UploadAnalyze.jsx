@@ -161,10 +161,10 @@ const UploadAnalyze = () => {
                 ["AI output", "Creative + technical PDF"]
               ].map(([label, value]) => (
                 <div
-                  className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white/70 px-3 py-3 dark:border-zinc-800 dark:bg-zinc-950/50"
+                  className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white/90 px-3 py-3 dark:border-zinc-700 dark:bg-zinc-900/82"
                   key={label}
                 >
-                  <span className="text-zinc-500 dark:text-zinc-400">{label}</span>
+                  <span className="font-medium text-zinc-600 dark:text-zinc-300">{label}</span>
                   <span className="text-right font-bold text-zinc-950 dark:text-white">{value}</span>
                 </div>
               ))}
@@ -212,12 +212,12 @@ const UploadAnalyze = () => {
                   <CreditCard size={22} />
                 </div>
                 <h2 className="text-2xl font-extrabold text-zinc-950 dark:text-white">Upgrade to continue</h2>
-                <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
                   You have 0 analysis credits. Choose a plan to unlock more AI analyses.
                 </p>
               </div>
               <button
-                className="grid h-10 w-10 place-items-center rounded-lg text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                className="grid h-10 w-10 place-items-center rounded-lg text-zinc-700 transition hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:focus-visible:ring-brand-400/25"
                 onClick={() => setUpgradeOpen(false)}
                 type="button"
               >
@@ -231,7 +231,7 @@ const UploadAnalyze = () => {
                 ["Agency", "Rs 1999", "1000 credits"]
               ].map(([name, price, credits]) => (
                 <div
-                  className="rounded-lg border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-950/50"
+                  className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82"
                   key={name}
                 >
                   <p className="font-extrabold text-zinc-950 dark:text-white">{name}</p>

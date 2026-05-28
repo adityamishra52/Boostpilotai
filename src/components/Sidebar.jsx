@@ -87,15 +87,15 @@ const Sidebar = ({ open, onClose }) => {
                 <p className="truncate text-sm font-bold text-zinc-950 dark:text-white">
                   {user?.name || "BoostPilot User"}
                 </p>
-                <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="truncate text-xs font-medium text-zinc-600 dark:text-zinc-300">
                   {user?.email || "user@boostpilot.ai"}
                 </p>
               </div>
             </div>
 
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <div className="min-w-0 rounded-xl border border-zinc-200 bg-white/75 px-3 py-2 dark:border-zinc-800 dark:bg-zinc-950/50">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-500">
+              <div className="min-w-0 rounded-xl border border-zinc-200 bg-white/90 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900/82">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
                   Credits
                 </p>
                 <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:text-white">
@@ -103,14 +103,14 @@ const Sidebar = ({ open, onClose }) => {
                 </p>
               </div>
 
-              <div className="min-w-0 rounded-xl border border-zinc-200 bg-white/75 px-3 py-2 dark:border-zinc-800 dark:bg-zinc-950/50">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-500">
+              <div className="min-w-0 rounded-xl border border-zinc-200 bg-white/90 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900/82">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
                   Plan
                 </p>
                 <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:text-white">
                   {user?.plan || "Free"}
                 </p>
-                <p className="truncate text-[10px] capitalize text-zinc-500">
+                <p className="truncate text-[10px] font-medium capitalize text-zinc-600 dark:text-zinc-300">
                   {user?.billingCycle || "monthly"}
                 </p>
               </div>
@@ -129,9 +129,9 @@ const Sidebar = ({ open, onClose }) => {
                 <NavLink
                   className={({ isActive }) =>
                     clsx(
-                      "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition",
+                      "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25",
                       isActive
-                        ? "bg-zinc-950 text-white shadow-soft dark:bg-white dark:text-zinc-950"
+                        ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
                         : "text-zinc-800 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
                     )
                   }
@@ -150,9 +150,9 @@ const Sidebar = ({ open, onClose }) => {
               <NavLink
                 className={({ isActive }) =>
                   clsx(
-                    "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition",
+                    "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25",
                     isActive
-                      ? "bg-zinc-950 text-white shadow-soft dark:bg-white dark:text-zinc-950"
+                      ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
                       : "text-zinc-800 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
                   )
                 }

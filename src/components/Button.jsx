@@ -7,11 +7,11 @@ const variants = {
   accent:
     "bg-gradient-to-r from-brand-500 via-signal to-coral text-white shadow-glow hover:-translate-y-0.5 hover:shadow-lg",
   secondary:
-    "border border-zinc-200 bg-white/82 text-zinc-800 shadow-sm hover:-translate-y-0.5 hover:border-zinc-300 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/72 dark:text-zinc-100 dark:hover:border-zinc-700 dark:hover:bg-zinc-800",
+    "border border-zinc-300 bg-white text-zinc-900 shadow-sm hover:-translate-y-0.5 hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:hover:bg-zinc-800",
   ghost:
-    "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white",
+    "text-zinc-700 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white",
   danger:
-    "border border-red-200 bg-red-50 text-red-700 hover:-translate-y-0.5 hover:bg-red-100 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
+    "border border-red-300 bg-red-50 text-red-800 hover:-translate-y-0.5 hover:bg-red-100 dark:border-red-700 dark:bg-red-950/70 dark:text-red-100 dark:hover:bg-red-900/70"
 };
 
 const Button = ({
@@ -35,7 +35,7 @@ const Button = ({
   return (
     <Component
       className={clsx(
-        "inline-flex max-w-full items-center justify-center gap-2 rounded-lg text-center font-semibold leading-tight transition duration-200 [touch-action:manipulation] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 [&>svg]:shrink-0",
+        "inline-flex max-w-full items-center justify-center gap-2 rounded-lg text-center font-semibold leading-tight transition duration-200 [touch-action:manipulation] active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/45 dark:focus-visible:ring-brand-400/35 disabled:cursor-not-allowed disabled:opacity-60 [&>svg]:shrink-0",
         variants[variant],
         sizes[size],
         className

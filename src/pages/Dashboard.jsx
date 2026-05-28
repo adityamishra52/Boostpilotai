@@ -142,7 +142,7 @@ const Dashboard = () => {
                 Upload, analyze, export.
               </h2>
 
-              <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+              <p className="mt-3 max-w-xl text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">
                 Gemini analysis, technical checks, history, and PDF reports are ready for the next creative.
               </p>
 
@@ -156,8 +156,8 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="min-w-0 border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-950/45 xl:border-l xl:border-t-0">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">
+            <div className="min-w-0 border-t border-zinc-200 bg-zinc-50/95 p-5 dark:border-zinc-800 dark:bg-zinc-900/70 xl:border-l xl:border-t-0">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">
                 Last result
               </p>
 
@@ -173,12 +173,12 @@ const Dashboard = () => {
                     {lastAnalysis.aiOutput?.contentScore ?? 0}/100
                   </p>
                   <ProgressBar className="mt-3" value={lastAnalysis.aiOutput?.contentScore ?? 0} />
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                  <p className="mt-3 line-clamp-3 text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">
                     {lastAnalysis.aiOutput?.viralCaption || "No caption available."}
                   </p>
                 </>
               ) : (
-                <p className="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
+                <p className="mt-3 text-sm font-medium text-zinc-600 dark:text-zinc-300">
                   No saved analysis yet.
                 </p>
               )}
@@ -198,7 +198,7 @@ const Dashboard = () => {
                   <span className="truncate font-semibold text-zinc-700 dark:text-zinc-200">
                     {label}
                   </span>
-                  <span className="shrink-0 text-zinc-500 dark:text-zinc-400">{value}%</span>
+                  <span className="shrink-0 font-medium text-zinc-600 dark:text-zinc-300">{value}%</span>
                 </div>
                 <ProgressBar value={value} />
               </div>
@@ -237,7 +237,7 @@ const Dashboard = () => {
               ? [0, 1, 2].map((item) => <Skeleton className="h-20" key={item} />)
               : recent.map((item) => (
                   <Link
-                    className="group grid min-w-0 gap-4 rounded-xl border border-zinc-200 bg-white/72 p-4 transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft dark:border-zinc-800 dark:bg-zinc-950/55 dark:hover:border-brand-700 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                    className="group grid min-w-0 gap-4 rounded-xl border border-zinc-200 bg-white/90 p-4 transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-50/60 hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900/82 dark:hover:border-brand-400/70 dark:hover:bg-zinc-900 dark:focus-visible:ring-brand-400/25 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
                     key={item._id}
                     to={`/results/${item._id}`}
                   >
@@ -255,7 +255,7 @@ const Dashboard = () => {
                           {item.file?.originalName || "Untitled media"}
                         </h3>
 
-                        <p className="mt-1 truncate text-sm text-zinc-500 dark:text-zinc-400">
+                        <p className="mt-1 truncate text-sm font-medium text-zinc-600 dark:text-zinc-300">
                           {item.platform}
                           {item.contentType ? ` ${item.contentType}` : ""} - {formatDate(item.createdAt)} -{" "}
                           {formatFileSize(item.file?.size || 0)}

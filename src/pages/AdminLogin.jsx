@@ -70,7 +70,7 @@ const AdminLogin = () => {
                 Admin only
               </p>
               <h2 className="mt-3 text-3xl font-extrabold text-zinc-950 dark:text-white">Sign in as admin</h2>
-              <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+              <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
                 Normal user accounts cannot access this dashboard.
               </p>
             </div>

@@ -12,7 +12,7 @@ const Logo = ({ compact = false, inverse = false }) => {
           <p className={clsx("text-sm font-extrabold tracking-tight", inverse ? "text-white" : "text-zinc-950 dark:text-white")}>
             BoostPilot AI
           </p>
-          <p className={clsx("text-[11px] font-semibold uppercase tracking-[0.16em]", inverse ? "text-zinc-400" : "text-zinc-500 dark:text-zinc-400")}>
+          <p className={clsx("text-[11px] font-bold uppercase tracking-[0.16em]", inverse ? "text-zinc-300" : "text-zinc-600 dark:text-zinc-300")}>
             Signal studio
           </p>
         </div>

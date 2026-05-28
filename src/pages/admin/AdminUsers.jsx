@@ -105,10 +105,10 @@ const AdminUsers = () => {
           ["Admins", totals.admins]
         ].map(([label, value]) => (
           <div
-            className="rounded-lg border border-zinc-200 bg-white/78 p-4 dark:border-zinc-800 dark:bg-zinc-950/60"
+            className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82"
             key={label}
           >
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">{label}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">{label}</p>
             <p className="mt-2 text-2xl font-extrabold text-zinc-950 dark:text-white">{value}</p>
           </div>
         ))}
@@ -125,7 +125,7 @@ const AdminUsers = () => {
           <div className="space-y-3">
             {users.map((user) => (
               <div
-                className="grid gap-4 rounded-lg border border-zinc-200 bg-white/76 p-4 dark:border-zinc-800 dark:bg-zinc-950/55 xl:grid-cols-[minmax(0,1fr)_520px] xl:items-center"
+                className="grid gap-4 rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82 xl:grid-cols-[minmax(0,1fr)_520px] xl:items-center"
                 key={user.id}
               >
                 <div className="min-w-0">
@@ -136,8 +136,8 @@ const AdminUsers = () => {
                       {user.isBlocked ? "Blocked" : "Active"}
                     </Badge>
                   </div>
-                  <p className="mt-1 truncate text-sm text-zinc-500 dark:text-zinc-400">{user.email}</p>
-                  <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                  <p className="mt-1 truncate text-sm font-medium text-zinc-600 dark:text-zinc-300">{user.email}</p>
+                  <p className="mt-2 text-xs font-medium text-zinc-600 dark:text-zinc-300">
                     {user.analysisCount} analyses - joined {formatDate(user.createdAt)}
                   </p>
                 </div>
@@ -145,11 +145,11 @@ const AdminUsers = () => {
                 <div className="space-y-3">
                   <div className="grid gap-3 md:grid-cols-[120px_120px_120px_1fr]">
                     <label className="block">
-                      <span className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">
+                      <span className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
                         Plan
                       </span>
                       <select
-                        className="h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 text-sm font-bold text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white"
+                        className="h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-900 outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:ring-brand-400/25"
                         disabled={busyId === user.id}
                         onChange={(event) =>
                           mutate(user.id, () =>
@@ -165,11 +165,11 @@ const AdminUsers = () => {
                     </label>
 
                     <label className="block">
-                      <span className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">
+                      <span className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
                         Cycle
                       </span>
                       <select
-                        className="h-11 w-full rounded-lg border border-zinc-200 bg-white px-3 text-sm font-bold text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white"
+                        className="h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-900 outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:ring-brand-400/25"
                         disabled={busyId === user.id}
                         onChange={(event) =>
                           mutate(user.id, () =>

@@ -11,7 +11,7 @@ const PageHeader = ({ eyebrow, title, description, action }) => {
           {title}
         </h1>
         {description && (
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+          <p className="mt-2 max-w-2xl text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">
             {description}
           </p>
         )}

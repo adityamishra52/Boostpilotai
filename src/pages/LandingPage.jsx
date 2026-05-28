@@ -89,11 +89,11 @@ const LandingPage = () => {
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
             {stats.map(([value, label]) => (
               <div
-                className="rounded-xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5"
+                className="rounded-xl border border-slate-200 bg-white/95 p-4 text-slate-950 shadow-sm backdrop-blur"
                 key={label}
               >
-                <p className="text-lg font-extrabold text-slate-950 dark:text-white">{value}</p>
-                <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">{label}</p>
+                <p className="text-lg font-extrabold text-slate-950">{value}</p>
+                <p className="mt-1 text-xs font-bold text-slate-700">{label}</p>
               </div>
             ))}
           </div>
@@ -106,7 +106,7 @@ const LandingPage = () => {
               <span className="h-2.5 w-2.5 rounded-full bg-cyan-400" />
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
 
-              <span className="ml-auto text-xs font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-zinc-500">
+              <span className="ml-auto text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-zinc-300">
                 Signal studio
               </span>
             </div>
@@ -127,32 +127,32 @@ const LandingPage = () => {
               </div>
 
               <div className="space-y-4">
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/5">
+                <div className="rounded-xl border border-slate-200 bg-white p-4 text-slate-950 shadow-sm">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-bold text-slate-600 dark:text-zinc-300">
+                    <p className="text-sm font-extrabold text-slate-700">
                       Launch readiness
                     </p>
-                    <p className="text-3xl font-extrabold text-slate-950 dark:text-white">92%</p>
+                    <p className="text-3xl font-extrabold text-slate-950">92%</p>
                   </div>
 
-                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-200">
                     <div className="h-full w-[92%] rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-orange-500" />
                   </div>
                 </div>
 
                 {["Caption angle", "Hook strength", "Technical quality"].map((item, index) => (
                   <div
-                    className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5"
+                    className="rounded-xl border border-slate-200 bg-white p-4 text-slate-950 shadow-sm"
                     key={item}
                   >
                     <div className="flex items-center gap-3">
                       <CheckCircle2 className="text-emerald-500" size={18} />
 
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-bold text-slate-950 dark:text-white">
+                        <p className="truncate text-sm font-extrabold text-slate-950">
                           {item}
                         </p>
-                        <p className="text-xs text-slate-500 dark:text-zinc-400">
+                        <p className="text-xs font-bold text-slate-700">
                           {index === 0
                             ? "Short-form ready"
                             : index === 1
@@ -164,13 +164,13 @@ const LandingPage = () => {
                   </div>
                 ))}
 
-                <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
-                  <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-slate-950 dark:text-white">
+                <div className="rounded-xl border border-slate-200 bg-white p-4 text-slate-950 shadow-sm">
+                  <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-slate-950">
                     <BarChart3 size={18} />
                     Report exports
                   </div>
 
-                  <p className="text-sm leading-6 text-slate-600 dark:text-zinc-300">
+                  <p className="text-sm font-semibold leading-6 text-slate-700">
                     Strategy, technical checks, and admin history stay aligned from upload to PDF.
                   </p>
                 </div>
@@ -193,7 +193,7 @@ const LandingPage = () => {
 
               <h2 className="text-lg font-extrabold text-slate-950 dark:text-white">{title}</h2>
 
-              <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-zinc-400">
+              <p className="mt-2 text-sm font-medium leading-6 text-slate-600 dark:text-zinc-300">
                 {text}
               </p>
             </div>

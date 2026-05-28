@@ -6,7 +6,7 @@ const SectionContainer = ({ title, description, icon: Icon, action, children, cl
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex min-w-0 items-start gap-3">
           {Icon && (
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-zinc-200 bg-white text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-zinc-200 bg-white text-zinc-800 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
               <Icon size={18} />
             </div>
           )}
@@ -15,7 +15,7 @@ const SectionContainer = ({ title, description, icon: Icon, action, children, cl
               {title}
             </h2>
             {description && (
-              <p className="mt-1 text-sm leading-6 text-zinc-500 dark:text-zinc-400">{description}</p>
+              <p className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-300">{description}</p>
             )}
           </div>
         </div>

@@ -214,7 +214,7 @@ const AdminSettings = () => {
                 Payment message
               </span>
               <textarea
-                className="min-h-28 w-full rounded-lg border border-zinc-200 bg-white/86 px-4 py-3 text-sm leading-6 text-zinc-950 shadow-sm outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-100 dark:border-zinc-800 dark:bg-zinc-950/72 dark:text-white dark:focus:ring-brand-900/30"
+                className="min-h-28 w-full rounded-lg border border-zinc-300 bg-white px-4 py-3 text-sm leading-6 text-zinc-950 shadow-sm outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:border-brand-400 dark:focus:ring-brand-400/25"
                 onChange={(event) => updateField("paymentMessage", event.target.value)}
                 value={billing.paymentMessage}
               />
@@ -224,7 +224,7 @@ const AdminSettings = () => {
 
         <div className="space-y-5">
           <SectionContainer icon={QrCode} title="Payment QR">
-            <div className="grid place-items-center rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
+            <div className="grid place-items-center rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900/82">
               {previewSrc ? (
                 <img
                   alt="Payment QR preview"
@@ -232,7 +232,7 @@ const AdminSettings = () => {
                   src={previewSrc}
                 />
               ) : (
-                <div className="grid h-48 w-48 place-items-center rounded-lg border border-dashed border-zinc-300 bg-zinc-50 text-center text-xs font-bold uppercase tracking-[0.12em] text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900">
+                <div className="grid h-48 w-48 place-items-center rounded-lg border border-dashed border-zinc-300 bg-zinc-50 text-center text-xs font-bold uppercase tracking-[0.12em] text-zinc-600 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200">
                   <QrCode size={52} />
                   QR preview
                 </div>
@@ -267,12 +267,12 @@ const AdminSettings = () => {
               </Button>
             </div>
 
-            <div className="mt-4 rounded-lg border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-950/50">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">UPI</p>
+            <div className="mt-4 rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">UPI</p>
               <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
                 {billing.upiId}
               </p>
-              <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">
+              <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">
                 Payment proof email
               </p>
               <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
@@ -283,8 +283,8 @@ const AdminSettings = () => {
 
           <SectionContainer icon={KeyRound} title="Admin password">
             <form className="space-y-4" onSubmit={handlePasswordSubmit}>
-              <div className="rounded-lg border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-950/50">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">Signed in admin</p>
+              <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">Signed in admin</p>
                 <p className="mt-2 break-all font-extrabold text-zinc-950 dark:text-white">{user?.email}</p>
               </div>
               <Input
