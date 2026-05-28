@@ -1,0 +1,13 @@
+# BoostPilot AI
+
+BoostPilot AI is an AI content optimization platform for creators, teams, and brands.
+
+It analyzes images and videos to generate captions, hashtags, hooks, technical quality suggestions, platform-fit scores, and export-ready reports for YouTube, Instagram, Facebook, and LinkedIn.
+
+Public pages:
+- https://boostpilotai.vercel.app/
+- https://boostpilotai.vercel.app/login
+- https://boostpilotai.vercel.app/register
+- https://boostpilotai.vercel.app/pricing
+
+Private app areas such as dashboard, analysis history, settings, and admin pages require authentication and should not be indexed.

@@ -1,0 +1,11 @@
+{
+  "name": "BoostPilot AI",
+  "short_name": "BoostPilot AI",
+  "description": "AI content optimization for creators across YouTube, Instagram, Facebook, and LinkedIn.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary"
+}

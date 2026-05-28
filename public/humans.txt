@@ -1,0 +1,12 @@
+/* TEAM */
+Project: BoostPilot AI
+Team: Add project/team details here.
+Site: https://boostpilotai.vercel.app
+
+/* THANKS */
+Creators, testers, and users helping improve AI content workflows.
+
+/* SITE */
+Standards: HTML, CSS, JavaScript
+Framework: React, Vite
+Language: English
