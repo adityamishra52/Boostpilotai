@@ -1,4 +1,3 @@
-```txt
 # BoostPilot AI
 
 BoostPilot AI is an AI-powered content optimization platform.
@@ -29,4 +28,3 @@ Public pages:
 - https://boostpilotai.vercel.app/login
 - https://boostpilotai.vercel.app/register
 - https://boostpilotai.vercel.app/pricing
-```

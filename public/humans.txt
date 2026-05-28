@@ -1,6 +1,6 @@
 /* TEAM */
 Project: BoostPilot AI
-Team: Add project/team details here.
+Team: Individual.
 Site: https://boostpilotai.vercel.app
 
 /* THANKS */
