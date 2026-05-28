@@ -4,14 +4,14 @@ const SectionContainer = ({ title, description, icon: Icon, action, children, cl
   return (
     <Card className={className}>
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex items-start gap-3">
+        <div className="flex min-w-0 items-start gap-3">
           {Icon && (
             <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-zinc-200 bg-white text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200">
               <Icon size={18} />
             </div>
           )}
-          <div>
-            <h2 className="text-base font-extrabold tracking-tight text-zinc-950 dark:text-white">
+          <div className="min-w-0">
+            <h2 className="text-base font-extrabold tracking-tight text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
               {title}
             </h2>
             {description && (
@@ -19,7 +19,7 @@ const SectionContainer = ({ title, description, icon: Icon, action, children, cl
             )}
           </div>
         </div>
-        {action}
+        {action && <div className="flex w-full shrink-0 sm:w-auto">{action}</div>}
       </div>
       {children}
     </Card>

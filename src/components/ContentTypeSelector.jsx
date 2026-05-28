@@ -2,20 +2,17 @@ import clsx from "clsx";
 
 export const contentTypesByPlatform = {
   YouTube: ["Video", "Short", "Thumbnail"],
-  Instagram: ["Reel", "Post", "Story"],
-  LinkedIn: ["Image Post", "Video Post", "Carousel"],
-  Facebook: ["Image Post", "Video Post", "Story"]
+  Instagram: ["Post", "Video", "Story"],
+  LinkedIn: ["Post", "Video", "Carousel"],
+  Facebook: ["Post", "Video", "Story"]
 };
 
 const helperText = {
-  Video: "Long-form video",
+  Video: "Motion creative",
   Short: "9:16 under 60s",
   Thumbnail: "16:9 image",
-  Reel: "Vertical video",
   Post: "Feed image",
   Story: "Vertical story",
-  "Image Post": "Static creative",
-  "Video Post": "Feed video",
   Carousel: "Multi-slide story"
 };
 
@@ -23,7 +20,7 @@ const ContentTypeSelector = ({ platform, value, onChange }) => {
   const options = contentTypesByPlatform[platform] || [];
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,150px),1fr))] gap-3">
       {options.map((item) => {
         const active = value === item;
 

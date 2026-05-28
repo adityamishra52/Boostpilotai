@@ -1,5 +1,5 @@
-import { ArrowLeft } from "lucide-react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { ArrowLeft, Plus } from "lucide-react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -13,8 +13,18 @@ import { analysisService } from "../services/analysisService";
 const ResultPage = () => {
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const [analysis, setAnalysis] = useState(location.state?.analysis || null);
   const [loading, setLoading] = useState(!location.state?.analysis);
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+      return;
+    }
+
+    navigate("/history");
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -51,7 +61,7 @@ const ResultPage = () => {
   }
 
   return (
-    <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 10 }}>
+    <motion.div animate={{ opacity: 1, y: 0 }} className="pb-28 md:pb-0" initial={{ opacity: 0, y: 10 }}>
       <PageHeader
         action={
           <Button as={Link} icon={ArrowLeft} to="/history" variant="secondary">
@@ -63,6 +73,26 @@ const ResultPage = () => {
         title="AI analysis report"
       />
       <ResultsPanel analysis={analysis} />
+
+      <div className="mt-5 hidden justify-end gap-3 md:flex">
+        <Button icon={ArrowLeft} onClick={handleBack} variant="secondary">
+          Back
+        </Button>
+        <Button as={Link} icon={Plus} to="/analyze" variant="accent">
+          New analysis
+        </Button>
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-zinc-200/80 bg-white/92 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-16px_40px_rgba(15,23,42,0.14)] backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/92 md:hidden">
+        <div className="mx-auto flex max-w-[520px] gap-3">
+          <Button className="flex-1" icon={ArrowLeft} onClick={handleBack} variant="secondary">
+            Back
+          </Button>
+          <Button as={Link} className="flex-1" icon={Plus} to="/analyze" variant="accent">
+            New analysis
+          </Button>
+        </div>
+      </div>
     </motion.div>
   );
 };

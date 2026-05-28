@@ -26,20 +26,35 @@ const allowedTypes = [
   "video/webm"
 ];
 
+const getPreferredContentType = (platform, selectedFile) => {
+  const options = contentTypesByPlatform[platform] || [];
+
+  if (!options.length) {
+    return "";
+  }
+
+  const mediaPreference = selectedFile?.type?.startsWith("video/")
+    ? ["Video", "Video Post", "Reel", "Short", "Story"]
+    : selectedFile?.type?.startsWith("image/")
+      ? ["Post", "Image Post", "Thumbnail", "Carousel"]
+      : [];
+
+  return mediaPreference.find((item) => options.includes(item)) || options[0];
+};
+
 const UploadAnalyze = () => {
   const { updateUser, user } = useAuth();
   const navigate = useNavigate();
+  const defaultPlatform = user?.preferences?.defaultPlatform || "Instagram";
   const [file, setFile] = useState(null);
-  const [platform, setPlatform] = useState(user?.preferences?.defaultPlatform || "Instagram");
-  const [contentType, setContentType] = useState(
-    contentTypesByPlatform[user?.preferences?.defaultPlatform || "Instagram"]?.[0] || "Reel"
-  );
+  const [platform, setPlatform] = useState(defaultPlatform);
+  const [contentType, setContentType] = useState(getPreferredContentType(defaultPlatform));
   const [loading, setLoading] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
 
   const handlePlatformChange = (nextPlatform) => {
     setPlatform(nextPlatform);
-    setContentType(contentTypesByPlatform[nextPlatform]?.[0] || "");
+    setContentType(getPreferredContentType(nextPlatform, file));
   };
 
   const handleFile = (selectedFile) => {
@@ -59,6 +74,7 @@ const UploadAnalyze = () => {
     }
 
     setFile(selectedFile);
+    setContentType(getPreferredContentType(platform, selectedFile));
   };
 
   const handleSubmit = async () => {
@@ -105,13 +121,13 @@ const UploadAnalyze = () => {
         title="Content intelligence studio"
       />
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
         <div className="space-y-5">
           <SectionContainer icon={FileUp} title="Media asset">
             <FileDropzone file={file} onFile={handleFile} />
           </SectionContainer>
 
-          <SectionContainer icon={Gauge} title="Distribution target">
+          <SectionContainer icon={Gauge} title="Content destination">
             <PlatformSelector onChange={handlePlatformChange} value={platform} />
           </SectionContainer>
 
@@ -120,7 +136,7 @@ const UploadAnalyze = () => {
           </SectionContainer>
         </div>
 
-        <div className="space-y-5 xl:sticky xl:top-24 xl:h-fit">
+        <div className="space-y-5 xl:sticky xl:top-5 xl:h-fit">
           <Card>
             <div className="flex items-center justify-between">
               <div>
@@ -138,8 +154,8 @@ const UploadAnalyze = () => {
             <ProgressBar className="mt-4" value={readiness} />
             <div className="mt-5 space-y-3 text-sm">
               {[
-                ["Platform", platform],
-                ["Content type", contentType],
+                ["Destination", platform],
+                ["Content format", contentType],
                 ["Credits", user?.credits ?? 0],
                 ["File size", file ? formatFileSize(file.size) : "None"],
                 ["AI output", "Creative + technical PDF"]

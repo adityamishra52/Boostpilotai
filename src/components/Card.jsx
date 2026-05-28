@@ -4,7 +4,7 @@ const Card = ({ children, className, as: Component = "div", ...props }) => {
   return (
     <Component
       className={clsx(
-        "surface rounded-lg p-5 transition duration-200",
+        "surface min-w-0 rounded-lg p-4 transition duration-200 sm:p-5",
         className
       )}
       {...props}

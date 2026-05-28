@@ -34,17 +34,21 @@ const Sidebar = ({ open, onClose }) => {
     <>
       <div
         className={clsx(
-          "fixed inset-0 z-30 bg-zinc-950/45 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
+          "fixed inset-0 z-40 bg-zinc-950/55 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
           open ? "opacity-100" : "pointer-events-none opacity-0"
         )}
+        aria-hidden="true"
         onClick={onClose}
       />
 
       <aside
         className={clsx(
-          "fixed inset-y-0 left-0 z-40 flex h-dvh max-h-dvh w-[288px] max-w-[86vw] flex-col overflow-hidden border-r border-zinc-200/80 bg-white/95 shadow-2xl backdrop-blur-2xl transition-transform duration-300 dark:border-zinc-800/80 dark:bg-zinc-950/95 lg:sticky lg:top-0 lg:h-dvh lg:max-h-dvh lg:w-[280px] lg:min-w-[280px] lg:max-w-[280px] lg:translate-x-0 lg:shadow-none",
+          "fixed inset-y-0 left-0 z-50 flex h-screen h-dvh max-h-dvh w-[288px] max-w-[86vw] flex-col overflow-hidden border-r border-zinc-200/80 bg-white/96 shadow-2xl backdrop-blur-2xl transition-transform duration-300 will-change-transform dark:border-zinc-800/80 dark:bg-zinc-950/96 lg:static lg:z-auto lg:h-full lg:max-h-none lg:w-[280px] lg:min-w-[280px] lg:max-w-[280px] lg:translate-x-0 lg:shadow-none",
           open ? "translate-x-0" : "-translate-x-full"
         )}
+        aria-label="Primary navigation"
+        aria-modal={open ? "true" : undefined}
+        role={open ? "dialog" : "navigation"}
       >
         <div className="shrink-0 p-4 pb-3">
           <div className="flex items-center justify-between rounded-xl border border-zinc-200 bg-white/80 p-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70">
@@ -59,7 +63,7 @@ const Sidebar = ({ open, onClose }) => {
           </div>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
+        <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto px-4 pb-4">
           <div className="rounded-xl border border-zinc-200 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 p-4 text-white shadow-soft dark:border-zinc-800">
             <div className="mb-5 flex items-center justify-between">
               <Badge className="bg-white/10 text-white ring-white/15" variant="neutral">

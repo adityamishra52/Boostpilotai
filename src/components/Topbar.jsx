@@ -6,11 +6,11 @@ import ThemeToggle from "./ThemeToggle";
 
 const Topbar = ({ onMenu }) => {
   return (
-    <header className="sticky top-0 z-20 border-b border-zinc-200/80 bg-white/75 backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/75">
-      <div className="mx-auto flex min-h-16 w-full max-w-[1440px] items-center gap-2 px-3 py-3 sm:gap-3 sm:px-5 lg:px-8">
+    <header className="z-20 shrink-0 border-b border-zinc-200/80 bg-white/82 backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/82">
+      <div className="mx-auto flex min-h-16 w-full max-w-[1440px] items-center gap-2 px-3 py-2.5 sm:gap-3 sm:px-5 lg:px-8">
         <Button
           aria-label="Open navigation"
-          className="h-10 w-10 shrink-0 px-0 lg:hidden"
+          className="h-12 w-12 shrink-0 rounded-xl border-zinc-300 bg-white px-0 text-zinc-950 shadow-[0_12px_34px_rgba(15,23,42,0.18)] ring-1 ring-zinc-950/5 hover:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:ring-white/10 [&>svg]:h-6 [&>svg]:w-6"
           icon={Menu}
           onClick={onMenu}
           variant="secondary"

@@ -10,7 +10,7 @@ const platforms = [
 
 const PlatformSelector = ({ value, onChange }) => {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(148px,1fr))] gap-3">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,148px),1fr))] gap-3">
       {platforms.map((platform) => {
         const Icon = platform.icon;
         const active = value === platform.name;

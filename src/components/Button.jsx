@@ -35,7 +35,7 @@ const Button = ({
   return (
     <Component
       className={clsx(
-        "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-60",
+        "inline-flex max-w-full items-center justify-center gap-2 rounded-lg text-center font-semibold leading-tight transition duration-200 [touch-action:manipulation] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 [&>svg]:shrink-0",
         variants[variant],
         sizes[size],
         className

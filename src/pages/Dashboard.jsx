@@ -88,7 +88,7 @@ const Dashboard = () => {
         title="Growth command center"
       />
 
-      <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
         <StatCard
           accent="from-emerald-400 to-brand-500"
           detail={`${user?.plan || "Free"} - ${user?.billingCycle || "monthly"}`}
@@ -128,7 +128,7 @@ const Dashboard = () => {
 
       <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(320px,380px)]">
         <Card className="min-w-0 overflow-hidden p-0">
-          <div className="grid min-w-0 gap-0 lg:grid-cols-[minmax(0,1fr)_280px]">
+          <div className="grid min-w-0 gap-0 xl:grid-cols-[minmax(0,1fr)_280px]">
             <div className="min-w-0 p-5 sm:p-6">
               <div className="mb-5 flex flex-wrap items-center gap-2">
                 <Badge variant="brand">
@@ -156,7 +156,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="min-w-0 border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-950/45 lg:border-l lg:border-t-0">
+            <div className="min-w-0 border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-950/45 xl:border-l xl:border-t-0">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">
                 Last result
               </p>
@@ -257,7 +257,7 @@ const Dashboard = () => {
 
                         <p className="mt-1 truncate text-sm text-zinc-500 dark:text-zinc-400">
                           {item.platform}
-                          {item.contentType ? ` ${item.contentType}` : ""} · {formatDate(item.createdAt)} ·{" "}
+                          {item.contentType ? ` ${item.contentType}` : ""} - {formatDate(item.createdAt)} -{" "}
                           {formatFileSize(item.file?.size || 0)}
                         </p>
                       </div>

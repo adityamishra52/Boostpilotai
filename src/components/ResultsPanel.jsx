@@ -158,9 +158,9 @@ const ResultsPanel = ({ analysis }) => {
 
   return (
     <div className="space-y-5">
-      <div className="sticky top-16 z-10 rounded-lg border border-zinc-200 bg-white/84 p-2 shadow-soft backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/84">
+      <div className="sticky top-3 z-10 rounded-lg border border-zinc-200 bg-white/88 p-2 shadow-soft backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/88">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div>
+          <div className="min-w-0">
             <p className="text-sm font-extrabold text-zinc-950 dark:text-white">AI analysis report</p>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               Overview, creative assets, and technical quality on one page
@@ -192,15 +192,6 @@ const ResultsPanel = ({ analysis }) => {
             <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-600 dark:text-zinc-300">
               {output.summary}
             </p>
-            {output.targetAudience && (
-              <div className="mt-5 rounded-lg border border-brand-200 bg-brand-50/80 p-4 text-sm leading-6 text-zinc-700 dark:border-brand-400/20 dark:bg-brand-400/10 dark:text-zinc-200">
-                <div className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.16em] text-brand-700 dark:text-brand-200">
-                  <Users size={15} />
-                  Target audience
-                </div>
-                {output.targetAudience}
-              </div>
-            )}
           </div>
           <div className="border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-950/45 xl:border-l xl:border-t-0">
             <div className="flex items-center justify-center">
