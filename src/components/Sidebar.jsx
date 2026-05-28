@@ -94,8 +94,8 @@ const Sidebar = ({ open, onClose }) => {
             </div>
 
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <div className="min-w-0 rounded-xl border border-zinc-200 bg-white/90 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900/82">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
+              <div className="min-w-0 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-950 dark:border-zinc-700 dark:bg-zinc-800/90 dark:text-white">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-200">
                   Credits
                 </p>
                 <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:text-white">
@@ -103,14 +103,14 @@ const Sidebar = ({ open, onClose }) => {
                 </p>
               </div>
 
-              <div className="min-w-0 rounded-xl border border-zinc-200 bg-white/90 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900/82">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
+              <div className="min-w-0 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-950 dark:border-zinc-700 dark:bg-zinc-800/90 dark:text-white">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-200">
                   Plan
                 </p>
                 <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:text-white">
                   {user?.plan || "Free"}
                 </p>
-                <p className="truncate text-[10px] font-medium capitalize text-zinc-600 dark:text-zinc-300">
+                <p className="truncate text-[10px] font-semibold capitalize text-zinc-600 dark:text-zinc-200">
                   {user?.billingCycle || "monthly"}
                 </p>
               </div>
