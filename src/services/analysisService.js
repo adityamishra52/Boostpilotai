@@ -34,7 +34,7 @@ export const analysisService = {
     return data;
   },
 
-  async premiumAction(id, action) {
+  async premiumAction(id, action, payload = {}) {
     const endpoints = {
       applySuggestions: "apply-suggestions",
       fixWeakness: "fix-weakness",
@@ -48,7 +48,7 @@ export const analysisService = {
       throw new Error("Unsupported premium action");
     }
 
-    const { data } = await api.post(`/analysis/${id}/${endpoint}`);
+    const { data } = await api.post(`/analysis/${id}/${endpoint}`, payload);
     return data;
   },
 
