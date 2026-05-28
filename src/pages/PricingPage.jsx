@@ -1,4 +1,4 @@
-import { CheckCircle2, Copy, CreditCard, Mail, QrCode, Sparkles, X } from "lucide-react";
+import { CheckCircle2, Copy, CreditCard, Lock, Mail, QrCode, Sparkles, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -9,7 +9,7 @@ import Card from "../components/Card";
 import PageHeader from "../components/PageHeader";
 import { useAuth } from "../context/AuthContext";
 import { billingService } from "../services/billingService";
-import { creditsForPlan, plans, priceForPlan } from "../utils/plans";
+import { creditsForPlan, featuresForPlan, hasPlan, plans, priceForPlan } from "../utils/plans";
 
 const defaultSettings = {
   upiId: "boostpilot@upi",
@@ -20,6 +20,19 @@ const defaultSettings = {
   paymentMessage:
     "After completing payment, send your payment number, UTR, or transaction number to boostpilot@ai.in."
 };
+
+const comparisonRows = [
+  { label: "Basic AI analysis", plan: "free" },
+  { label: "Standard PDF export", plan: "free" },
+  { label: "Watermark-free exports", plan: "creator" },
+  { label: "Fix Weakness", plan: "creator" },
+  { label: "Generate Variants", plan: "creator" },
+  { label: "Apply Suggestions", plan: "pro" },
+  { label: "Advanced technical recommendations", plan: "pro" },
+  { label: "Competitor-style suggestions", plan: "pro" },
+  { label: "YouTube thumbnail ideas", plan: "agency" },
+  { label: "Team and agency tools", plan: "agency" }
+];
 
 const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
   const amount = priceForPlan(plan, billingCycle);
@@ -167,7 +180,7 @@ const PricingPage = () => {
     setLoadingPlan(plan.name);
 
     try {
-      const data = await billingService.requestUpgrade({ plan: plan.name, billingCycle });
+      const data = await billingService.requestUpgrade({ plan: plan.id, billingCycle });
       setSettings({ ...defaultSettings, ...(data.settings || settings) });
       setSelectedPlan(plan);
     } catch (error) {
@@ -205,13 +218,14 @@ const PricingPage = () => {
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {plans.map((plan) => {
-          const isCurrent = user?.plan === plan.name && (user?.billingCycle || "monthly") === billingCycle;
-          const isFree = plan.name === "Free";
+          const isCurrent = user?.plan === plan.id && (user?.billingCycle || "monthly") === billingCycle;
+          const isFree = plan.id === "free";
+          const visibleFeatures = featuresForPlan(plan.id).slice(0, plan.id === "free" ? 6 : 7);
 
           return (
             <Card
-              className={isCurrent ? "border-brand-300 shadow-glow dark:border-brand-700" : ""}
-              key={plan.name}
+              className={plan.recommended ? "border-brand-300 shadow-glow dark:border-brand-700" : isCurrent ? "border-emerald-300 dark:border-emerald-700" : ""}
+              key={plan.id}
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -220,7 +234,10 @@ const PricingPage = () => {
                     {priceForPlan(plan, billingCycle)}
                   </p>
                 </div>
-                {isCurrent && <Badge variant="success">Current</Badge>}
+                <div className="flex flex-col items-end gap-2">
+                  {plan.recommended && <Badge variant="brand">Recommended</Badge>}
+                  {isCurrent && <Badge variant="success">Current</Badge>}
+                </div>
               </div>
               <p className="mt-3 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">{plan.audience}</p>
               <div className="mt-5 rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
@@ -230,13 +247,28 @@ const PricingPage = () => {
                 </div>
               </div>
               <ul className="mt-5 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
-                {["AI media analysis", "History and PDF reports", "Technical quality scoring"].map((item) => (
+                {visibleFeatures.map((item) => (
                   <li className="flex gap-2" key={item}>
                     <CheckCircle2 className="mt-0.5 text-emerald-500" size={16} />
-                    {item}
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
+              {plan.id !== "agency" && (
+                <div className="mt-5 rounded-lg border border-dashed border-zinc-300 bg-zinc-50/90 p-3 text-sm text-zinc-600 dark:border-zinc-700 dark:bg-zinc-950/80 dark:text-zinc-300">
+                  <div className="flex items-center gap-2 font-bold text-zinc-800 dark:text-zinc-100">
+                    <Lock size={15} />
+                    Next unlock
+                  </div>
+                  <p className="mt-1 leading-6">
+                    {plan.id === "free"
+                      ? "Creator unlocks Fix Weakness, Variants, and watermark-free exports."
+                      : plan.id === "creator"
+                        ? "Pro unlocks Apply Suggestions and advanced recommendations."
+                        : "Agency unlocks thumbnail concepts and team-oriented workflows."}
+                  </p>
+                </div>
+              )}
               <Button
                 className="mt-6 w-full"
                 disabled={isCurrent || isFree}
@@ -251,6 +283,54 @@ const PricingPage = () => {
           );
         })}
       </div>
+
+      <Card className="mt-6 p-0">
+        <div className="border-b border-zinc-200 p-5 dark:border-zinc-800">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-extrabold text-zinc-950 dark:text-white">Feature matrix</h2>
+              <p className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                Compare locked premium actions and reporting upgrades across all four plans.
+              </p>
+            </div>
+            <Badge variant="brand">4 plans</Badge>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[760px] text-left text-sm">
+            <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-600 dark:bg-zinc-900 dark:text-zinc-300">
+              <tr>
+                <th className="px-4 py-3">Feature</th>
+                {plans.map((plan) => (
+                  <th className="px-4 py-3 text-center" key={plan.id}>
+                    {plan.name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {comparisonRows.map((row) => (
+                <tr className="border-t border-zinc-200 dark:border-zinc-800" key={row.label}>
+                  <td className="px-4 py-3 font-semibold text-zinc-950 dark:text-white">{row.label}</td>
+                  {plans.map((plan) => {
+                    const included = hasPlan(plan.id, row.plan);
+
+                    return (
+                      <td className="px-4 py-3 text-center" key={`${row.label}-${plan.id}`}>
+                        {included ? (
+                          <CheckCircle2 className="mx-auto text-emerald-500" size={18} />
+                        ) : (
+                          <Lock className="mx-auto text-zinc-400 dark:text-zinc-600" size={16} />
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
 
       {selectedPlan && (
         <PaymentModal

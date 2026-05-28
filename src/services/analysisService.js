@@ -34,6 +34,24 @@ export const analysisService = {
     return data;
   },
 
+  async premiumAction(id, action) {
+    const endpoints = {
+      applySuggestions: "apply-suggestions",
+      fixWeakness: "fix-weakness",
+      variants: "generate-variants",
+      youtubeThumbnails: "youtube-thumbnails"
+    };
+
+    const endpoint = endpoints[action];
+
+    if (!endpoint) {
+      throw new Error("Unsupported premium action");
+    }
+
+    const { data } = await api.post(`/analysis/${id}/${endpoint}`);
+    return data;
+  },
+
   async downloadReport(id) {
     const response = await api.get(`/analysis/${id}/report`, {
       responseType: "blob"

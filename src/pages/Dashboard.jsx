@@ -27,6 +27,7 @@ import StatCard from "../components/StatCard";
 import { useAuth } from "../context/AuthContext";
 import { analysisService } from "../services/analysisService";
 import { formatDate, formatFileSize, platformAccent } from "../utils/formatters";
+import { planLabel } from "../utils/plans";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -91,7 +92,7 @@ const Dashboard = () => {
       <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
         <StatCard
           accent="from-emerald-400 to-brand-500"
-          detail={`${user?.plan || "Free"} - ${user?.billingCycle || "monthly"}`}
+          detail={`${planLabel(user?.plan)} - ${user?.billingCycle || "monthly"}`}
           icon={CreditCard}
           label="Credits"
           value={loading ? "-" : user?.credits ?? 0}

@@ -1,4 +1,4 @@
-import { BarChart3, FileText, ShieldAlert, UploadCloud, Users } from "lucide-react";
+import { BarChart3, Crown, FileText, ShieldAlert, UploadCloud, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -47,9 +47,10 @@ const AdminDashboard = () => {
         <StatCard accent="from-signal to-coral" detail="All saved analyses" icon={FileText} label="Analyses" value={loading ? "-" : analytics?.totalAnalyses || 0} />
         <StatCard accent="from-amber-400 to-coral" detail="Blocked accounts" icon={ShieldAlert} label="Blocked" value={loading ? "-" : analytics?.blockedUsers || 0} />
         <StatCard accent="from-mint to-brand-500" detail="Stored media records" icon={UploadCloud} label="Uploads" value={loading ? "-" : analytics?.uploadedFiles?.length || 0} />
+        <StatCard accent="from-brand-400 to-signal" detail="Saved premium actions" icon={Crown} label="Premium" value={loading ? "-" : analytics?.totalPremiumActions || 0} />
       </div>
 
-      <div className="mt-5 grid gap-5 xl:grid-cols-2">
+      <div className="mt-5 grid gap-5 xl:grid-cols-3">
         <SectionContainer icon={BarChart3} title="Platform-wise usage">
           <div className="space-y-3">
             {loading ? (
@@ -80,6 +81,24 @@ const AdminDashboard = () => {
                 >
                   <span className="font-bold text-zinc-950 dark:!text-white">{item.plan}</span>
                   <Badge variant="neutral">{item.count}</Badge>
+                </div>
+              ))
+            )}
+          </div>
+        </SectionContainer>
+
+        <SectionContainer icon={Crown} title="Premium action usage">
+          <div className="space-y-3">
+            {loading ? (
+              <Skeleton className="h-28" />
+            ) : (
+              Object.entries(analytics?.premiumActionUsage || {}).map(([action, count]) => (
+                <div
+                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"
+                  key={action}
+                >
+                  <span className="font-bold text-zinc-950 dark:!text-white">{action}</span>
+                  <Badge variant="brand">{count}</Badge>
                 </div>
               ))
             )}

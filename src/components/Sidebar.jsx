@@ -18,6 +18,7 @@ import { useAuth } from "../context/AuthContext";
 import Badge from "./Badge";
 import Logo from "./Logo";
 import Button from "./Button";
+import { planLabel } from "../utils/plans";
 
 const navItems = [
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
@@ -108,7 +109,7 @@ const Sidebar = ({ open, onClose }) => {
                   Plan
                 </p>
                 <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:!text-white">
-                  {user?.plan || "Free"}
+                  {planLabel(user?.plan)}
                 </p>
                 <p className="truncate text-[10px] font-semibold capitalize text-zinc-700 dark:!text-zinc-200">
                   {user?.billingCycle || "monthly"}

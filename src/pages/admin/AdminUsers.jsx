@@ -10,7 +10,7 @@ import SectionContainer from "../../components/SectionContainer";
 import Skeleton from "../../components/Skeleton";
 import { adminService } from "../../services/adminService";
 import { formatDate } from "../../utils/formatters";
-import { planNames } from "../../utils/plans";
+import { planLabel, planNames } from "../../utils/plans";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -138,7 +138,8 @@ const AdminUsers = () => {
                   </div>
                   <p className="mt-1 truncate text-sm font-medium text-zinc-700 dark:!text-zinc-300">{user.email}</p>
                   <p className="mt-2 text-xs font-medium text-zinc-700 dark:!text-zinc-300">
-                    {user.analysisCount} analyses - joined {formatDate(user.createdAt)}
+                    {user.analysisCount} analyses - {user.premiumActionCount || 0} premium actions - joined{" "}
+                    {formatDate(user.createdAt)}
                   </p>
                 </div>
 
@@ -159,7 +160,9 @@ const AdminUsers = () => {
                         value={user.plan}
                       >
                         {planNames.map((plan) => (
-                          <option key={plan}>{plan}</option>
+                          <option key={plan} value={plan}>
+                            {planLabel(plan)}
+                          </option>
                         ))}
                       </select>
                     </label>

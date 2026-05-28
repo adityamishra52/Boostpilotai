@@ -113,7 +113,7 @@ const UploadAnalyze = () => {
   );
 
   return (
-    <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 10 }}>
+    <motion.div animate={{ opacity: 1, y: 0 }} className="pb-28 md:pb-0" initial={{ opacity: 0, y: 10 }}>
       <PageHeader
         action={<Badge variant={file ? "success" : "warning"}>{file ? "Asset ready" : "Awaiting media"}</Badge>}
         description="Analyze creative strategy, media quality, platform fit, and export-ready reporting."
@@ -253,6 +253,28 @@ const UploadAnalyze = () => {
           </Card>
         </div>
       )}
+
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-zinc-200/80 bg-white/92 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-16px_40px_rgba(15,23,42,0.14)] backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/92 md:hidden">
+        <div className="mx-auto flex max-w-[520px] items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
+              {file ? "Ready to analyze" : "Choose media first"}
+            </p>
+            <p className="truncate text-sm font-extrabold text-zinc-950 dark:text-white">
+              {file ? `${platform} ${contentType}` : "Image or video"}
+            </p>
+          </div>
+          <Button
+            className="shrink-0"
+            icon={WandSparkles}
+            loading={loading}
+            onClick={handleSubmit}
+            variant="accent"
+          >
+            {loading ? "Analyzing" : "Generate"}
+          </Button>
+        </div>
+      </div>
     </motion.div>
   );
 };
