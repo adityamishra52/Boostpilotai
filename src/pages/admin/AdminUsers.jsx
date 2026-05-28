@@ -105,11 +105,11 @@ const AdminUsers = () => {
           ["Admins", totals.admins]
         ].map(([label, value]) => (
           <div
-            className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82"
+            className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"
             key={label}
           >
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">{label}</p>
-            <p className="mt-2 text-2xl font-extrabold text-zinc-950 dark:text-white">{value}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">{label}</p>
+            <p className="mt-2 text-2xl font-extrabold text-zinc-950 dark:!text-white">{value}</p>
           </div>
         ))}
       </div>
@@ -125,19 +125,19 @@ const AdminUsers = () => {
           <div className="space-y-3">
             {users.map((user) => (
               <div
-                className="grid gap-4 rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82 xl:grid-cols-[minmax(0,1fr)_520px] xl:items-center"
+                className="grid gap-4 rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white xl:grid-cols-[minmax(0,1fr)_520px] xl:items-center"
                 key={user.id}
               >
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="truncate font-extrabold text-zinc-950 dark:text-white">{user.name}</p>
+                    <p className="truncate font-extrabold text-zinc-950 dark:!text-white">{user.name}</p>
                     <Badge variant={user.role === "admin" ? "brand" : "neutral"}>{user.role}</Badge>
                     <Badge variant={user.isBlocked ? "danger" : "success"}>
                       {user.isBlocked ? "Blocked" : "Active"}
                     </Badge>
                   </div>
-                  <p className="mt-1 truncate text-sm font-medium text-zinc-600 dark:text-zinc-300">{user.email}</p>
-                  <p className="mt-2 text-xs font-medium text-zinc-600 dark:text-zinc-300">
+                  <p className="mt-1 truncate text-sm font-medium text-zinc-700 dark:!text-zinc-300">{user.email}</p>
+                  <p className="mt-2 text-xs font-medium text-zinc-700 dark:!text-zinc-300">
                     {user.analysisCount} analyses - joined {formatDate(user.createdAt)}
                   </p>
                 </div>

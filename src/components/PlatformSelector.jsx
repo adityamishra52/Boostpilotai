@@ -21,7 +21,7 @@ const PlatformSelector = ({ value, onChange }) => {
               "group flex min-h-32 min-w-0 flex-col items-start justify-between gap-4 rounded-lg border p-4 text-left transition duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/45 dark:focus-visible:ring-brand-400/35",
               active
                 ? "border-zinc-950 bg-zinc-950 text-white shadow-glow dark:border-brand-300/55 dark:bg-brand-400/16 dark:text-white"
-                : "border-zinc-200 bg-white/90 text-zinc-800 hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-50/70 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100 dark:hover:border-brand-400/70 dark:hover:bg-zinc-900"
+                : "border-zinc-200 bg-white/90 text-zinc-900 hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-50/70 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100 dark:hover:!border-brand-400/70 dark:hover:!bg-zinc-900"
             )}
             key={platform.name}
             onClick={() => onChange(platform.name)}
@@ -32,7 +32,7 @@ const PlatformSelector = ({ value, onChange }) => {
             </span>
             <span className="min-w-0">
               <span className="block break-words text-base font-bold leading-tight">{platform.name}</span>
-              <span className={clsx("text-xs font-semibold", active ? "text-zinc-200 dark:text-brand-100" : "text-zinc-600 dark:text-zinc-300")}>
+              <span className={clsx("text-xs font-semibold", active ? "text-zinc-200 dark:text-brand-100" : "text-zinc-700 dark:!text-zinc-300")}>
                 Channel rules
               </span>
             </span>

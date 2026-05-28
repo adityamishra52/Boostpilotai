@@ -237,7 +237,7 @@ const Dashboard = () => {
               ? [0, 1, 2].map((item) => <Skeleton className="h-20" key={item} />)
               : recent.map((item) => (
                   <Link
-                    className="group grid min-w-0 gap-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-zinc-950 transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-50/70 hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:hover:border-brand-400/70 dark:hover:bg-zinc-800/80 dark:focus-visible:ring-brand-400/25 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                    className="group grid min-w-0 gap-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 text-zinc-950 transition hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-50/70 hover:shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:!border-zinc-700 dark:!bg-zinc-900 dark:!text-white dark:hover:!border-brand-400/70 dark:hover:!bg-zinc-800/80 dark:focus-visible:ring-brand-400/25 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
                     key={item._id}
                     to={`/results/${item._id}`}
                   >
@@ -251,11 +251,11 @@ const Dashboard = () => {
                       </div>
 
                       <div className="min-w-0">
-                        <h3 className="truncate font-extrabold text-zinc-950 dark:text-white">
+                        <h3 className="truncate font-extrabold text-zinc-950 dark:!text-white">
                           {item.file?.originalName || "Untitled media"}
                         </h3>
 
-                        <p className="mt-1 truncate text-sm font-semibold text-zinc-700 dark:text-zinc-200">
+                        <p className="mt-1 truncate text-sm font-semibold text-zinc-700 dark:!text-zinc-200">
                           {item.platform}
                           {item.contentType ? ` ${item.contentType}` : ""} - {formatDate(item.createdAt)} -{" "}
                           {formatFileSize(item.file?.size || 0)}

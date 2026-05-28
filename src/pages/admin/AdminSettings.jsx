@@ -267,15 +267,15 @@ const AdminSettings = () => {
               </Button>
             </div>
 
-            <div className="mt-4 rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">UPI</p>
-              <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
+            <div className="mt-4 rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">UPI</p>
+              <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:!text-white">
                 {billing.upiId}
               </p>
-              <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">
+              <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">
                 Payment proof email
               </p>
-              <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
+              <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:!text-white">
                 {billing.paymentEmail}
               </p>
             </div>
@@ -283,9 +283,9 @@ const AdminSettings = () => {
 
           <SectionContainer icon={KeyRound} title="Admin password">
             <form className="space-y-4" onSubmit={handlePasswordSubmit}>
-              <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">Signed in admin</p>
-                <p className="mt-2 break-all font-extrabold text-zinc-950 dark:text-white">{user?.email}</p>
+              <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">Signed in admin</p>
+                <p className="mt-2 break-all font-extrabold text-zinc-950 dark:!text-white">{user?.email}</p>
               </div>
               <Input
                 autoComplete="current-password"

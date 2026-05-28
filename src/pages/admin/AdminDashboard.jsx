@@ -57,10 +57,10 @@ const AdminDashboard = () => {
             ) : (
               (analytics?.platformUsage || []).map((item) => (
                 <div
-                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900/82"
+                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"
                   key={item.platform}
                 >
-                  <span className="font-bold text-zinc-950 dark:text-white">{item.platform}</span>
+                  <span className="font-bold text-zinc-950 dark:!text-white">{item.platform}</span>
                   <Badge variant="brand">{item.count}</Badge>
                 </div>
               ))
@@ -75,10 +75,10 @@ const AdminDashboard = () => {
             ) : (
               (analytics?.planUsage || []).map((item) => (
                 <div
-                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900/82"
+                  className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white/90 px-4 py-3 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"
                   key={item.plan}
                 >
-                  <span className="font-bold text-zinc-950 dark:text-white">{item.plan}</span>
+                  <span className="font-bold text-zinc-950 dark:!text-white">{item.plan}</span>
                   <Badge variant="neutral">{item.count}</Badge>
                 </div>
               ))

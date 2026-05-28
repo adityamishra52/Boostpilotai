@@ -44,7 +44,7 @@ const ListBlock = ({ items, numbered = false }) => {
     <div className="space-y-2">
       {values.map((item, index) => (
         <div
-          className="flex gap-3 rounded-lg border border-zinc-200 bg-white/88 p-3 text-sm leading-6 text-zinc-800 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100"
+          className="flex gap-3 rounded-lg border border-zinc-200 bg-white/88 p-3 text-sm leading-6 text-zinc-800 shadow-sm dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100"
           key={`${item}-${index}`}
         >
           <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-zinc-950 text-[11px] font-bold text-white dark:bg-brand-400/20 dark:text-white dark:ring-1 dark:ring-brand-300/35">
@@ -65,11 +65,11 @@ const healthFromValue = (value, goodAt = 80) => {
 };
 
 const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
-  <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82">
+  <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-zinc-950 shadow-sm dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
     <div className="flex items-start justify-between gap-3">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">{label}</p>
-        <p className="mt-2 text-lg font-extrabold tracking-tight text-zinc-950 dark:text-white">{value}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">{label}</p>
+        <p className="mt-2 text-lg font-extrabold tracking-tight text-zinc-950 dark:!text-white">{value}</p>
       </div>
       {Icon && (
         <div className="grid h-9 w-9 place-items-center rounded-lg bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">
@@ -77,7 +77,7 @@ const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
         </div>
       )}
     </div>
-    {detail && <p className="mt-2 text-xs leading-5 text-zinc-600 dark:text-zinc-300">{detail}</p>}
+    {detail && <p className="mt-2 text-xs leading-5 text-zinc-700 dark:!text-zinc-300">{detail}</p>}
     {typeof progress === "number" && (
       <ProgressBar className="mt-4" tone={healthFromValue(progress)} value={progress} />
     )}
@@ -85,10 +85,10 @@ const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
 );
 
 const EngagementMetric = ({ label, value }) => (
-  <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82">
+  <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-zinc-950 shadow-sm dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
     <div className="flex items-center justify-between gap-3">
-      <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">{label}</p>
-      <p className="text-lg font-extrabold text-zinc-950 dark:text-white">{Number(value) || 0}</p>
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">{label}</p>
+      <p className="text-lg font-extrabold text-zinc-950 dark:!text-white">{Number(value) || 0}</p>
     </div>
     <ProgressBar className="mt-3" tone={healthFromValue(value)} value={Number(value) || 0} />
   </div>
@@ -198,17 +198,17 @@ const ResultsPanel = ({ analysis }) => {
               <ScoreRing score={output.contentScore} />
             </div>
             <div className="mt-5 grid grid-cols-2 gap-3 text-center">
-              <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900/70">
-                <p className="text-lg font-extrabold text-zinc-950 dark:text-white">
+              <div className="rounded-lg border border-zinc-200 bg-white p-3 text-zinc-950 dark:!border-zinc-800 dark:!bg-zinc-900/90 dark:!text-white">
+                <p className="text-lg font-extrabold text-zinc-950 dark:!text-white">
                   {data.technical.aspectRatio || "N/A"}
                 </p>
-                <p className="text-xs font-semibold text-zinc-600 dark:text-zinc-300">Aspect</p>
+                <p className="text-xs font-semibold text-zinc-700 dark:!text-zinc-300">Aspect</p>
               </div>
-              <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900/70">
-                <p className="text-lg font-extrabold text-zinc-950 dark:text-white">
+              <div className="rounded-lg border border-zinc-200 bg-white p-3 text-zinc-950 dark:!border-zinc-800 dark:!bg-zinc-900/90 dark:!text-white">
+                <p className="text-lg font-extrabold text-zinc-950 dark:!text-white">
                   {data.technical.fileSizeMB || "N/A"} MB
                 </p>
-                <p className="text-xs font-semibold text-zinc-600 dark:text-zinc-300">File size</p>
+                <p className="text-xs font-semibold text-zinc-700 dark:!text-zinc-300">File size</p>
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@ const ResultsPanel = ({ analysis }) => {
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
         <SectionContainer icon={Users} title="Target audience">
-          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100">
+          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
             {output.targetAudience || "Audience insight unavailable for this result."}
           </p>
         </SectionContainer>
@@ -226,7 +226,7 @@ const ResultsPanel = ({ analysis }) => {
           icon={Sparkles}
           title="Improved post version"
         >
-          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100">
+          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
             {output.improvedPostVersion || "No improved post version available."}
           </p>
         </SectionContainer>
@@ -249,7 +249,7 @@ const ResultsPanel = ({ analysis }) => {
           icon={Megaphone}
           title="Viral caption"
         >
-          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100">
+          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
             {output.viralCaption}
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -321,15 +321,15 @@ const ResultsPanel = ({ analysis }) => {
           <EngagementMetric label="CTA strength" value={data.engagement.ctaScore} />
         </div>
         <div className="mt-5 grid gap-5 xl:grid-cols-2">
-          <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
-            <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-zinc-950 dark:text-white">
+          <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
+            <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-zinc-950 dark:!text-white">
               <ThumbsUp size={17} />
               Strengths
             </div>
             <ListBlock items={data.strengths} />
           </div>
-          <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
-            <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-zinc-950 dark:text-white">
+          <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
+            <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-zinc-950 dark:!text-white">
               <ThumbsDown size={17} />
               Weaknesses
             </div>

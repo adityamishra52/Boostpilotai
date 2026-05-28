@@ -161,11 +161,11 @@ const UploadAnalyze = () => {
                 ["AI output", "Creative + technical PDF"]
               ].map(([label, value]) => (
                 <div
-                  className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white/90 px-3 py-3 dark:border-zinc-700 dark:bg-zinc-900/82"
+                  className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white/90 px-3 py-3 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"
                   key={label}
                 >
-                  <span className="font-medium text-zinc-600 dark:text-zinc-300">{label}</span>
-                  <span className="text-right font-bold text-zinc-950 dark:text-white">{value}</span>
+                  <span className="font-medium text-zinc-700 dark:!text-zinc-300">{label}</span>
+                  <span className="text-right font-bold text-zinc-950 dark:!text-white">{value}</span>
                 </div>
               ))}
             </div>
@@ -231,11 +231,11 @@ const UploadAnalyze = () => {
                 ["Agency", "Rs 1999", "1000 credits"]
               ].map(([name, price, credits]) => (
                 <div
-                  className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82"
+                  className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"
                   key={name}
                 >
-                  <p className="font-extrabold text-zinc-950 dark:text-white">{name}</p>
-                  <p className="mt-1 text-sm text-zinc-500">{price}/mo</p>
+                  <p className="font-extrabold text-zinc-950 dark:!text-white">{name}</p>
+                  <p className="mt-1 text-sm text-zinc-600 dark:!text-zinc-300">{price}/mo</p>
                   <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-brand-600 dark:text-brand-300">
                     {credits}
                   </p>

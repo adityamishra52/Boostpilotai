@@ -84,15 +84,15 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
                 )}
               </div>
               <div className="min-w-0 space-y-3">
-                <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">UPI ID</p>
-                  <p className="mt-2 break-all text-lg font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
+                <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">UPI ID</p>
+                  <p className="mt-2 break-all text-lg font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:!text-white">
                     {details.upiId}
                   </p>
                 </div>
-                <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">Send proof to</p>
-                  <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:text-white">
+                <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-700 dark:!text-zinc-300">Send proof to</p>
+                  <p className="mt-2 break-all font-extrabold text-zinc-950 [overflow-wrap:anywhere] dark:!text-white">
                     {details.paymentEmail}
                   </p>
                 </div>
@@ -223,8 +223,8 @@ const PricingPage = () => {
                 {isCurrent && <Badge variant="success">Current</Badge>}
               </div>
               <p className="mt-3 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">{plan.audience}</p>
-              <div className="mt-5 rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
-                <div className="flex items-center gap-2 font-bold text-zinc-950 dark:text-white">
+              <div className="mt-5 rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
+                <div className="flex items-center gap-2 font-bold text-zinc-950 dark:!text-white">
                   <CreditCard size={18} />
                   {creditsForPlan(plan, billingCycle)} analyses/{billingCycle === "yearly" ? "year" : "month"}
                 </div>

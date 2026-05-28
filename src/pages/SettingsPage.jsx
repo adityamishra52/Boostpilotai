@@ -112,11 +112,11 @@ const SettingsPage = () => {
               ))}
             </select>
           </label>
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
+          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="font-bold text-zinc-950 dark:text-white">Dark mode</p>
-                <p className="mt-1 text-sm font-medium text-zinc-600 dark:text-zinc-300">
+                <p className="font-bold text-zinc-950 dark:!text-white">Dark mode</p>
+                <p className="mt-1 text-sm font-medium text-zinc-700 dark:!text-zinc-300">
                   Switch the dashboard between light and dark appearances.
                 </p>
               </div>
@@ -150,7 +150,7 @@ const SettingsPage = () => {
               {user?.name}
             </h2>
             <p className="mt-2 break-all text-sm font-medium text-zinc-600 dark:text-zinc-300">{user?.email}</p>
-            <div className="mt-5 rounded-lg bg-zinc-50 p-4 text-sm font-medium leading-6 text-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-300">
+            <div className="mt-5 rounded-lg bg-zinc-50 p-4 text-sm font-medium leading-6 text-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-300">
               JWT authentication protects every analysis route. User settings are stored on the
               MongoDB user document.
             </div>
