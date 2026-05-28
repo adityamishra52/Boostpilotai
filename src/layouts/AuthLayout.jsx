@@ -24,11 +24,11 @@ const AuthLayout = () => {
           <div className="grid grid-cols-3 gap-3">
             {["Captions", "Hooks", "Scores"].map((item, index) => (
               <div
-                className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-900/82"
+                className="rounded-lg border border-zinc-200 bg-white/95 p-4 text-zinc-950 shadow-sm"
                 key={item}
               >
-                <p className="text-2xl font-extrabold">{index === 0 ? "8x" : index === 1 ? "12" : "94"}</p>
-                <p className="mt-1 text-xs font-bold text-zinc-600 dark:text-zinc-300">{item}</p>
+                <p className="text-2xl font-extrabold text-zinc-950">{index === 0 ? "8x" : index === 1 ? "12" : "94"}</p>
+                <p className="mt-1 text-xs font-bold text-zinc-700">{item}</p>
               </div>
             ))}
           </div>
