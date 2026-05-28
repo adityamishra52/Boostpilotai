@@ -48,6 +48,15 @@ export const getAbsoluteMediaUrl = (mediaUrl) => {
 };
 
 export const mediaService = {
+  async applyFixes(analysisId, selectedFixes = []) {
+    const { data } = await api.post("/media/apply-fixes", {
+      analysisId,
+      selectedFixes
+    });
+
+    return data;
+  },
+
   async fetchBlob(mediaUrl) {
     const requestUrl = normalizeMediaRequestUrl(mediaUrl);
 
@@ -60,5 +69,22 @@ export const mediaService = {
     });
 
     return response;
+  },
+
+  async generateThumbnails(analysisId) {
+    const { data } = await api.post("/media/generate-thumbnails", {
+      analysisId
+    });
+
+    return data;
+  },
+
+  async useCover(analysisId, conceptIndex) {
+    const { data } = await api.post("/media/use-cover", {
+      analysisId,
+      conceptIndex
+    });
+
+    return data;
   }
 };
