@@ -1,4 +1,12 @@
+```txt
 User-agent: *
 Allow: /
 
 Sitemap: https://boostpilotai.vercel.app/sitemap.xml
+
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /settings
+Disallow: /history
+Disallow: /analyze
+```
