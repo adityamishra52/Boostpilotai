@@ -92,7 +92,7 @@ const HistoryPage = () => {
               <button
                 className={`rounded-lg px-3 py-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25 ${
                   platform === item
-                    ? "bg-zinc-950 text-white dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
+                    ? "bg-zinc-950 text-white dark:bg-brand-400/20 dark:text-white dark:ring-1 dark:ring-brand-300/40"
                     : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
                 }`}
                 key={item}

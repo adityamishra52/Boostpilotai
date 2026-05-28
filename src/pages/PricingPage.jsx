@@ -186,7 +186,7 @@ const PricingPage = () => {
               <button
                 className={`rounded-md px-4 py-2 text-sm font-bold capitalize transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25 ${
                   billingCycle === cycle
-                    ? "bg-zinc-950 text-white dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
+                    ? "bg-zinc-950 text-white dark:bg-brand-400/20 dark:text-white dark:ring-1 dark:ring-brand-300/40"
                     : "text-zinc-700 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
                 }`}
                 key={cycle}

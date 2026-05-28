@@ -29,7 +29,7 @@ const ContentTypeSelector = ({ platform, value, onChange }) => {
             className={clsx(
               "min-h-24 min-w-0 rounded-lg border px-4 py-3 text-left transition duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/45 dark:focus-visible:ring-brand-400/35",
               active
-                ? "border-zinc-950 bg-zinc-950 text-white shadow-soft dark:border-brand-300/55 dark:bg-brand-400/16 dark:text-white"
+                ? "border-zinc-950 bg-zinc-950 text-white shadow-soft dark:border-brand-300/60 dark:bg-brand-400/20 dark:text-white"
                 : "border-zinc-200 bg-white/90 text-zinc-900 hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-50/70 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100 dark:hover:!border-brand-400/70 dark:hover:!bg-zinc-900"
             )}
             key={item}

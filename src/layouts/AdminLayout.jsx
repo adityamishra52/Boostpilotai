@@ -50,8 +50,8 @@ const AdminLayout = () => {
                   clsx(
                     "flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25",
                     isActive
-                      ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
-                      : "text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
+                      ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/20 dark:text-white dark:ring-1 dark:ring-brand-300/40"
+                      : "bg-white text-zinc-800 hover:bg-zinc-100 hover:text-zinc-950 dark:bg-zinc-950/80 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
                   )
                 }
                 key={item.to}
@@ -91,8 +91,8 @@ const AdminLayout = () => {
                   clsx(
                     "rounded-lg border px-3 py-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25",
                     isActive
-                      ? "border-zinc-950 bg-zinc-950 text-white dark:border-brand-300/55 dark:bg-brand-400/18 dark:text-white"
-                      : "border-zinc-200 bg-white/90 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100"
+                      ? "border-zinc-950 bg-zinc-950 text-white dark:border-brand-300/60 dark:bg-brand-400/20 dark:text-white"
+                      : "border-zinc-200 bg-white/90 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
                   )
                 }
                 key={item.to}

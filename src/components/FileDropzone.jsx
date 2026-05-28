@@ -41,8 +41,8 @@ const FileDropzone = ({ file, onFile }) => {
           file
             ? "border-brand-400 bg-brand-50/90 text-zinc-950 dark:border-brand-400/55 dark:bg-brand-400/10 dark:text-white"
             : dragActive
-              ? "border-brand-400 bg-brand-50/95 text-zinc-950 shadow-glow dark:border-brand-300/70 dark:bg-brand-400/14 dark:text-white"
-              : "border-zinc-300 bg-zinc-50/92 text-zinc-950 hover:border-brand-400 hover:bg-brand-50/70 dark:border-zinc-700 dark:bg-zinc-900/78 dark:text-zinc-100 dark:hover:border-brand-400/70 dark:hover:bg-zinc-900"
+              ? "border-brand-400 bg-brand-50/95 text-zinc-950 shadow-glow dark:border-brand-300/70 dark:bg-brand-400/15 dark:text-white"
+              : "border-zinc-300 bg-zinc-50/90 text-zinc-950 hover:border-brand-400 hover:bg-brand-50/70 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:border-brand-400/70 dark:hover:bg-zinc-900"
         )}
         onDragEnter={(event) => {
           event.preventDefault();

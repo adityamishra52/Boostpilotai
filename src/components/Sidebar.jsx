@@ -131,7 +131,7 @@ const Sidebar = ({ open, onClose }) => {
                     clsx(
                       "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25",
                       isActive
-                        ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
+                        ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/20 dark:text-white dark:ring-1 dark:ring-brand-300/40"
                         : "text-zinc-800 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
                     )
                   }
@@ -152,7 +152,7 @@ const Sidebar = ({ open, onClose }) => {
                   clsx(
                     "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:focus-visible:ring-brand-400/25",
                     isActive
-                      ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/18 dark:text-white dark:ring-1 dark:ring-brand-300/35"
+                      ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/20 dark:text-white dark:ring-1 dark:ring-brand-300/40"
                       : "text-zinc-800 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
                   )
                 }

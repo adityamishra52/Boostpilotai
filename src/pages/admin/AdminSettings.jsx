@@ -224,7 +224,7 @@ const AdminSettings = () => {
 
         <div className="space-y-5">
           <SectionContainer icon={QrCode} title="Payment QR">
-            <div className="grid place-items-center rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900/82">
+            <div className="grid place-items-center rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-700 dark:bg-zinc-900/90">
               {previewSrc ? (
                 <img
                   alt="Payment QR preview"

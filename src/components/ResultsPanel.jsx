@@ -176,14 +176,17 @@ const ResultsPanel = ({ analysis }) => {
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="grid gap-0 xl:grid-cols-[minmax(0,1fr)_340px]">
-          <div className="p-5 sm:p-6">
-            <div className="mb-4 flex flex-wrap items-center gap-2">
+        <div className="grid gap-0 xl:grid-cols-[minmax(0,1fr)_minmax(300px,340px)]">
+          <div className="min-w-0 p-5 sm:p-6">
+            <div className="mb-4 flex min-w-0 flex-wrap items-start gap-2">
               <Badge variant="brand">{analysis.platform}</Badge>
               {analysis.contentType && <Badge>{analysis.contentType}</Badge>}
-              <Badge variant={fitIsStrong ? "success" : "warning"}>
+              <Badge
+                className="max-w-full !whitespace-normal text-left leading-snug sm:max-w-[42rem] [&>svg]:mt-0.5 [&>svg]:shrink-0"
+                variant={fitIsStrong ? "success" : "warning"}
+              >
                 {fitIsStrong ? <CheckCircle2 size={13} /> : <AlertTriangle size={13} />}
-                {data.technical.platformFit || "Fit pending"}
+                <span className="min-w-0 break-words">{data.technical.platformFit || "Fit pending"}</span>
               </Badge>
             </div>
             <h2 className="text-balance text-2xl font-extrabold tracking-tight text-zinc-950 dark:text-white md:text-3xl">
