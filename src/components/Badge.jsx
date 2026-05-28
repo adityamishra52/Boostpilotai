@@ -1,18 +1,18 @@
 import clsx from "clsx";
 
 const variants = {
-  neutral: "!bg-zinc-100 !text-zinc-800 ring-zinc-300 dark:!bg-zinc-800 dark:!text-zinc-100 dark:ring-zinc-700",
-  brand: "!bg-brand-100 !text-brand-900 ring-brand-300 dark:!bg-brand-400/20 dark:!text-cyan-50 dark:ring-brand-300/40",
-  success: "!bg-emerald-100 !text-emerald-900 ring-emerald-300 dark:!bg-emerald-400/18 dark:!text-emerald-50 dark:ring-emerald-300/35",
-  warning: "!bg-amber-100 !text-amber-900 ring-amber-300 dark:!bg-amber-400/18 dark:!text-amber-50 dark:ring-amber-300/35",
-  danger: "!bg-red-100 !text-red-900 ring-red-300 dark:!bg-red-400/18 dark:!text-red-50 dark:ring-red-300/35"
+  neutral: "!bg-zinc-100 !text-zinc-900 ring-zinc-300 dark:!bg-zinc-800 dark:!text-zinc-50 dark:ring-zinc-700",
+  brand: "!bg-cyan-100 !text-cyan-950 ring-cyan-300 dark:!bg-cyan-950/80 dark:!text-cyan-50 dark:ring-cyan-400/45",
+  success: "!bg-emerald-100 !text-emerald-950 ring-emerald-300 dark:!bg-emerald-950/85 dark:!text-emerald-50 dark:ring-emerald-400/45",
+  warning: "!bg-amber-100 !text-amber-950 ring-amber-300 dark:!bg-amber-950/85 dark:!text-amber-50 dark:ring-amber-400/45",
+  danger: "!bg-red-100 !text-red-950 ring-red-300 dark:!bg-red-950/85 dark:!text-red-50 dark:ring-red-400/45"
 };
 
 const Badge = ({ children, className, variant = "neutral" }) => {
   return (
     <span
       className={clsx(
-        "inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-extrabold ring-1 ring-inset",
+        "inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-extrabold leading-tight ring-1 ring-inset [overflow-wrap:normal]",
         variants[variant],
         className
       )}
