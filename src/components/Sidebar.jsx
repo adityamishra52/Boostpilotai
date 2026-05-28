@@ -43,7 +43,7 @@ const Sidebar = ({ open, onClose }) => {
 
       <aside
         className={clsx(
-          "fixed inset-y-0 left-0 z-50 flex h-screen h-dvh max-h-dvh w-[288px] max-w-[86vw] flex-col overflow-hidden border-r border-zinc-200/80 bg-white/96 shadow-2xl backdrop-blur-2xl transition-transform duration-300 will-change-transform dark:border-zinc-800/80 dark:bg-zinc-950/96 lg:static lg:z-auto lg:h-full lg:max-h-none lg:w-[280px] lg:min-w-[280px] lg:max-w-[280px] lg:translate-x-0 lg:shadow-none",
+          "fixed inset-y-0 left-0 z-50 flex h-screen h-dvh max-h-dvh w-[288px] max-w-[86vw] flex-col overflow-hidden border-r border-zinc-200 bg-white shadow-2xl transition-transform duration-300 will-change-transform dark:border-zinc-800 dark:bg-zinc-950 lg:static lg:z-auto lg:h-full lg:max-h-none lg:w-[280px] lg:min-w-[280px] lg:max-w-[280px] lg:translate-x-0 lg:shadow-none",
           open ? "translate-x-0" : "-translate-x-full"
         )}
         aria-label="Primary navigation"
@@ -51,14 +51,14 @@ const Sidebar = ({ open, onClose }) => {
         role={open ? "dialog" : "navigation"}
       >
         <div className="shrink-0 p-4 pb-3">
-          <div className="flex items-center justify-between rounded-xl border border-zinc-200 bg-white/80 p-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70">
+          <div className="flex items-center justify-between rounded-xl border border-zinc-200 bg-white p-3 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <Logo />
             <Button
               aria-label="Close navigation"
-              className="h-10 w-10 px-0 lg:hidden"
+              className="h-12 w-12 rounded-xl border border-zinc-200 bg-white px-0 text-zinc-800 shadow-sm hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 lg:hidden [&>svg]:h-5 [&>svg]:w-5"
               icon={X}
               onClick={onClose}
-              variant="ghost"
+              variant="secondary"
             />
           </div>
         </div>
@@ -78,7 +78,7 @@ const Sidebar = ({ open, onClose }) => {
             </p>
           </div>
 
-          <div className="mt-4 rounded-xl border border-zinc-200 bg-white/80 p-3 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <div className="mt-4 rounded-xl border border-zinc-200 bg-white p-3 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <div className="flex items-center gap-3">
               <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-brand-400 to-signal text-sm font-extrabold text-white shadow-lg">
                 {user?.name?.charAt(0)?.toUpperCase() || "B"}
@@ -117,7 +117,7 @@ const Sidebar = ({ open, onClose }) => {
             </div>
           </div>
 
-          <p className="mt-6 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-zinc-400">
+          <p className="mt-6 px-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-zinc-700 dark:text-zinc-200">
             Workspace
           </p>
 
@@ -132,7 +132,7 @@ const Sidebar = ({ open, onClose }) => {
                       "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition",
                       isActive
                         ? "bg-zinc-950 text-white shadow-soft dark:bg-white dark:text-zinc-950"
-                        : "text-zinc-600 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white"
+                        : "text-zinc-800 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
                     )
                   }
                   end={item.to === "/dashboard"}
@@ -153,7 +153,7 @@ const Sidebar = ({ open, onClose }) => {
                     "flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition",
                     isActive
                       ? "bg-zinc-950 text-white shadow-soft dark:bg-white dark:text-zinc-950"
-                      : "text-zinc-600 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white"
+                      : "text-zinc-800 hover:translate-x-0.5 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
                   )
                 }
                 onClick={onClose}
@@ -166,13 +166,13 @@ const Sidebar = ({ open, onClose }) => {
           </nav>
         </div>
 
-        <div className="shrink-0 border-t border-zinc-200/80 bg-white/90 p-4 dark:border-zinc-800/80 dark:bg-zinc-950/90">
-          <div className="rounded-xl border border-zinc-200 bg-white/75 p-3 dark:border-zinc-800 dark:bg-zinc-900/60">
+        <div className="shrink-0 border-t border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+          <div className="rounded-xl border border-zinc-200 bg-white p-3 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <div className="mb-2 flex items-center gap-2 text-sm font-bold text-zinc-950 dark:text-white">
               <BarChart3 className="shrink-0" size={18} />
               <span className="truncate">Output quality</span>
             </div>
-            <p className="line-clamp-2 text-xs leading-5 text-zinc-500 dark:text-zinc-400">
+            <p className="line-clamp-2 text-xs leading-5 text-zinc-600 dark:text-zinc-300">
               Gemini, technical checks, history, and PDF exports are wired together.
             </p>
             <Button className="mt-4 w-full" icon={LogOut} onClick={logout} variant="secondary">

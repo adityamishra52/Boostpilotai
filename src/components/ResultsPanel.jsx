@@ -44,7 +44,7 @@ const ListBlock = ({ items, numbered = false }) => {
     <div className="space-y-2">
       {values.map((item, index) => (
         <div
-          className="flex gap-3 rounded-lg border border-zinc-200 bg-white/70 p-3 text-sm leading-6 text-zinc-700 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/55 dark:text-zinc-300"
+          className="flex gap-3 rounded-lg border border-zinc-200 bg-white/88 p-3 text-sm leading-6 text-zinc-800 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100"
           key={`${item}-${index}`}
         >
           <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-zinc-950 text-[11px] font-bold text-white dark:bg-white dark:text-zinc-950">
@@ -65,7 +65,7 @@ const healthFromValue = (value, goodAt = 80) => {
 };
 
 const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
-  <div className="rounded-lg border border-zinc-200 bg-white/74 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/55">
+  <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82">
     <div className="flex items-start justify-between gap-3">
       <div>
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">{label}</p>
@@ -77,7 +77,7 @@ const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
         </div>
       )}
     </div>
-    {detail && <p className="mt-2 text-xs leading-5 text-zinc-500 dark:text-zinc-400">{detail}</p>}
+    {detail && <p className="mt-2 text-xs leading-5 text-zinc-600 dark:text-zinc-300">{detail}</p>}
     {typeof progress === "number" && (
       <ProgressBar className="mt-4" tone={healthFromValue(progress)} value={progress} />
     )}
@@ -85,7 +85,7 @@ const TechnicalMetric = ({ label, value, detail, progress, icon: Icon }) => (
 );
 
 const EngagementMetric = ({ label, value }) => (
-  <div className="rounded-lg border border-zinc-200 bg-white/74 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/55">
+  <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/82">
     <div className="flex items-center justify-between gap-3">
       <p className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">{label}</p>
       <p className="text-lg font-extrabold text-zinc-950 dark:text-white">{Number(value) || 0}</p>
@@ -158,11 +158,11 @@ const ResultsPanel = ({ analysis }) => {
 
   return (
     <div className="space-y-5">
-      <div className="sticky top-3 z-10 rounded-lg border border-zinc-200 bg-white/88 p-2 shadow-soft backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/88">
+      <div className="rounded-lg border border-zinc-200 bg-white/92 p-3 shadow-soft backdrop-blur-xl dark:border-zinc-700 dark:bg-zinc-900/92">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="min-w-0">
             <p className="text-sm font-extrabold text-zinc-950 dark:text-white">AI analysis report</p>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs leading-5 text-zinc-600 dark:text-zinc-300">
               Overview, creative assets, and technical quality on one page
             </p>
           </div>
@@ -189,11 +189,11 @@ const ResultsPanel = ({ analysis }) => {
             <h2 className="text-balance text-2xl font-extrabold tracking-tight text-zinc-950 dark:text-white md:text-3xl">
               {fileName}
             </h2>
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-600 dark:text-zinc-300">
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-700 dark:text-zinc-100">
               {output.summary}
             </p>
           </div>
-          <div className="border-t border-zinc-200 bg-zinc-50/80 p-5 dark:border-zinc-800 dark:bg-zinc-950/45 xl:border-l xl:border-t-0">
+          <div className="border-t border-zinc-200 bg-zinc-50/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/65 xl:border-l xl:border-t-0">
             <div className="flex items-center justify-center">
               <ScoreRing score={output.contentScore} />
             </div>
@@ -202,13 +202,13 @@ const ResultsPanel = ({ analysis }) => {
                 <p className="text-lg font-extrabold text-zinc-950 dark:text-white">
                   {data.technical.aspectRatio || "N/A"}
                 </p>
-                <p className="text-xs text-zinc-500">Aspect</p>
+                <p className="text-xs font-semibold text-zinc-600 dark:text-zinc-300">Aspect</p>
               </div>
               <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900/70">
                 <p className="text-lg font-extrabold text-zinc-950 dark:text-white">
                   {data.technical.fileSizeMB || "N/A"} MB
                 </p>
-                <p className="text-xs text-zinc-500">File size</p>
+                <p className="text-xs font-semibold text-zinc-600 dark:text-zinc-300">File size</p>
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@ const ResultsPanel = ({ analysis }) => {
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
         <SectionContainer icon={Users} title="Target audience">
-          <p className="rounded-lg border border-zinc-200 bg-white/76 p-4 text-sm leading-7 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/55 dark:text-zinc-300">
+          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100">
             {output.targetAudience || "Audience insight unavailable for this result."}
           </p>
         </SectionContainer>
@@ -226,7 +226,7 @@ const ResultsPanel = ({ analysis }) => {
           icon={Sparkles}
           title="Improved post version"
         >
-          <p className="rounded-lg border border-zinc-200 bg-white/76 p-4 text-sm leading-7 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/55 dark:text-zinc-300">
+          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100">
             {output.improvedPostVersion || "No improved post version available."}
           </p>
         </SectionContainer>
@@ -249,7 +249,7 @@ const ResultsPanel = ({ analysis }) => {
           icon={Megaphone}
           title="Viral caption"
         >
-          <p className="rounded-lg border border-zinc-200 bg-white/76 p-4 text-sm leading-7 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/55 dark:text-zinc-300">
+          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/82 dark:text-zinc-100">
             {output.viralCaption}
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -321,14 +321,14 @@ const ResultsPanel = ({ analysis }) => {
           <EngagementMetric label="CTA strength" value={data.engagement.ctaScore} />
         </div>
         <div className="mt-5 grid gap-5 xl:grid-cols-2">
-          <div className="rounded-lg border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-950/50">
+          <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
             <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-zinc-950 dark:text-white">
               <ThumbsUp size={17} />
               Strengths
             </div>
             <ListBlock items={data.strengths} />
           </div>
-          <div className="rounded-lg border border-zinc-200 bg-white/70 p-4 dark:border-zinc-800 dark:bg-zinc-950/50">
+          <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 dark:border-zinc-700 dark:bg-zinc-900/82">
             <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-zinc-950 dark:text-white">
               <ThumbsDown size={17} />
               Weaknesses

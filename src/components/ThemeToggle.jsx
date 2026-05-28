@@ -9,14 +9,14 @@ const ThemeToggle = () => {
   return (
     <button
       aria-label="Toggle theme"
-      className="group inline-flex h-10 items-center gap-2 rounded-lg border border-zinc-200 bg-white/82 px-3 text-sm font-bold text-zinc-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/72 dark:text-zinc-200 dark:hover:bg-zinc-800"
+      className="group inline-flex h-12 min-w-12 items-center justify-center gap-2 rounded-xl border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-white dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 sm:h-10 sm:min-w-0"
       onClick={toggleTheme}
       type="button"
     >
       <span
         className={clsx(
           "grid h-6 w-6 place-items-center rounded-md transition",
-          isDark ? "bg-zinc-800 text-amber-200" : "bg-zinc-100 text-zinc-700"
+          isDark ? "bg-amber-300 text-zinc-950" : "bg-zinc-100 text-zinc-800"
         )}
       >
         {isDark ? <Sun size={15} /> : <Moon size={15} />}

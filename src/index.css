@@ -95,9 +95,9 @@ svg {
 }
 
 .surface {
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(203, 213, 225, 0.95);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
 }
@@ -107,9 +107,9 @@ svg {
 }
 
 .dark .surface {
-  background: rgba(13, 16, 24, 0.76);
-  border-color: rgba(63, 63, 70, 0.72);
-  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.34);
+  background: rgba(15, 18, 27, 0.94);
+  border-color: rgba(82, 82, 91, 0.9);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.42);
 }
 
 .hairline {
