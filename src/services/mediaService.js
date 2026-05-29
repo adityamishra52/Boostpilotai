@@ -71,9 +71,10 @@ export const mediaService = {
     return response;
   },
 
-  async generateThumbnails(analysisId) {
+  async generateThumbnails(analysisId, style = "") {
     const { data } = await api.post("/media/generate-thumbnails", {
-      analysisId
+      analysisId,
+      style
     });
 
     return data;

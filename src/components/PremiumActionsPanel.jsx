@@ -27,6 +27,7 @@ import SectionContainer from "./SectionContainer";
 
 const VIDEO_EDITING_UNAVAILABLE_MESSAGE =
   "Video editing is not available on this server plan yet. Please use image editing or upgrade backend resources.";
+const thumbnailStyles = ["Auto", "MrBeast", "Ali Abdaal", "Alex Hormozi", "Iman Gadzhi", "Faceless", "Tech", "News", "Minimal"];
 
 const copyActions = [
   {
@@ -432,7 +433,14 @@ const MediaEnhancer = ({
   );
 };
 
-const ThumbnailResult = ({ result, onDownload, onFullscreen, onUseCover }) => {
+const ScoreMetric = ({ label, value }) => (
+  <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-2 dark:border-zinc-700 dark:bg-zinc-900/70">
+    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">{label}</p>
+    <p className="mt-1 text-base font-extrabold text-zinc-950 dark:text-white">{Number(value || 0) || 0}</p>
+  </div>
+);
+
+const ThumbnailResult = ({ result, onDownload, onFullscreen }) => {
   const concepts = list(result?.concepts).slice(0, 3);
   const hasImages = concepts.some((concept) => concept.thumbnailUrl || concept.thumbnailMediaId);
 
@@ -454,6 +462,7 @@ const ThumbnailResult = ({ result, onDownload, onFullscreen, onUseCover }) => {
           mimetype: "image/png",
           mediaType: "image"
         });
+        const viralScore = concept.viralScore || {};
 
         return (
           <div
@@ -470,23 +479,33 @@ const ThumbnailResult = ({ result, onDownload, onFullscreen, onUseCover }) => {
             <div className="space-y-3 p-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <Badge variant="brand">Thumbnail {index + 1}</Badge>
-                <Badge variant="success">CTR {concept.ctrScore || 86}</Badge>
+                <Badge variant="warning">{concept.style || "Auto"}</Badge>
               </div>
               <h4 className="line-clamp-2 text-base font-extrabold text-zinc-950 dark:text-white">
                 {concept.titleText}
               </h4>
-              <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-                {concept.whyItMayPerformWell || concept.ctrReason || "Bold text, strong focal point, and a clear curiosity gap for mobile viewers."}
+              <div className="grid gap-2 text-xs font-semibold leading-5 text-zinc-600 dark:text-zinc-300">
+                {concept.contentCategory && <span>Category: {concept.contentCategory}</span>}
+                {concept.subjectPlacement && <span>Subject: {concept.subjectPlacement}</span>}
+                {concept.backgroundRecommendation && <span>Background: {concept.backgroundRecommendation}</span>}
+                {concept.colors && <span>Colors: {concept.colors}</span>}
+                {concept.emotion && <span>Emotion: {concept.emotion}</span>}
+              </div>
+              <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                {concept.ctrReason || concept.whyItMayPerformWell || "Uses the uploaded frame, a clear subject, and a curiosity-driven title."}
               </p>
-              <div className="grid gap-2 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
+              <div className="grid grid-cols-2 gap-2">
+                <ScoreMetric label="Predicted CTR" value={viralScore.predictedCtr || concept.ctrScore || 86} />
+                <ScoreMetric label="Clickability" value={viralScore.clickability || 86} />
+                <ScoreMetric label="Curiosity" value={viralScore.curiosity || 86} />
+                <ScoreMetric label="Emotion" value={viralScore.emotion || 86} />
+              </div>
+              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
                 <Button icon={Download} onClick={() => onDownload(file)} size="sm" variant="secondary">
                   PNG
                 </Button>
                 <Button icon={Maximize2} onClick={() => onFullscreen({ concept, file })} size="sm" variant="secondary">
                   Fullscreen
-                </Button>
-                <Button icon={CheckCircle2} onClick={() => onUseCover(index)} size="sm" variant="secondary">
-                  Use cover
                 </Button>
               </div>
             </div>
@@ -497,10 +516,33 @@ const ThumbnailResult = ({ result, onDownload, onFullscreen, onUseCover }) => {
   );
 };
 
+const LockedThumbnailPreview = () => (
+  <div className="mt-4 grid gap-4 xl:grid-cols-3">
+    {[1, 2, 3].map((item) => (
+      <div
+        className="overflow-hidden rounded-lg border border-dashed border-zinc-300 bg-white/70 shadow-sm dark:border-zinc-700 dark:bg-zinc-950/60"
+        key={item}
+      >
+        <div className="aspect-video bg-zinc-100 dark:bg-zinc-900" />
+        <div className="space-y-3 p-3">
+          <div className="flex items-center justify-between gap-2">
+            <Badge variant="neutral">Thumbnail {item}</Badge>
+            <Badge variant="warning">Agency</Badge>
+          </div>
+          <div className="h-4 w-2/3 rounded bg-zinc-200 dark:bg-zinc-800" />
+          <div className="h-3 w-full rounded bg-zinc-100 dark:bg-zinc-900" />
+          <div className="h-3 w-5/6 rounded bg-zinc-100 dark:bg-zinc-900" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
   const { user } = useAuth();
   const [loadingKey, setLoadingKey] = useState("");
   const [selectedFixes, setSelectedFixes] = useState([]);
+  const [thumbnailStyle, setThumbnailStyle] = useState("Auto");
   const [fullscreen, setFullscreen] = useState(null);
   const premiumActions = analysis?.premiumActions || {};
 
@@ -556,25 +598,14 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
     setLoadingKey("youtubeThumbnails");
 
     try {
-      const data = await mediaService.generateThumbnails(analysis._id);
+      const data = await mediaService.generateThumbnails(
+        analysis._id,
+        thumbnailStyle === "Auto" ? "" : thumbnailStyle
+      );
       onAnalysisUpdate(data.analysis);
       toast.success("Thumbnail images generated");
     } catch (error) {
       toast.error(error.response?.data?.message || "Thumbnail generation failed");
-    } finally {
-      setLoadingKey("");
-    }
-  };
-
-  const useCover = async (conceptIndex) => {
-    setLoadingKey(`cover-${conceptIndex}`);
-
-    try {
-      const data = await mediaService.useCover(analysis._id, conceptIndex);
-      onAnalysisUpdate(data.analysis);
-      toast.success("Cover selected for this analysis");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Could not select cover");
     } finally {
       setLoadingKey("");
     }
@@ -705,11 +736,38 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
             </p>
           )}
 
-          {premiumActions.youtubeThumbnails && (
+          {userCanUse("agency") && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {thumbnailStyles.map((style) => (
+                <button
+                  className={`rounded-lg border px-3 py-2 text-sm font-bold transition ${
+                    thumbnailStyle === style
+                      ? "border-cyan-400 bg-cyan-100 text-cyan-950 dark:bg-cyan-400/20 dark:text-cyan-100"
+                      : "border-zinc-200 bg-white text-zinc-700 hover:border-cyan-300 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200"
+                  }`}
+                  key={style}
+                  onClick={() => setThumbnailStyle(style)}
+                  type="button"
+                >
+                  {style}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {!userCanUse("agency") && (
+            <>
+              <p className="mt-3 rounded-lg border border-dashed border-zinc-300 bg-zinc-50/90 p-3 text-sm font-semibold text-zinc-700 dark:border-zinc-700 dark:bg-zinc-950/80 dark:text-zinc-200">
+                Agency unlocks content-aware YouTube thumbnails, viral scoring, and PNG downloads.
+              </p>
+              <LockedThumbnailPreview />
+            </>
+          )}
+
+          {userCanUse("agency") && premiumActions.youtubeThumbnails && (
             <ThumbnailResult
               onDownload={downloadMedia}
               onFullscreen={setFullscreen}
-              onUseCover={useCover}
               result={premiumActions.youtubeThumbnails}
             />
           )}
