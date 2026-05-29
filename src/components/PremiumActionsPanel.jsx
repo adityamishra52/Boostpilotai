@@ -25,6 +25,9 @@ import Button from "./Button";
 import ProtectedMedia from "./ProtectedMedia";
 import SectionContainer from "./SectionContainer";
 
+const VIDEO_EDITING_UNAVAILABLE_MESSAGE =
+  "Video editing is not available on this server plan yet. Please use image editing or upgrade backend resources.";
+
 const copyActions = [
   {
     key: "fixWeakness",
@@ -294,8 +297,8 @@ const MediaEnhancer = ({
   const editedFile = mediaFileFromAction(applyResult?.editedMedia);
   const kind = mediaKind(analysis);
   const canApplyImage = user?.role === "admin" || hasPlan(user, "pro");
-  const canApplyVideo = user?.role === "admin" || hasPlan(user, "agency");
-  const canApply = kind === "video" ? canApplyVideo : canApplyImage;
+  const videoEditingUnavailable = kind === "video";
+  const canApply = !videoEditingUnavailable && canApplyImage;
   const requiredApplyPlan = kind === "video" ? "agency" : "pro";
 
   useEffect(() => {
@@ -321,6 +324,7 @@ const MediaEnhancer = ({
               <Badge variant={kind === "video" ? "warning" : "success"}>
                 Apply: {planLabel(requiredApplyPlan)}
               </Badge>
+              {videoEditingUnavailable && <Badge variant="warning">Video editing coming soon</Badge>}
               {editedFile && <Badge variant="success">Edited</Badge>}
             </div>
             <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
@@ -336,7 +340,11 @@ const MediaEnhancer = ({
           <Button icon={RotateCcw} onClick={reset} size="sm" variant="secondary">
             Reset
           </Button>
-          {canApply ? (
+          {videoEditingUnavailable ? (
+            <Button disabled icon={CheckCircle2} loading={loading} size="sm" variant="secondary">
+              Apply selected fixes
+            </Button>
+          ) : canApply ? (
             <Button
               disabled={!selectedFixes.length}
               icon={CheckCircle2}
@@ -357,7 +365,9 @@ const MediaEnhancer = ({
 
       {!canApply && (
         <p className="mt-3 rounded-lg border border-dashed border-zinc-300 bg-zinc-50/90 p-3 text-sm font-semibold text-zinc-700 dark:border-zinc-700 dark:bg-zinc-950/80 dark:text-zinc-200">
-          Creator can view the AI fix checklist. Applying {kind} fixes requires {planLabel(requiredApplyPlan)}.
+          {videoEditingUnavailable
+            ? VIDEO_EDITING_UNAVAILABLE_MESSAGE
+            : `Creator can view the AI fix checklist. Applying ${kind} fixes requires ${planLabel(requiredApplyPlan)}.`}
         </p>
       )}
 
@@ -528,7 +538,10 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
       onAnalysisUpdate(data.analysis);
       toast.success("Edited media ready");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Media edit failed");
+      const message = error.response?.data?.message || "Media edit failed";
+      toast.error(message, {
+        duration: message === VIDEO_EDITING_UNAVAILABLE_MESSAGE ? 7000 : 4000
+      });
     } finally {
       setLoadingKey("");
     }
