@@ -23,15 +23,18 @@ const defaultSettings = {
 
 const comparisonRows = [
   { label: "Basic AI analysis", plan: "free" },
-  { label: "Standard PDF export", plan: "free" },
-  { label: "Watermark-free exports", plan: "creator" },
-  { label: "Fix Weakness", plan: "creator" },
-  { label: "Generate Variants", plan: "creator" },
-  { label: "Apply Suggestions", plan: "pro" },
-  { label: "Advanced technical recommendations", plan: "pro" },
-  { label: "Competitor-style suggestions", plan: "pro" },
-  { label: "YouTube thumbnail ideas", plan: "agency" },
-  { label: "Team and agency tools", plan: "agency" }
+  { label: "Basic captions/hooks", plan: "free" },
+  { label: "Standard report", plan: "free" },
+  { label: "AI Rewrite Studio", plan: "creator" },
+  { label: "Viral Content Library", plan: "creator" },
+  { label: "No watermark", plan: "creator" },
+  { label: "Trend Finder", plan: "pro" },
+  { label: "Growth Coach", plan: "pro" },
+  { label: "Advanced platform strategy", plan: "pro" },
+  { label: "Advanced report insights", plan: "pro" },
+  { label: "Admin/team-ready controls", plan: "agency" },
+  { label: "Priority AI processing", plan: "agency" },
+  { label: "Future team workspace/API access", plan: "agency" }
 ];
 
 const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
@@ -235,7 +238,7 @@ const PricingPage = () => {
                   </p>
                 </div>
                 <div className="flex flex-col items-end gap-2">
-                  {plan.recommended && <Badge variant="brand">Recommended</Badge>}
+                  {plan.badge && <Badge variant={plan.recommended ? "brand" : "warning"}>{plan.badge}</Badge>}
                   {isCurrent && <Badge variant="success">Current</Badge>}
                 </div>
               </div>
@@ -262,10 +265,10 @@ const PricingPage = () => {
                   </div>
                   <p className="mt-1 leading-6">
                     {plan.id === "free"
-                      ? "Creator unlocks Fix Weakness, Variants, and watermark-free exports."
+                      ? "Creator unlocks AI Rewrite Studio and Viral Content Library."
                       : plan.id === "creator"
-                        ? "Pro unlocks Apply Suggestions and advanced recommendations."
-                        : "Agency unlocks thumbnail concepts and team-oriented workflows."}
+                        ? "Pro unlocks Trend Finder, Growth Coach, and advanced strategy."
+                        : "Agency unlocks admin-ready controls, higher limits, and premium reports."}
                   </p>
                 </div>
               )}

@@ -5,6 +5,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AdminAnalyses from "../pages/admin/AdminAnalyses";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminFeatures from "../pages/admin/AdminFeatures";
 import AdminSettings from "../pages/admin/AdminSettings";
 import AdminUsers from "../pages/admin/AdminUsers";
 import AdminLogin from "../pages/AdminLogin";
@@ -56,6 +57,7 @@ const AppRoutes = () => {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<AdminUsers />} />
           <Route path="/admin/analyses" element={<AdminAnalyses />} />
+          <Route path="/admin/features" element={<AdminFeatures />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
         </Route>
       </Route>

@@ -6,6 +6,21 @@ export const adminService = {
     return data;
   },
 
+  async features() {
+    const { data } = await api.get("/admin/features");
+    return data;
+  },
+
+  async featureUsage() {
+    const { data } = await api.get("/admin/features/usage");
+    return data;
+  },
+
+  async updateFeature(key, payload) {
+    const { data } = await api.patch(`/admin/features/${key}`, payload);
+    return data;
+  },
+
   async users() {
     const { data } = await api.get("/admin/users");
     return data;

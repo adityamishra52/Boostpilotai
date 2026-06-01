@@ -3,51 +3,37 @@ export const planOrder = ["free", "creator", "pro", "agency"];
 export const planFeatures = {
   free: [
     "Basic AI analysis",
-    "Limited credits",
     "Basic captions and hooks",
-    "1 repurposed platform",
-    "Limited history",
-    "Standard PDF",
-    "Watermarked exports"
+    "Limited credits",
+    "Standard report"
   ],
   creator: [
     "Everything in Free",
-    "More credits",
-    "Better AI quality",
-    "Advanced captions",
-    "Better hashtags",
-    "Better hook generation",
-    "Fix Weakness",
-    "Generate Variants",
-    "3 repurposed platforms",
-    "Improved reports",
-    "No watermark",
-    "Faster generation"
+    "AI Rewrite Studio",
+    "Viral Content Library",
+    "Better captions",
+    "Better hooks",
+    "More saved content",
+    "No watermark"
   ],
   pro: [
     "Everything in Creator",
-    "Apply Suggestions",
-    "Advanced technical analysis",
-    "Better scoring system",
-    "More export formats",
-    "Priority processing",
-    "Better AI prompts",
-    "Competitor-style suggestions",
-    "Advanced CTA generation",
-    "Platform growth recommendations",
-    "All-platform repurposing with tone selection"
+    "Trend Finder",
+    "Growth Coach",
+    "Advanced platform strategy",
+    "Growth recommendations",
+    "Weekly content goals",
+    "Advanced report insights"
   ],
   agency: [
     "Everything in Pro",
-    "Team/admin tools",
-    "YouTube thumbnail idea generator",
-    "3 thumbnail concepts",
-    "Shared workspace support",
-    "Higher upload limits",
-    "Priority AI queue",
-    "Premium branded PDF reports",
+    "Admin/team-ready controls",
+    "Higher limits",
+    "Priority AI processing",
+    "Premium reports",
+    "Future team workspace/API access",
     "Bulk repurposing with brand voice support",
-    "Future API support",
+    "Higher upload limits",
     "Multi-user management support"
   ]
 };
@@ -71,7 +57,8 @@ export const plans = [
     monthlyCredits: 50,
     yearlyCredits: 600,
     description: "50 analyses/month",
-    audience: "Solo creators"
+    audience: "Solo creators",
+    badge: "Best for creators"
   },
   {
     id: "pro",
@@ -82,7 +69,8 @@ export const plans = [
     yearlyCredits: 2400,
     description: "200 analyses/month",
     audience: "Growing creator teams",
-    recommended: true
+    recommended: true,
+    badge: "Popular"
   },
   {
     id: "agency",
@@ -92,7 +80,8 @@ export const plans = [
     monthlyCredits: 1000,
     yearlyCredits: 12000,
     description: "1000 analyses/month",
-    audience: "Client workflows"
+    audience: "Client workflows",
+    badge: "Best for agencies"
   }
 ];
 
