@@ -2,16 +2,19 @@ import clsx from "clsx";
 
 export const contentTypesByPlatform = {
   YouTube: ["Video", "Short", "Thumbnail"],
-  Instagram: ["Post", "Video", "Story"],
-  LinkedIn: ["Post", "Video", "Carousel"],
-  Facebook: ["Post", "Video", "Story"]
+  Instagram: ["Post", "Reel", "Story", "Video"],
+  LinkedIn: ["Post", "Image Post", "Video Post", "Carousel", "Video"],
+  Facebook: ["Post", "Image Post", "Video Post", "Story", "Video"]
 };
 
 const helperText = {
   Video: "Motion creative",
   Short: "9:16 under 60s",
   Thumbnail: "16:9 image",
+  Reel: "9:16 vertical",
   Post: "Feed image",
+  "Image Post": "Feed image",
+  "Video Post": "Feed video",
   Story: "Vertical story",
   Carousel: "Multi-slide story"
 };

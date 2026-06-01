@@ -21,6 +21,7 @@ import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 import { analysisService } from "../services/analysisService";
+import { buildAnalysisReport } from "../utils/analysisReportBuilder";
 import { downloadBlob } from "../utils/download";
 import Badge from "./Badge";
 import Button from "./Button";
@@ -126,22 +127,7 @@ const ResultsPanel = ({ analysis }) => {
     ? Math.max(10, 100 - Math.min(100, data.technical.durationSeconds))
     : 100;
 
-  const fullCopy = [
-    output.summary,
-    output.viralCaption,
-    ...data.hashtags,
-    ...data.titleIdeas,
-    ...data.hookLines,
-    ...data.cta,
-    ...data.improvementSuggestions,
-    output.targetAudience,
-    output.improvedPostVersion,
-    ...data.platformSpecificSuggestions,
-    ...data.strengths,
-    ...data.weaknesses,
-    ...(data.technical.qualityIssues || []),
-    ...(data.technical.fixSuggestions || [])
-  ].join("\n");
+  const fullCopy = buildAnalysisReport(analysis);
 
   const handleDownload = async () => {
     setDownloading(true);

@@ -19,14 +19,14 @@ import { useAuth } from "../context/AuthContext";
 import { analysisService } from "../services/analysisService";
 import { mediaService } from "../services/mediaService";
 import { downloadBlob } from "../utils/download";
+import { thumbnailFormatForAnalysis } from "../utils/mediaFormats";
 import { hasPlan, planLabel } from "../utils/plans";
 import Badge from "./Badge";
 import Button from "./Button";
 import ProtectedMedia from "./ProtectedMedia";
 import SectionContainer from "./SectionContainer";
 
-const VIDEO_EDITING_UNAVAILABLE_MESSAGE =
-  "Video editing is not available on this server plan yet. Please use image editing or upgrade backend resources.";
+const VIDEO_EDITING_UNAVAILABLE_MESSAGE = "Video preview editing not available on current server";
 const thumbnailStyles = ["Auto", "MrBeast", "Ali Abdaal", "Alex Hormozi", "Iman Gadzhi", "Faceless", "Tech", "News", "Minimal"];
 
 const copyActions = [
@@ -221,23 +221,44 @@ const VariantsResult = ({ result }) => (
   </div>
 );
 
+const EmptyPreview = ({ message }) => (
+  <div className="grid min-h-48 w-full place-items-center rounded-lg border border-dashed border-zinc-300 bg-white/80 p-5 text-center text-sm font-semibold text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300">
+    {message}
+  </div>
+);
+
 const MediaPreview = ({ analysis, editedFile, mode }) => {
   const originalFile = analysis.file;
+  const kind = mediaKind(analysis);
+  const previewClass = kind === "video" ? "aspect-video w-full object-contain" : "aspect-video w-full object-contain";
+  const placeholderClass = "aspect-video";
 
-  if (mode === "after" && editedFile) {
+  if (mode === "after") {
+    if (!editedFile) {
+      return (
+        <EmptyPreview
+          message={
+            kind === "video"
+              ? "No edited video preview yet. Apply selected fixes first."
+              : "No edited image preview yet. Apply selected fixes first."
+          }
+        />
+      );
+    }
+
     return (
       <ProtectedMedia
         alt="Edited media preview"
         className="w-full"
         controls
         file={editedFile}
-        mediaClassName="aspect-video w-full object-contain"
-        placeholderClassName="aspect-video"
+        mediaClassName={previewClass}
+        placeholderClassName={placeholderClass}
       />
     );
   }
 
-  if (mode === "split" && editedFile) {
+  if (mode === "compare") {
     return (
       <div className="grid gap-3 lg:grid-cols-2">
         <div>
@@ -249,22 +270,32 @@ const MediaPreview = ({ analysis, editedFile, mode }) => {
             className="w-full"
             controls
             file={originalFile}
-            mediaClassName="aspect-video w-full object-contain"
-            placeholderClassName="aspect-video"
+            mediaClassName={previewClass}
+            placeholderClassName={placeholderClass}
           />
         </div>
         <div>
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
             After
           </p>
-          <ProtectedMedia
-            alt="Edited media preview"
-            className="w-full"
-            controls
-            file={editedFile}
-            mediaClassName="aspect-video w-full object-contain"
-            placeholderClassName="aspect-video"
-          />
+          {editedFile ? (
+            <ProtectedMedia
+              alt="Edited media preview"
+              className="w-full"
+              controls
+              file={editedFile}
+              mediaClassName={previewClass}
+              placeholderClassName={placeholderClass}
+            />
+          ) : (
+            <EmptyPreview
+              message={
+                kind === "video"
+                  ? "No edited video preview yet. Apply selected fixes first."
+                  : "No edited image preview yet. Apply selected fixes first."
+              }
+            />
+          )}
         </div>
       </div>
     );
@@ -276,8 +307,8 @@ const MediaPreview = ({ analysis, editedFile, mode }) => {
       className="w-full"
       controls
       file={originalFile}
-      mediaClassName="aspect-video w-full object-contain"
-      placeholderClassName="aspect-video"
+      mediaClassName={previewClass}
+      placeholderClassName={placeholderClass}
     />
   );
 };
@@ -293,7 +324,7 @@ const MediaEnhancer = ({
   user
 }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewMode, setPreviewMode] = useState("split");
+  const [previewMode, setPreviewMode] = useState("compare");
   const options = useMemo(() => fixOptionsForAnalysis(analysis), [analysis]);
   const editedFile = mediaFileFromAction(applyResult?.editedMedia);
   const kind = mediaKind(analysis);
@@ -308,7 +339,7 @@ const MediaEnhancer = ({
 
   const reset = () => {
     setSelectedFixes(options.filter((option) => option.selected).map((option) => option.id));
-    setPreviewMode("split");
+    setPreviewMode("compare");
   };
 
   return (
@@ -325,7 +356,7 @@ const MediaEnhancer = ({
               <Badge variant={kind === "video" ? "warning" : "success"}>
                 Apply: {planLabel(requiredApplyPlan)}
               </Badge>
-              {videoEditingUnavailable && <Badge variant="warning">Video editing coming soon</Badge>}
+              {videoEditingUnavailable && <Badge variant="warning">{VIDEO_EDITING_UNAVAILABLE_MESSAGE}</Badge>}
               {editedFile && <Badge variant="success">Edited</Badge>}
             </div>
             <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
@@ -404,19 +435,18 @@ const MediaEnhancer = ({
         <div className="mt-4 rounded-lg border border-zinc-200 bg-zinc-50/70 p-3 dark:border-zinc-700 dark:bg-zinc-950/40">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-wrap gap-2">
-              {["before", "after", "split"].map((mode) => (
+              {["before", "after", "compare"].map((mode) => (
                 <button
                   className={`rounded-lg border px-3 py-2 text-sm font-bold ${
                     previewMode === mode
                       ? "border-cyan-400 bg-cyan-100 text-cyan-950 dark:bg-cyan-400/20 dark:text-cyan-100"
                       : "border-zinc-200 bg-white text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
                   }`}
-                  disabled={mode !== "before" && !editedFile}
                   key={mode}
                   onClick={() => setPreviewMode(mode)}
                   type="button"
                 >
-                  {mode === "split" ? "Before / After" : mode}
+                  {mode === "compare" ? "Before / After" : mode}
                 </button>
               ))}
             </div>
@@ -440,9 +470,11 @@ const ScoreMetric = ({ label, value }) => (
   </div>
 );
 
-const ThumbnailResult = ({ result, onDownload, onFullscreen }) => {
+const ThumbnailResult = ({ analysis, result, onDownload, onFullscreen }) => {
   const concepts = list(result?.concepts).slice(0, 3);
   const hasImages = concepts.some((concept) => concept.thumbnailUrl || concept.thumbnailMediaId);
+  const format = result?.thumbnailFormat || thumbnailFormatForAnalysis(analysis);
+  const aspectClass = format.aspectClass || thumbnailFormatForAnalysis(analysis).aspectClass;
 
   if (!hasImages) {
     return (
@@ -458,7 +490,7 @@ const ThumbnailResult = ({ result, onDownload, onFullscreen }) => {
         const file = mediaFileFromAction({
           mediaFileId: concept.thumbnailMediaId,
           mediaUrl: concept.thumbnailUrl,
-          originalName: `boostpilot-thumbnail-${index + 1}.png`,
+          originalName: `boostpilot-${format.key || "cover"}-${index + 1}.png`,
           mimetype: "image/png",
           mediaType: "image"
         });
@@ -473,12 +505,12 @@ const ThumbnailResult = ({ result, onDownload, onFullscreen }) => {
               alt={concept.titleText || `Thumbnail ${index + 1}`}
               className="w-full rounded-none"
               file={file}
-              mediaClassName="aspect-video w-full object-cover"
-              placeholderClassName="aspect-video"
+              mediaClassName={`${aspectClass} w-full object-cover`}
+              placeholderClassName={aspectClass}
             />
             <div className="space-y-3 p-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <Badge variant="brand">Thumbnail {index + 1}</Badge>
+                <Badge variant="brand">{format.ratio || "Cover"} {index + 1}</Badge>
                 <Badge variant="warning">{concept.style || "Auto"}</Badge>
               </div>
               <h4 className="line-clamp-2 text-base font-extrabold text-zinc-950 dark:text-white">
@@ -516,17 +548,20 @@ const ThumbnailResult = ({ result, onDownload, onFullscreen }) => {
   );
 };
 
-const LockedThumbnailPreview = () => (
+const LockedThumbnailPreview = ({ analysis }) => {
+  const format = thumbnailFormatForAnalysis(analysis);
+
+  return (
   <div className="mt-4 grid gap-4 xl:grid-cols-3">
     {[1, 2, 3].map((item) => (
       <div
         className="overflow-hidden rounded-lg border border-dashed border-zinc-300 bg-white/70 shadow-sm dark:border-zinc-700 dark:bg-zinc-950/60"
         key={item}
       >
-        <div className="aspect-video bg-zinc-100 dark:bg-zinc-900" />
+        <div className={`${format.aspectClass} bg-zinc-100 dark:bg-zinc-900`} />
         <div className="space-y-3 p-3">
           <div className="flex items-center justify-between gap-2">
-            <Badge variant="neutral">Thumbnail {item}</Badge>
+            <Badge variant="neutral">{format.ratio} {item}</Badge>
             <Badge variant="warning">Agency</Badge>
           </div>
           <div className="h-4 w-2/3 rounded bg-zinc-200 dark:bg-zinc-800" />
@@ -536,7 +571,8 @@ const LockedThumbnailPreview = () => (
       </div>
     ))}
   </div>
-);
+  );
+};
 
 const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
   const { user } = useAuth();
@@ -545,6 +581,7 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
   const [thumbnailStyle, setThumbnailStyle] = useState("Auto");
   const [fullscreen, setFullscreen] = useState(null);
   const premiumActions = analysis?.premiumActions || {};
+  const thumbnailFormat = thumbnailFormatForAnalysis(analysis);
 
   const userCanUse = (requiredPlan) => user?.role === "admin" || hasPlan(user, requiredPlan);
 
@@ -590,11 +627,6 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
   };
 
   const generateThumbnails = async () => {
-    if (analysis.platform !== "YouTube") {
-      toast.error("Thumbnail images are available only for YouTube analyses.");
-      return;
-    }
-
     setLoadingKey("youtubeThumbnails");
 
     try {
@@ -702,19 +734,18 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-extrabold text-zinc-950 dark:text-white">Thumbnail Images</h3>
+                  <h3 className="font-extrabold text-zinc-950 dark:text-white">{thumbnailFormat.label}</h3>
                   <Badge variant="warning">Agency</Badge>
                   {premiumActions.youtubeThumbnails && <Badge variant="success">Saved</Badge>}
                 </div>
                 <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-                  Generate content-aware YouTube thumbnails using the uploaded media frame.
+                  {thumbnailFormat.description}
                 </p>
               </div>
             </div>
 
             {userCanUse("agency") ? (
               <Button
-                disabled={analysis.platform !== "YouTube"}
                 icon={Sparkles}
                 loading={loadingKey === "youtubeThumbnails"}
                 onClick={generateThumbnails}
@@ -729,12 +760,6 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
               </Button>
             )}
           </div>
-
-          {analysis.platform !== "YouTube" && (
-            <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/35 dark:text-amber-100">
-              Available only for YouTube analyses.
-            </p>
-          )}
 
           {userCanUse("agency") && (
             <div className="mt-4 flex flex-wrap gap-2">
@@ -760,12 +785,13 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
               <p className="mt-3 rounded-lg border border-dashed border-zinc-300 bg-zinc-50/90 p-3 text-sm font-semibold text-zinc-700 dark:border-zinc-700 dark:bg-zinc-950/80 dark:text-zinc-200">
                 Agency unlocks content-aware YouTube thumbnails, viral scoring, and PNG downloads.
               </p>
-              <LockedThumbnailPreview />
+              <LockedThumbnailPreview analysis={analysis} />
             </>
           )}
 
           {userCanUse("agency") && premiumActions.youtubeThumbnails && (
             <ThumbnailResult
+              analysis={analysis}
               onDownload={downloadMedia}
               onFullscreen={setFullscreen}
               result={premiumActions.youtubeThumbnails}
@@ -784,8 +810,8 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
               alt={fullscreen.concept?.titleText || "Thumbnail fullscreen"}
               className="w-full"
               file={fullscreen.file}
-              mediaClassName="aspect-video w-full object-contain"
-              placeholderClassName="aspect-video"
+              mediaClassName={`${thumbnailFormat.aspectClass} max-h-[78vh] w-full object-contain`}
+              placeholderClassName={thumbnailFormat.aspectClass}
             />
             <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
               <p className="font-bold text-white">{fullscreen.concept?.titleText}</p>

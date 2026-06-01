@@ -10,7 +10,7 @@ const Topbar = ({ onMenu }) => {
       <div className="mx-auto flex min-h-16 w-full max-w-[1440px] items-center gap-2 px-3 py-2.5 sm:gap-3 sm:px-5 lg:px-8">
         <Button
           aria-label="Open navigation"
-          className="h-12 w-12 shrink-0 rounded-xl border-zinc-300 bg-white px-0 text-zinc-950 shadow-[0_12px_34px_rgba(15,23,42,0.18)] ring-1 ring-zinc-950/5 hover:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:ring-white/10 [&>svg]:h-6 [&>svg]:w-6"
+          className="h-12 w-12 shrink-0 rounded-xl border-zinc-300 bg-white px-0 text-zinc-950 shadow-[0_12px_34px_rgba(15,23,42,0.18)] ring-1 ring-zinc-950/5 hover:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:ring-white/10 lg:hidden [&>svg]:h-6 [&>svg]:w-6"
           icon={Menu}
           onClick={onMenu}
           variant="secondary"
