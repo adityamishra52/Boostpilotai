@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import LoadingScreen from "../components/LoadingScreen";
 import PageHeader from "../components/PageHeader";
 import PremiumActionsPanel from "../components/PremiumActionsPanel";
+import RepurposeContentPanel from "../components/RepurposeContentPanel";
 import ResultsPanel from "../components/ResultsPanel";
 import { analysisService } from "../services/analysisService";
 
@@ -74,6 +75,7 @@ const ResultPage = () => {
         title="AI analysis report"
       />
       <ResultsPanel analysis={analysis} />
+      <RepurposeContentPanel analysis={analysis} onAnalysisUpdate={setAnalysis} />
       <PremiumActionsPanel analysis={analysis} onAnalysisUpdate={setAnalysis} />
 
       <div className="mt-5 hidden justify-end gap-3 md:flex">

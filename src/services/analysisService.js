@@ -52,6 +52,11 @@ export const analysisService = {
     return data;
   },
 
+  async repurpose(id, payload = {}) {
+    const { data } = await api.post(`/analysis/${id}/repurpose`, payload);
+    return data;
+  },
+
   async downloadReport(id) {
     const response = await api.get(`/analysis/${id}/report`, {
       responseType: "blob"

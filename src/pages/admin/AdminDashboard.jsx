@@ -1,4 +1,4 @@
-import { BarChart3, Crown, FileText, ShieldAlert, UploadCloud, Users } from "lucide-react";
+import { BarChart3, Crown, FileText, Repeat2, ShieldAlert, UploadCloud, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -48,6 +48,7 @@ const AdminDashboard = () => {
         <StatCard accent="from-amber-400 to-coral" detail="Blocked accounts" icon={ShieldAlert} label="Blocked" value={loading ? "-" : analytics?.blockedUsers || 0} />
         <StatCard accent="from-mint to-brand-500" detail="Stored media records" icon={UploadCloud} label="Uploads" value={loading ? "-" : analytics?.uploadedFiles?.length || 0} />
         <StatCard accent="from-brand-400 to-signal" detail="Saved premium actions" icon={Crown} label="Premium" value={loading ? "-" : analytics?.totalPremiumActions || 0} />
+        <StatCard accent="from-cyan-400 to-emerald-500" detail="Analyses with repurposed content" icon={Repeat2} label="Repurpose" value={loading ? "-" : analytics?.repurposeUsage || 0} />
       </div>
 
       <div className="mt-5 grid gap-5 xl:grid-cols-3">

@@ -5,6 +5,7 @@ export const planFeatures = {
     "Basic AI analysis",
     "Limited credits",
     "Basic captions and hooks",
+    "1 repurposed platform",
     "Limited history",
     "Standard PDF",
     "Watermarked exports"
@@ -18,6 +19,7 @@ export const planFeatures = {
     "Better hook generation",
     "Fix Weakness",
     "Generate Variants",
+    "3 repurposed platforms",
     "Improved reports",
     "No watermark",
     "Faster generation"
@@ -32,7 +34,8 @@ export const planFeatures = {
     "Better AI prompts",
     "Competitor-style suggestions",
     "Advanced CTA generation",
-    "Platform growth recommendations"
+    "Platform growth recommendations",
+    "All-platform repurposing with tone selection"
   ],
   agency: [
     "Everything in Pro",
@@ -43,6 +46,7 @@ export const planFeatures = {
     "Higher upload limits",
     "Priority AI queue",
     "Premium branded PDF reports",
+    "Bulk repurposing with brand voice support",
     "Future API support",
     "Multi-user management support"
   ]
