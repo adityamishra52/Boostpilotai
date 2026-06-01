@@ -42,7 +42,7 @@ const Login = () => {
       toast.success("Welcome to BoostPilot");
       navigate(from, { replace: true });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Google sign-in failed");
+      toast.error(error.response?.data?.message || "Google sign-in failed. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -11,12 +11,12 @@ const GoogleAuthButton = ({ onSuccess, text = "continue_with", disabled = false 
   return (
     <div className={disabled ? "pointer-events-none opacity-60" : ""}>
       <GoogleLogin
-        onError={() => toast.error("Google sign-in failed")}
+        onError={() => toast.error("Google sign-in failed. Please try again.")}
         onSuccess={(response) => {
           if (response.credential) {
             onSuccess(response.credential);
           } else {
-            toast.error("Google did not return a sign-in credential");
+            toast.error("Google sign-in failed. Please try again.");
           }
         }}
         shape="rectangular"

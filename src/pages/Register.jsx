@@ -40,7 +40,7 @@ const Register = () => {
       toast.success("Workspace ready");
       navigate(redirect, { replace: true });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Google sign-up failed");
+      toast.error(error.response?.data?.message || "Google sign-in failed. Please try again.");
     } finally {
       setLoading(false);
     }

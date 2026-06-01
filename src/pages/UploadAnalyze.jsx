@@ -189,7 +189,7 @@ const UploadAnalyze = () => {
       setRestoreOpen(true);
       toast.success("Signed in with Google");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Google sign-in failed");
+      toast.error(error.response?.data?.message || "Google sign-in failed. Please try again.");
     } finally {
       setGoogleLoading(false);
     }
