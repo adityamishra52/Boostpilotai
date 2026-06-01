@@ -49,6 +49,10 @@ const AdminDashboard = () => {
         <StatCard accent="from-mint to-brand-500" detail="Stored media records" icon={UploadCloud} label="Uploads" value={loading ? "-" : analytics?.uploadedFiles?.length || 0} />
         <StatCard accent="from-brand-400 to-signal" detail="Saved premium actions" icon={Crown} label="Premium" value={loading ? "-" : analytics?.totalPremiumActions || 0} />
         <StatCard accent="from-cyan-400 to-emerald-500" detail="Analyses with repurposed content" icon={Repeat2} label="Repurpose" value={loading ? "-" : analytics?.repurposeUsage || 0} />
+        <StatCard accent="from-purple-400 to-cyan-500" detail="AI rewrite studio uses" icon={FileText} label="Rewrite" value={loading ? "-" : analytics?.rewriteUsage || 0} />
+        <StatCard accent="from-emerald-400 to-cyan-500" detail="Trend searches" icon={BarChart3} label="Trends" value={loading ? "-" : analytics?.trendFinderUsage || 0} />
+        <StatCard accent="from-orange-400 to-pink-500" detail="Coach reports" icon={Users} label="Coach" value={loading ? "-" : analytics?.coachUsage || 0} />
+        <StatCard accent="from-zinc-700 to-zinc-950" detail="Saved library items" icon={UploadCloud} label="Library" value={loading ? "-" : analytics?.librarySavedItems || 0} />
       </div>
 
       <div className="mt-5 grid gap-5 xl:grid-cols-3">

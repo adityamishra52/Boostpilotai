@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import Button from "../components/Button";
+import AIRewriteStudio from "../components/AIRewriteStudio";
 import LoadingScreen from "../components/LoadingScreen";
 import PageHeader from "../components/PageHeader";
 import PremiumActionsPanel from "../components/PremiumActionsPanel";
@@ -75,6 +76,7 @@ const ResultPage = () => {
         title="AI analysis report"
       />
       <ResultsPanel analysis={analysis} />
+      <AIRewriteStudio analysis={analysis} onAnalysisUpdate={setAnalysis} />
       <RepurposeContentPanel analysis={analysis} onAnalysisUpdate={setAnalysis} />
       <PremiumActionsPanel analysis={analysis} onAnalysisUpdate={setAnalysis} />
 

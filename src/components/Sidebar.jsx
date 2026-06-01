@@ -3,13 +3,16 @@ import {
   Clock,
   CreditCard,
   Crown,
+  Library,
   LayoutDashboard,
   LogIn,
   LogOut,
   Radio,
   Settings,
   ShieldCheck,
+  TrendingUp,
   UploadCloud,
+  WandSparkles,
   X
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
@@ -25,6 +28,9 @@ const navItems = [
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
   { label: "Analyze", to: "/analyze", icon: UploadCloud },
   { label: "History", to: "/history", icon: Clock },
+  { label: "Trend Finder", to: "/trends", icon: TrendingUp },
+  { label: "Growth Coach", to: "/coach", icon: WandSparkles },
+  { label: "Content Library", to: "/library", icon: Library },
   { label: "Pricing", to: "/pricing", icon: CreditCard },
   { label: "Settings", to: "/settings", icon: Settings }
 ];
@@ -126,7 +132,7 @@ const Sidebar = ({ open, onClose }) => {
           <nav className="mt-2 space-y-1 pb-3">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const protectedItem = ["/dashboard", "/history", "/settings"].includes(item.to);
+              const protectedItem = ["/dashboard", "/history", "/trends", "/coach", "/library", "/settings"].includes(item.to);
               const to =
                 protectedItem && !isAuthenticated
                   ? `/login?redirect=${encodeURIComponent(item.to)}`

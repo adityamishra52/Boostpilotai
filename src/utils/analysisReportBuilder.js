@@ -89,5 +89,15 @@ export const buildAnalysisReport = (analysis = {}) => {
   addSection(sections, "Target Audience", output.targetAudience);
   addSection(sections, "Platform Recommendation", platformRecommendation);
 
+  const rewrites = analysis.aiRewriteStudio || {};
+  const latestRewrite = rewrites.latestMode ? rewrites[rewrites.latestMode] : null;
+  if (latestRewrite?.versions?.length) {
+    addSection(
+      sections,
+      "AI Rewrite Studio",
+      latestRewrite.versions.map((item) => item.text)
+    );
+  }
+
   return sections.map(renderSection).join("\n\n");
 };
