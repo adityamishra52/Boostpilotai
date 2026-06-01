@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Toaster } from "react-hot-toast";
 
 import App from "./App";
@@ -10,19 +11,21 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <App />
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              className: "dark:!bg-zinc-900 dark:!text-white",
-              duration: 2600
-            }}
-          />
-        </AuthProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || ""}>
+      <BrowserRouter>
+        <ThemeProvider>
+          <AuthProvider>
+            <App />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                className: "dark:!bg-zinc-900 dark:!text-white",
+                duration: 2600
+              }}
+            />
+          </AuthProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );

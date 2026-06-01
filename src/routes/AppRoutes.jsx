@@ -33,17 +33,18 @@ const AppRoutes = () => {
       </Route>
       <Route path="/admin/login" element={<AdminLogin />} />
 
-      <Route element={<ProtectedRoute />}>
-        <Route element={<DashboardLayout />}>
+      <Route element={<DashboardLayout />}>
+        <Route path="/analyze" element={<UploadAnalyze />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/analyze" element={<UploadAnalyze />} />
           <Route path="/results/:id" element={<ResultPage />} />
           <Route path="/history" element={<HistoryPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
 
+      <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
       <Route element={<AdminProtectedRoute />}>
         <Route element={<AdminLayout />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />

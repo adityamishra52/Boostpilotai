@@ -1,18 +1,21 @@
 import { Lock, Mail, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 import Button from "../components/Button";
 import Card from "../components/Card";
+import GoogleAuthButton from "../components/GoogleAuthButton";
 import Input from "../components/Input";
 import { useAuth } from "../context/AuthContext";
 
 const Register = () => {
-  const { register } = useAuth();
+  const { loginWithGoogle, register } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/dashboard";
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,9 +24,23 @@ const Register = () => {
     try {
       await register(form);
       toast.success("Workspace created");
-      navigate("/dashboard", { replace: true });
+      navigate(redirect, { replace: true });
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogle = async (credential) => {
+    setLoading(true);
+
+    try {
+      await loginWithGoogle(credential);
+      toast.success("Workspace ready");
+      navigate(redirect, { replace: true });
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Google sign-up failed");
     } finally {
       setLoading(false);
     }
@@ -79,9 +96,17 @@ const Register = () => {
         </Button>
       </form>
 
+      <div className="my-5 flex items-center gap-3">
+        <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+        <span className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">or</span>
+        <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+      </div>
+
+      <GoogleAuthButton disabled={loading} onSuccess={handleGoogle} text="signup_with" />
+
       <p className="mt-6 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
         Already have an account?{" "}
-        <Link className="rounded font-bold text-brand-700 hover:text-brand-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:text-brand-200 dark:hover:text-brand-100 dark:focus-visible:ring-brand-400/25" to="/login">
+        <Link className="rounded font-bold text-brand-700 hover:text-brand-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:text-brand-200 dark:hover:text-brand-100 dark:focus-visible:ring-brand-400/25" to={`/login?redirect=${encodeURIComponent(redirect)}`}>
           Sign in
         </Link>
       </p>

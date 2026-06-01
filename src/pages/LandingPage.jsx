@@ -42,7 +42,7 @@ const stats = [
 
 const LandingPage = () => {
   const { isAuthenticated } = useAuth();
-  const workspacePath = isAuthenticated ? "/dashboard" : "/register";
+  const workspacePath = isAuthenticated ? "/dashboard" : "/login?redirect=/dashboard";
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.18),transparent_32%),linear-gradient(180deg,#ffffff,#f8fafc)] text-slate-950 dark:bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.16),transparent_32%),linear-gradient(180deg,#05070b,#0b0f19)] dark:text-white">
@@ -78,11 +78,11 @@ const LandingPage = () => {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button as={Link} icon={ArrowRight} size="lg" to={workspacePath} variant="accent">
-              {isAuthenticated ? "Open workspace" : "Start free"}
+              Open workspace
             </Button>
 
-            <Button as={Link} icon={PlayCircle} size="lg" to="/login" variant="secondary">
-              View demo account
+            <Button as={Link} icon={PlayCircle} size="lg" to="/analyze" variant="secondary">
+              Analyze content
             </Button>
           </div>
 

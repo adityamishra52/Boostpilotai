@@ -4,6 +4,7 @@ import {
   CreditCard,
   Crown,
   LayoutDashboard,
+  LogIn,
   LogOut,
   Radio,
   Settings,
@@ -29,7 +30,7 @@ const navItems = [
 ];
 
 const Sidebar = ({ open, onClose }) => {
-  const { logout, user } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
 
   return (
     <>
@@ -86,10 +87,10 @@ const Sidebar = ({ open, onClose }) => {
               </div>
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-zinc-950 dark:text-white">
-                  {user?.name || "BoostPilot User"}
+                  {user?.name || "Guest workspace"}
                 </p>
                 <p className="truncate text-xs font-medium text-zinc-600 dark:text-zinc-300">
-                  {user?.email || "user@boostpilot.ai"}
+                  {user?.email || "Sign in to save analyses"}
                 </p>
               </div>
             </div>
@@ -100,7 +101,7 @@ const Sidebar = ({ open, onClose }) => {
                   Credits
                 </p>
                 <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:!text-white">
-                  {user?.credits ?? 0}
+                  {isAuthenticated ? (user?.credits ?? 0) : "-"}
                 </p>
               </div>
 
@@ -109,7 +110,7 @@ const Sidebar = ({ open, onClose }) => {
                   Plan
                 </p>
                 <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:!text-white">
-                  {planLabel(user?.plan)}
+                  {isAuthenticated ? planLabel(user?.plan) : "Guest"}
                 </p>
                 <p className="truncate text-[10px] font-semibold capitalize text-zinc-700 dark:!text-zinc-200">
                   {user?.billingCycle || "monthly"}
@@ -125,6 +126,11 @@ const Sidebar = ({ open, onClose }) => {
           <nav className="mt-2 space-y-1 pb-3">
             {navItems.map((item) => {
               const Icon = item.icon;
+              const protectedItem = ["/dashboard", "/history", "/settings"].includes(item.to);
+              const to =
+                protectedItem && !isAuthenticated
+                  ? `/login?redirect=${encodeURIComponent(item.to)}`
+                  : item.to;
 
               return (
                 <NavLink
@@ -139,7 +145,7 @@ const Sidebar = ({ open, onClose }) => {
                   end={item.to === "/dashboard"}
                   key={item.to}
                   onClick={onClose}
-                  to={item.to}
+                  to={to}
                 >
                   <Icon className="shrink-0" size={19} />
                   <span className="truncate">{item.label}</span>
@@ -176,9 +182,22 @@ const Sidebar = ({ open, onClose }) => {
             <p className="line-clamp-2 text-xs leading-5 text-zinc-600 dark:text-zinc-300">
               Gemini, technical checks, history, and PDF exports are wired together.
             </p>
-            <Button className="mt-4 w-full" icon={LogOut} onClick={logout} variant="secondary">
-              Sign out
-            </Button>
+            {isAuthenticated ? (
+              <Button className="mt-4 w-full" icon={LogOut} onClick={logout} variant="secondary">
+                Sign out
+              </Button>
+            ) : (
+              <Button
+                as={NavLink}
+                className="mt-4 w-full"
+                icon={LogIn}
+                onClick={onClose}
+                to="/login?redirect=/dashboard"
+                variant="secondary"
+              >
+                Sign in
+              </Button>
+            )}
           </div>
         </div>
       </aside>

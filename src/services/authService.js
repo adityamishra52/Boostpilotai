@@ -11,6 +11,11 @@ export const authService = {
     return data;
   },
 
+  async loginWithGoogle(credential) {
+    const { data } = await api.post("/auth/google", { credential });
+    return data;
+  },
+
   async me() {
     const { data } = await api.get("/auth/me");
     return data;

@@ -1,7 +1,7 @@
-import { CheckCircle2, Cpu, CreditCard, FileUp, Gauge, WandSparkles, X } from "lucide-react";
+import { CheckCircle2, Cpu, CreditCard, FileUp, Gauge, LockKeyhole, WandSparkles, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Badge from "../components/Badge";
@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import ContentTypeSelector, { contentTypesByPlatform } from "../components/ContentTypeSelector";
 import FileDropzone from "../components/FileDropzone";
+import GoogleAuthButton from "../components/GoogleAuthButton";
 import PageHeader from "../components/PageHeader";
 import PlatformSelector from "../components/PlatformSelector";
 import ProgressBar from "../components/ProgressBar";
@@ -16,6 +17,11 @@ import SectionContainer from "../components/SectionContainer";
 import { useAuth } from "../context/AuthContext";
 import { analysisService } from "../services/analysisService";
 import { formatFileSize } from "../utils/formatters";
+import {
+  clearGuestAnalysisDraft,
+  getGuestAnalysisDraft,
+  saveGuestAnalysisDraft
+} from "../utils/guestAnalysisDraft";
 
 const allowedTypes = [
   "image/jpeg",
@@ -43,14 +49,19 @@ const getPreferredContentType = (platform, selectedFile) => {
 };
 
 const UploadAnalyze = () => {
-  const { updateUser, user } = useAuth();
+  const { isAuthenticated, loginWithGoogle, updateUser, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const defaultPlatform = user?.preferences?.defaultPlatform || "Instagram";
   const [file, setFile] = useState(null);
   const [platform, setPlatform] = useState(defaultPlatform);
   const [contentType, setContentType] = useState(getPreferredContentType(defaultPlatform));
   const [loading, setLoading] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [loginRequiredOpen, setLoginRequiredOpen] = useState(false);
+  const [restoreOpen, setRestoreOpen] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [draftChecked, setDraftChecked] = useState(false);
 
   const handlePlatformChange = (nextPlatform) => {
     setPlatform(nextPlatform);
@@ -77,8 +88,8 @@ const UploadAnalyze = () => {
     setContentType(getPreferredContentType(platform, selectedFile));
   };
 
-  const handleSubmit = async () => {
-    if (!file) {
+  const submitAnalysis = async (selectedFile = file) => {
+    if (!selectedFile) {
       toast.error("Choose a file before analyzing");
       return;
     }
@@ -91,10 +102,11 @@ const UploadAnalyze = () => {
     setLoading(true);
 
     try {
-      const data = await analysisService.analyze({ file, platform, contentType });
+      const data = await analysisService.analyze({ file: selectedFile, platform, contentType });
       if (data.user) {
         updateUser(data.user);
       }
+      await clearGuestAnalysisDraft();
       toast.success("Analysis complete");
       navigate(`/results/${data.analysis._id}`, { state: { analysis: data.analysis } });
     } catch (error) {
@@ -106,6 +118,115 @@ const UploadAnalyze = () => {
       setLoading(false);
     }
   };
+
+  const saveCurrentDraft = async () => {
+    const draft = await saveGuestAnalysisDraft({
+      file,
+      platform,
+      contentType,
+      selectedOptions: {},
+      formState: { platform, contentType }
+    });
+
+    if (file && !draft.fileSaved) {
+      toast("Your selections were saved. Please select the file again after sign-in.");
+    }
+
+    return draft;
+  };
+
+  const handleSubmit = async () => {
+    if (!file) {
+      toast.error("Choose a file before analyzing");
+      return;
+    }
+
+    if (!isAuthenticated) {
+      await saveCurrentDraft();
+      setLoginRequiredOpen(true);
+      return;
+    }
+
+    await submitAnalysis(file);
+  };
+
+  const restoreDraft = async () => {
+    const draft = await getGuestAnalysisDraft();
+
+    if (!draft) {
+      return null;
+    }
+
+    if (draft.platform) {
+      setPlatform(draft.platform);
+    }
+
+    if (draft.contentType) {
+      setContentType(draft.contentType);
+    }
+
+    if (draft.file) {
+      setFile(draft.file);
+    } else if (draft.fileMetadata) {
+      toast("Your selections were restored. Please select the file again to continue.");
+    }
+
+    return draft;
+  };
+
+  const continueWithEmail = (path) => {
+    setLoginRequiredOpen(false);
+    navigate(`${path}?redirect=${encodeURIComponent("/analyze?continueDraft=1")}`);
+  };
+
+  const handleGoogle = async (credential) => {
+    setGoogleLoading(true);
+
+    try {
+      await loginWithGoogle(credential);
+      setLoginRequiredOpen(false);
+      await restoreDraft();
+      setRestoreOpen(true);
+      toast.success("Signed in with Google");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Google sign-in failed");
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleContinueDraft = async () => {
+    setRestoreOpen(false);
+    await submitAnalysis(file);
+  };
+
+  useEffect(() => {
+    let mounted = true;
+
+    const checkDraft = async () => {
+      if (!isAuthenticated || draftChecked) {
+        return;
+      }
+
+      const params = new URLSearchParams(location.search);
+      const shouldContinue = params.get("continueDraft") === "1";
+      const draft = await restoreDraft();
+
+      if (mounted && draft && (shouldContinue || draft.fileSaved || draft.fileMetadata)) {
+        setRestoreOpen(true);
+      }
+
+      if (mounted) {
+        setDraftChecked(true);
+      }
+    };
+
+    checkDraft();
+
+    return () => {
+      mounted = false;
+    };
+  }, [draftChecked, isAuthenticated, location.search]);
 
   const readiness = [file ? 34 : 0, platform ? 33 : 0, contentType ? 33 : 0].reduce(
     (sum, item) => sum + item,
@@ -156,7 +277,7 @@ const UploadAnalyze = () => {
               {[
                 ["Destination", platform],
                 ["Content format", contentType],
-                ["Credits", user?.credits ?? 0],
+                ["Credits", isAuthenticated ? (user?.credits ?? 0) : "Sign in"],
                 ["File size", file ? formatFileSize(file.size) : "None"],
                 ["AI output", "Creative + technical PDF"]
               ].map(([label, value]) => (
@@ -247,6 +368,76 @@ const UploadAnalyze = () => {
                 View pricing
               </Button>
               <Button className="flex-1" onClick={() => setUpgradeOpen(false)} variant="secondary">
+                Not now
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {loginRequiredOpen && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-zinc-950/60 px-4 backdrop-blur-sm">
+          <Card className="w-full max-w-lg p-0">
+            <div className="flex items-start justify-between border-b border-zinc-200 p-5 dark:border-zinc-800">
+              <div>
+                <div className="mb-3 grid h-11 w-11 place-items-center rounded-lg bg-gradient-to-br from-brand-500 via-signal to-coral text-white shadow-glow">
+                  <LockKeyhole size={22} />
+                </div>
+                <h2 className="text-2xl font-extrabold text-zinc-950 dark:text-white">
+                  Sign in to generate your analysis
+                </h2>
+                <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
+                  Your upload and selections are saved. Sign in to continue without losing progress.
+                </p>
+              </div>
+              <button
+                className="grid h-10 w-10 place-items-center rounded-lg text-zinc-700 transition hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:focus-visible:ring-brand-400/25"
+                onClick={() => setLoginRequiredOpen(false)}
+                type="button"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="space-y-3 p-5">
+              <GoogleAuthButton disabled={googleLoading} onSuccess={handleGoogle} />
+              <Button className="w-full" onClick={() => continueWithEmail("/login")} variant="secondary">
+                Sign in with email
+              </Button>
+              <Button className="w-full" onClick={() => continueWithEmail("/register")} variant="secondary">
+                Create account
+              </Button>
+              <Button className="w-full" onClick={() => setLoginRequiredOpen(false)} variant="ghost">
+                Cancel
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {restoreOpen && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-zinc-950/60 px-4 backdrop-blur-sm">
+          <Card className="w-full max-w-md p-0">
+            <div className="border-b border-zinc-200 p-5 dark:border-zinc-800">
+              <div className="mb-3 grid h-11 w-11 place-items-center rounded-lg bg-gradient-to-br from-brand-500 via-signal to-coral text-white shadow-glow">
+                <WandSparkles size={22} />
+              </div>
+              <h2 className="text-2xl font-extrabold text-zinc-950 dark:text-white">Continue your analysis?</h2>
+              <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
+                Your saved upload and selections are ready to continue.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 p-5 sm:flex-row">
+              <Button className="flex-1" disabled={!file} loading={loading} onClick={handleContinueDraft} variant="accent">
+                Continue
+              </Button>
+              <Button
+                className="flex-1"
+                onClick={async () => {
+                  setRestoreOpen(false);
+                  await clearGuestAnalysisDraft();
+                }}
+                variant="secondary"
+              >
                 Not now
               </Button>
             </div>

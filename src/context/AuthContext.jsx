@@ -43,6 +43,15 @@ export const AuthProvider = ({ children }) => {
     [persistSession]
   );
 
+  const loginWithGoogle = useCallback(
+    async (credential) => {
+      const data = await authService.loginWithGoogle(credential);
+      persistSession(data);
+      return data;
+    },
+    [persistSession]
+  );
+
   const logout = useCallback(() => {
     localStorage.removeItem("boostpilot_token");
     localStorage.removeItem("boostpilot_user");
@@ -101,12 +110,13 @@ export const AuthProvider = ({ children }) => {
       booting,
       isAuthenticated: Boolean(token && user),
       login,
+      loginWithGoogle,
       logout,
       refreshUser,
       register,
       updateUser
     }),
-    [booting, login, logout, refreshUser, register, token, updateUser, user]
+    [booting, login, loginWithGoogle, logout, refreshUser, register, token, updateUser, user]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
