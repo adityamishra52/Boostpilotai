@@ -12,7 +12,7 @@ const Badge = ({ children, className, variant = "neutral" }) => {
   return (
     <span
       className={clsx(
-        "inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-extrabold leading-tight ring-1 ring-inset [overflow-wrap:normal]",
+        "inline-flex max-w-full items-center gap-1 rounded-md px-2.5 py-1 text-left text-xs font-extrabold leading-tight ring-1 ring-inset [overflow-wrap:anywhere]",
         variants[variant],
         className
       )}

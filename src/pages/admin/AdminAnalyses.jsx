@@ -22,7 +22,7 @@ const AdminAnalyses = () => {
       const data = await adminService.analyses();
       setAnalyses(data.analyses);
     } catch (error) {
-      toast.error(error.response?.data?.message || "Unable to load analyses");
+      toast.error(error.response?.data?.message || "Unable to load reports");
     } finally {
       setLoading(false);
     }
@@ -37,7 +37,7 @@ const AdminAnalyses = () => {
     try {
       await adminService.deleteAnalysis(id);
       await loadAnalyses();
-      toast.success("Analysis deleted");
+      toast.success("Report deleted");
     } catch (error) {
       toast.error(error.response?.data?.message || "Delete failed");
     } finally {
@@ -49,12 +49,12 @@ const AdminAnalyses = () => {
     <div>
       <PageHeader
         action={<Badge variant="brand">{analyses.length} records</Badge>}
-        description="Review and remove stored analysis history across all users."
+        description="Review and remove saved reports across all users."
         eyebrow="Admin"
-        title="Analysis history"
+        title="Report history"
       />
 
-      <SectionContainer icon={FileText} title="All analyses">
+      <SectionContainer icon={FileText} title="All reports">
         {loading ? (
           <div className="space-y-3">
             {[0, 1, 2].map((item) => (

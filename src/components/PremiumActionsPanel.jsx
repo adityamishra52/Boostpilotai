@@ -381,7 +381,7 @@ const MediaEnhancer = ({
           </div>
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-extrabold text-zinc-950 dark:text-white">AI Media Enhancer</h3>
+              <h3 className="font-extrabold text-zinc-950 dark:text-white">Improve Media</h3>
               <Badge variant="brand">Creator</Badge>
               <Badge variant={kind === "video" ? "warning" : "success"}>
                 Apply: {planLabel(requiredApplyPlan)}
@@ -571,7 +571,7 @@ const ThumbnailResult = ({ analysis, result, onDownload, onFullscreen }) => {
   );
 };
 
-const LockedThumbnailPreview = ({ analysis }) => {
+const LockedThumbnailPreview = ({ analysis, locked = true }) => {
   const format = thumbnailFormatForAnalysis(analysis);
 
   return (
@@ -585,7 +585,7 @@ const LockedThumbnailPreview = ({ analysis }) => {
         <div className="space-y-3 p-3">
           <div className="flex items-center justify-between gap-2">
             <Badge variant="neutral">{format.ratio} {item}</Badge>
-            <Badge variant="warning">Agency</Badge>
+            <Badge variant={locked ? "warning" : "success"}>{locked ? "Agency" : "Ready"}</Badge>
           </div>
           <div className="h-4 w-2/3 rounded bg-zinc-200 dark:bg-zinc-800" />
           <div className="h-3 w-full rounded bg-zinc-100 dark:bg-zinc-900" />
@@ -597,7 +597,7 @@ const LockedThumbnailPreview = ({ analysis }) => {
   );
 };
 
-const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
+const PremiumActionsPanel = ({ analysis, focus = "all", onAnalysisUpdate }) => {
   const { user } = useAuth();
   const [loadingKey, setLoadingKey] = useState("");
   const [selectedFixes, setSelectedFixes] = useState([]);
@@ -605,6 +605,9 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
   const [fullscreen, setFullscreen] = useState(null);
   const premiumActions = analysis?.premiumActions || {};
   const thumbnailFormat = thumbnailFormatForAnalysis(analysis);
+  const showCopyActions = focus === "all";
+  const showMediaEnhancer = focus === "all" || focus === "media";
+  const showThumbnails = focus === "all" || focus === "thumbnails";
 
   const userCanUse = (requiredPlan) => user?.role === "admin" || hasPlan(user, requiredPlan);
 
@@ -690,12 +693,18 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
   return (
     <SectionContainer
       className="mt-5"
-      description="Generate polished outputs, edited media, and content-aware YouTube thumbnails."
+      description={
+        focus === "media"
+          ? "Pick fixes, compare before and after, and download the edited file."
+          : focus === "thumbnails"
+            ? "Create thumbnail ideas that match your image or video."
+            : "Improve text, media, and thumbnails."
+      }
       icon={Crown}
-      title="Premium studio"
+      title={focus === "media" ? "Improve Media" : focus === "thumbnails" ? "Thumbnail Gallery" : "Premium tools"}
     >
       <div className="grid gap-4">
-        {copyActions.map((action) => {
+        {showCopyActions && copyActions.map((action) => {
           const Icon = action.icon;
           const locked = !userCanUse(action.requiredPlan);
           const result = premiumActions[action.key];
@@ -743,7 +752,7 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
           );
         })}
 
-        {userCanUse("creator") ? (
+        {showMediaEnhancer && (userCanUse("creator") ? (
           <MediaEnhancer
             analysis={analysis}
             applyResult={premiumActions.applySuggestions}
@@ -758,7 +767,7 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
           <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/90">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
-                <h3 className="font-extrabold text-zinc-950 dark:text-white">AI Media Enhancer</h3>
+                <h3 className="font-extrabold text-zinc-950 dark:text-white">Improve Media</h3>
                 <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
                   Creator unlocks AI fix suggestions. Pro and Agency can apply them to media.
                 </p>
@@ -768,9 +777,9 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
               </Button>
             </div>
           </div>
-        )}
+        ))}
 
-        <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/90 dark:text-white">
+        {showThumbnails && <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 shadow-sm dark:border-zinc-700 dark:bg-zinc-900/90 dark:text-white">
           <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
             <div className="flex min-w-0 gap-3">
               <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-zinc-950 text-white dark:bg-brand-400/20 dark:text-brand-100 dark:ring-1 dark:ring-brand-300/40">
@@ -833,15 +842,24 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
             </>
           )}
 
-          {userCanUse("agency") && premiumActions.youtubeThumbnails && (
-            <ThumbnailResult
-              analysis={analysis}
-              onDownload={downloadMedia}
-              onFullscreen={setFullscreen}
-              result={premiumActions.youtubeThumbnails}
-            />
+          {userCanUse("agency") && (
+            premiumActions.youtubeThumbnails ? (
+              <ThumbnailResult
+                analysis={analysis}
+                onDownload={downloadMedia}
+                onFullscreen={setFullscreen}
+                result={premiumActions.youtubeThumbnails}
+              />
+            ) : (
+              <>
+                <p className="mt-3 rounded-lg border border-dashed border-cyan-200 bg-cyan-50/80 p-3 text-sm font-semibold text-cyan-950 dark:border-cyan-900/60 dark:bg-cyan-950/30 dark:text-cyan-100">
+                  Choose a style and click Generate to create downloadable PNG thumbnails.
+                </p>
+                <LockedThumbnailPreview analysis={analysis} locked={false} />
+              </>
+            )
           )}
-        </div>
+        </div>}
       </div>
 
       {fullscreen && (

@@ -33,7 +33,7 @@ const ContentLibrary = () => {
 
   return (
     <div>
-      <PageHeader eyebrow="Library" title="Content Library" description="Save, search, copy, and reuse your best captions, hooks, titles, CTAs, hashtags, and rewrites." />
+      <PageHeader eyebrow="Library" title="Saved Content" description="Find and reuse your captions, hooks, titles, hashtags, and rewritten text." />
       {!canUse ? <LockedFeature title="Content Library" requiredPlan="Creator" /> : (
         <SectionContainer title="Saved content">
           <div className="mb-4 grid gap-3 md:grid-cols-4">

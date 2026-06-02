@@ -80,9 +80,9 @@ const SettingsPage = () => {
   return (
     <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 10 }}>
       <PageHeader
-        description="Tune your default platform, profile name and workspace appearance."
+        description="Change your name, default site, theme, and password."
         eyebrow="Settings"
-        title="Workspace preferences"
+        title="Your settings"
       />
 
       <div className="grid gap-5 xl:grid-cols-[1fr_360px]">
@@ -96,7 +96,7 @@ const SettingsPage = () => {
           />
           <label className="block">
             <span className="mb-2 block text-sm font-semibold text-zinc-700 dark:text-zinc-200">
-              Default platform
+              Default site
             </span>
             <select
               className="h-12 w-full rounded-lg border border-zinc-300 bg-white px-4 text-sm font-semibold text-zinc-950 outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-300/35 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:border-brand-400 dark:focus:ring-brand-400/25"
@@ -117,7 +117,7 @@ const SettingsPage = () => {
               <div>
                 <p className="font-bold text-zinc-950 dark:!text-white">Dark mode</p>
                 <p className="mt-1 text-sm font-medium text-zinc-700 dark:!text-zinc-300">
-                  Switch the dashboard between light and dark appearances.
+              Switch between light and dark colors.
                 </p>
               </div>
               <button
@@ -151,8 +151,7 @@ const SettingsPage = () => {
             </h2>
             <p className="mt-2 break-all text-sm font-medium text-zinc-600 dark:text-zinc-300">{user?.email}</p>
             <div className="mt-5 rounded-lg bg-zinc-50 p-4 text-sm font-medium leading-6 text-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-300">
-              JWT authentication protects every analysis route. User settings are stored on the
-              MongoDB user document.
+              Your account protects your saved reports and uploaded media.
             </div>
           </Card>
 
@@ -164,7 +163,7 @@ const SettingsPage = () => {
               <div>
                 <p className="font-extrabold text-zinc-950 dark:text-white">Change password</p>
                 <p className="mt-1 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
-                  Passwords are saved in MongoDB as bcrypt hashes.
+                  Use a strong password to keep your account safe.
                 </p>
               </div>
             </div>

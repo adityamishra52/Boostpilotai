@@ -138,7 +138,7 @@ const AdminUsers = () => {
                   </div>
                   <p className="mt-1 truncate text-sm font-medium text-zinc-700 dark:!text-zinc-300">{user.email}</p>
                   <p className="mt-2 text-xs font-medium text-zinc-700 dark:!text-zinc-300">
-                    {user.analysisCount} analyses - {user.premiumActionCount || 0} premium actions - joined{" "}
+                    {user.analysisCount} reports - {user.premiumActionCount || 0} premium actions - joined{" "}
                     {formatDate(user.createdAt)}
                   </p>
                 </div>

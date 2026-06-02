@@ -1,5 +1,5 @@
 import { Download, ExternalLink, Search, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
@@ -23,6 +23,7 @@ const HistoryPage = () => {
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [platform, setPlatform] = useState("All");
+  const [searchParams] = useSearchParams();
 
   const loadHistory = async () => {
     try {
@@ -39,6 +40,10 @@ const HistoryPage = () => {
     loadHistory();
   }, []);
 
+  useEffect(() => {
+    setQuery(searchParams.get("search") || "");
+  }, [searchParams]);
+
   const filtered = useMemo(() => {
     return items.filter((item) => {
       const matchesPlatform = platform === "All" || item.platform === platform;
@@ -53,7 +58,7 @@ const HistoryPage = () => {
     try {
       await analysisService.remove(id);
       setItems((current) => current.filter((item) => item._id !== id));
-      toast.success("Analysis deleted");
+      toast.success("Report deleted");
     } catch (error) {
       toast.error(error.response?.data?.message || "Delete failed");
     }
@@ -71,9 +76,9 @@ const HistoryPage = () => {
   return (
     <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 10 }}>
       <PageHeader
-        description="A searchable archive of generated strategy, media quality, and PDF reports."
+        description="Search your saved captions, fixes, media checks, and PDF reports."
         eyebrow="History"
-        title="Analysis library"
+        title="Saved reports"
       />
 
       <Card className="mb-5">
@@ -83,7 +88,7 @@ const HistoryPage = () => {
             <input
               className="w-full bg-transparent text-sm text-zinc-950 outline-none placeholder:text-zinc-500 dark:text-white dark:placeholder:text-zinc-400"
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search file, caption, platform, or content type"
+              placeholder="Search file, caption, site, or post type"
               value={query}
             />
           </div>
@@ -108,7 +113,7 @@ const HistoryPage = () => {
 
       {!loading && filtered.length === 0 ? (
         <EmptyState
-          description="No saved analyses match this view."
+          description="No saved reports match this view."
           title="Nothing here yet"
         />
       ) : (
@@ -132,8 +137,8 @@ const HistoryPage = () => {
                 ].join("\n\n");
 
                 return (
-                  <Card className="p-4 hover:-translate-y-0.5" key={item._id}>
-                    <div className="grid gap-4 xl:grid-cols-[1fr_auto] xl:items-center">
+                  <Card className="min-w-0 overflow-hidden p-4 hover:-translate-y-0.5" key={item._id}>
+                    <div className="grid min-w-0 gap-4 2xl:grid-cols-[minmax(0,1fr)_auto] 2xl:items-center">
                       <div className="flex min-w-0 flex-col gap-4 sm:flex-row">
                         <div className="relative h-28 w-full shrink-0 overflow-hidden rounded-lg bg-zinc-950 sm:h-24 sm:w-40">
                           <ProtectedMedia
@@ -151,15 +156,18 @@ const HistoryPage = () => {
                             {output.contentScore ?? 0}
                           </div>
                         </div>
-                        <div className="min-w-0">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h2 className="truncate text-lg font-extrabold tracking-tight text-zinc-950 dark:text-white">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex min-w-0 flex-wrap items-center gap-2">
+                            <h2 className="min-w-0 max-w-full break-words text-lg font-extrabold tracking-tight text-zinc-950 dark:text-white sm:truncate">
                               {fileName}
                             </h2>
                             <Badge variant="neutral">{item.platform}</Badge>
                             {item.contentType && <Badge variant="brand">{item.contentType}</Badge>}
                             {tech.platformFit && (
-                              <Badge variant={tech.platformFit.toLowerCase().includes("strong") ? "success" : "warning"}>
+                              <Badge
+                                className="max-w-full whitespace-normal break-words text-left sm:max-w-[520px]"
+                                variant={tech.platformFit.toLowerCase().includes("strong") ? "success" : "warning"}
+                              >
                                 {tech.platformFit}
                               </Badge>
                             )}
@@ -168,20 +176,20 @@ const HistoryPage = () => {
                             {formatDate(item.createdAt)} - {formatFileSize(file.size)}
                             {tech.width ? ` - ${tech.width}x${tech.height}` : ""}
                           </p>
-                          <p className="mt-3 line-clamp-2 text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">
+                          <p className="mt-3 line-clamp-2 break-words text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">
                             {output.viralCaption}
                           </p>
                         </div>
                       </div>
-                      <div className="flex flex-wrap gap-2 xl:justify-end">
-                        <CopyButton text={copyText} />
-                        <Button icon={Download} onClick={() => handleDownload(item._id)} variant="secondary">
+                      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-start 2xl:justify-end">
+                        <CopyButton className="w-full justify-center sm:w-auto" text={copyText} />
+                        <Button className="w-full justify-center sm:w-auto" icon={Download} onClick={() => handleDownload(item._id)} variant="secondary">
                           Report
                         </Button>
-                        <Button as={Link} icon={ExternalLink} to={`/results/${item._id}`} variant="secondary">
+                        <Button className="w-full justify-center sm:w-auto" as={Link} icon={ExternalLink} to={`/results/${item._id}`} variant="secondary">
                           Open
                         </Button>
-                        <Button icon={Trash2} onClick={() => handleDelete(item._id)} variant="danger">
+                        <Button className="w-full justify-center sm:w-auto" icon={Trash2} onClick={() => handleDelete(item._id)} variant="danger">
                           Delete
                         </Button>
                       </div>

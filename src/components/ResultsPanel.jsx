@@ -155,15 +155,15 @@ const ResultsPanel = ({ analysis }) => {
       <div className="rounded-lg border border-zinc-200 bg-white/92 p-3 shadow-soft backdrop-blur-xl dark:border-zinc-700 dark:bg-zinc-900/92">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="min-w-0">
-            <p className="text-sm font-extrabold text-zinc-950 dark:text-white">AI analysis report</p>
+            <p className="text-sm font-extrabold text-zinc-950 dark:text-white">Your report</p>
             <p className="text-xs leading-5 text-zinc-600 dark:text-zinc-300">
-              Overview, creative assets, and technical quality on one page
+              A simple summary, suggested text, and fixes
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             <CopyButton label={isTwitter ? "Copy All" : "Copy report"} text={fullCopy} />
             <Button icon={Download} loading={downloading} onClick={handleDownload} variant="accent">
-              Export PDF
+              Download PDF
             </Button>
           </div>
         </div>
@@ -213,15 +213,15 @@ const ResultsPanel = ({ analysis }) => {
       </Card>
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-        <SectionContainer icon={Users} title="Target audience">
+        <SectionContainer icon={Users} title="Who this is for">
           <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
-            {output.targetAudience || "Audience insight unavailable for this result."}
+            {output.targetAudience || "Audience details are not available for this result."}
           </p>
         </SectionContainer>
         <SectionContainer
           action={<CopyButton text={output.improvedPostVersion || ""} />}
           icon={Sparkles}
-          title="Improved post version"
+          title="Better post version"
         >
           <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
             {output.improvedPostVersion || "No improved post version available."}
@@ -259,7 +259,7 @@ const ResultsPanel = ({ analysis }) => {
           <SectionContainer
             action={<CopyButton text={[...data.engagementStrategy, ...data.repostStrategy, output.replyPrompt].filter(Boolean).join("\n")} />}
             icon={BarChart3}
-            title="Engagement Strategy"
+            title="Reply and repost plan"
           >
             <ListBlock items={data.engagementStrategy} />
             <div className="mt-4">
@@ -276,14 +276,14 @@ const ResultsPanel = ({ analysis }) => {
             <SectionContainer
               action={<CopyButton text={output.altTextSuggestion} />}
               icon={Lightbulb}
-              title="Alt Text Suggestion"
+              title="Image description"
             >
               <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
                 {output.altTextSuggestion}
               </p>
             </SectionContainer>
           )}
-          <SectionContainer icon={Ruler} title="Posting Style">
+          <SectionContainer icon={Ruler} title="Best posting style">
             <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
               {output.bestPostingStyle || "Short, punchy, conversational, and built around one clear action."}
             </p>
@@ -309,7 +309,7 @@ const ResultsPanel = ({ analysis }) => {
         <SectionContainer
           action={<CopyButton text={output.viralCaption} />}
           icon={Megaphone}
-          title="Viral caption"
+          title="Suggested caption"
         >
           <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
             {output.viralCaption}
@@ -335,28 +335,28 @@ const ResultsPanel = ({ analysis }) => {
         <SectionContainer
           action={<CopyButton text={data.hookLines.join("\n")} />}
           icon={MessageCircle}
-          title="Hook lines"
+          title="Opening lines"
         >
           <ListBlock items={data.hookLines} numbered />
         </SectionContainer>
         <SectionContainer
           action={<CopyButton text={data.cta.join("\n")} />}
           icon={Copy}
-          title="CTA options"
+          title="Next step options"
         >
           <ListBlock items={data.cta} />
         </SectionContainer>
         <SectionContainer
           action={<CopyButton text={data.improvementSuggestions.join("\n")} />}
           icon={Lightbulb}
-          title="Improvement suggestions"
+          title="Ways to improve"
         >
           <ListBlock items={data.improvementSuggestions} />
         </SectionContainer>
         <SectionContainer
           action={<CopyButton text={data.platformSpecificSuggestions.join("\n")} />}
           icon={BarChart3}
-          title="Platform-specific suggestions"
+          title="Tips for this site"
         >
           <ListBlock items={data.platformSpecificSuggestions} />
         </SectionContainer>
@@ -375,12 +375,12 @@ const ResultsPanel = ({ analysis }) => {
         </SectionContainer>
       </div>
 
-      <SectionContainer icon={BarChart3} title="Engagement analysis">
+      <SectionContainer icon={BarChart3} title="How people may react">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <EngagementMetric label="Hook score" value={data.engagement.hookScore} />
+          <EngagementMetric label="Opening" value={data.engagement.hookScore} />
           <EngagementMetric label="Clarity" value={data.engagement.clarityScore} />
-          <EngagementMetric label="Visual appeal" value={data.engagement.visualAppealScore} />
-          <EngagementMetric label="CTA strength" value={data.engagement.ctaScore} />
+          <EngagementMetric label="Looks good" value={data.engagement.visualAppealScore} />
+          <EngagementMetric label="Next step" value={data.engagement.ctaScore} />
         </div>
         <div className="mt-5 grid gap-5 xl:grid-cols-2">
           <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
@@ -401,7 +401,7 @@ const ResultsPanel = ({ analysis }) => {
       </SectionContainer>
 
       <div className="grid gap-5 xl:grid-cols-[1fr_0.9fr]">
-        <SectionContainer icon={Ruler} title="Technical quality">
+        <SectionContainer icon={Ruler} title="File quality">
           <div className="grid gap-3 sm:grid-cols-2">
             <TechnicalMetric
               detail={data.technical.recommendedDimensions}
@@ -435,7 +435,7 @@ const ResultsPanel = ({ analysis }) => {
         </SectionContainer>
 
         <div className="space-y-5">
-          <SectionContainer icon={AlertTriangle} title="Quality issues">
+          <SectionContainer icon={AlertTriangle} title="Problems found">
             <ListBlock items={data.technical.qualityIssues || []} />
           </SectionContainer>
           <SectionContainer icon={CheckCircle2} title="Recommended fixes">

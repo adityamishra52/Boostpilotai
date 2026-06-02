@@ -53,10 +53,9 @@ const AdminLogin = () => {
               <div className="mb-5 grid h-14 w-14 place-items-center rounded-lg bg-gradient-to-br from-brand-500 via-signal to-coral text-white shadow-glow">
                 <Shield size={26} />
               </div>
-              <h1 className="text-5xl font-extrabold tracking-tight">Admin operations for BoostPilot AI.</h1>
+              <h1 className="text-5xl font-extrabold tracking-tight">BoostPilot AI admin tools.</h1>
               <p className="mt-5 text-base leading-7 text-zinc-600 dark:text-zinc-300">
-                Manage customers, credits, plans, analyses, uploaded assets, and abuse controls from one protected
-                workspace.
+                Manage users, credits, plans, reports, uploaded files, and safety controls in one protected place.
               </p>
             </div>
           </div>

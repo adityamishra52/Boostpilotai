@@ -13,7 +13,7 @@ const Logo = ({ compact = false, inverse = false }) => {
             BoostPilot AI
           </p>
           <p className={clsx("text-[11px] font-bold uppercase tracking-[0.16em]", inverse ? "text-zinc-300" : "text-zinc-600 dark:text-zinc-300")}>
-            Signal studio
+            Creator tools
           </p>
         </div>
       )}

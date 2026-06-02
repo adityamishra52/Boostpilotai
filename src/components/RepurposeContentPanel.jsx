@@ -39,7 +39,7 @@ const stringifyContent = (item = {}) =>
     item.seoSummary,
     ...(item.tweets || []),
     ...(item.headings || []).map((heading) => `## ${heading}`),
-    item.cta && `CTA: ${item.cta}`,
+    item.cta && `Next step: ${item.cta}`,
     ...(item.hashtags || [])
   ]
     .filter(Boolean)
@@ -86,7 +86,7 @@ const ContentBlock = ({ item }) => {
           ))}
         </div>
       )}
-      {item.cta && <p className="text-sm font-bold text-zinc-950 dark:text-white">CTA: {item.cta}</p>}
+      {item.cta && <p className="text-sm font-bold text-zinc-950 dark:text-white">Next step: {item.cta}</p>}
     </div>
   );
 };
@@ -144,16 +144,16 @@ const RepurposeContentPanel = ({ analysis, onAnalysisUpdate }) => {
   };
 
   const exportMarkdown = () => {
-    const blob = new Blob([selectedText || "No repurposed content yet."], { type: "text/markdown" });
+    const blob = new Blob([selectedText || "No reused content yet."], { type: "text/markdown" });
     downloadBlob({ data: blob, headers: {} }, "boostpilot-repurposed-content.md");
   };
 
   return (
     <SectionContainer
       className="mt-5"
-      description="Turn this analysis into platform-specific posts, threads, summaries, and newsletters."
+      description="Turn this report into posts, threads, summaries, and newsletters for other sites."
       icon={Repeat2}
-      title="Repurpose Content"
+      title="Reuse Content"
     >
       <div className="grid gap-4">
         <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/90">
@@ -162,17 +162,17 @@ const RepurposeContentPanel = ({ analysis, onAnalysisUpdate }) => {
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="brand">{planLabel(user?.plan)} limit: {limit}</Badge>
                 {canUseTone && <Badge variant="success">Tone selection</Badge>}
-                {canUseBrandVoice && <Badge variant="warning">Brand voice</Badge>}
+                {canUseBrandVoice && <Badge variant="warning">Brand style</Badge>}
               </div>
               <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-                Select up to {limit} platform{limit === 1 ? "" : "s"} for this generation.
+                Choose up to {limit} site{limit === 1 ? "" : "s"} for this version.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
               {selectedText && <CopyButton label="Copy all" text={selectedText} />}
-              <Button icon={Download} onClick={exportMarkdown} variant="secondary">Export</Button>
+              <Button icon={Download} onClick={exportMarkdown} variant="secondary">Download</Button>
               <Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">
-                {saved ? "Regenerate" : "Generate"}
+                {saved ? "Make again" : "Create"}
               </Button>
             </div>
           </div>

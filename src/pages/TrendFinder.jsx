@@ -1,4 +1,4 @@
-import { ChevronDown, Flame, Goal, Search, TrendingUp, X } from "lucide-react";
+import { ChevronDown, Flame, Goal, Search, Trash2, TrendingUp, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -73,6 +73,24 @@ const readRecent = () => {
 };
 
 const saveRecent = (next) => localStorage.setItem(recentKey, JSON.stringify(next));
+
+const parseTrendSearch = (item = {}) => {
+  const parts = String(item.niche || "")
+    .split("|")
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const nicheText = parts[0] || item.niche || "AI & Technology";
+  const strength = parts.find((part) => part.toLowerCase().startsWith("strength:"))?.replace(/^strength:\s*/i, "");
+  const goal = parts.find((part) => part.toLowerCase().startsWith("goal:"))?.replace(/^goal:\s*/i, "");
+
+  return {
+    platform: item.platform || "YouTube",
+    niches: nicheText.split(",").map((part) => part.trim()).filter(Boolean),
+    region: item.region || "Global",
+    strength: strength || "📈 Rising",
+    goal: goal || "More Views"
+  };
+};
 
 const SearchableMultiSelect = ({ label, options, value, onChange, suggestions = [], recent = [] }) => {
   const [open, setOpen] = useState(false);
@@ -279,25 +297,26 @@ const TrendFinder = () => {
     .filter(Boolean);
   const recentNiches = recent.niches || [];
 
-  const submit = async () => {
-    if (!form.niches.length) {
+  const submit = async (nextForm = form) => {
+    if (!nextForm.niches.length) {
       toast.error("Select at least one niche");
       return;
     }
 
     const nextRecent = {
-      niches: [...new Set([...form.niches, ...recentNiches])].slice(0, 6),
-      countries: [...new Set([form.region, ...(recent.countries || [])])].slice(0, 4)
+      niches: [...new Set([...nextForm.niches, ...recentNiches])].slice(0, 6),
+      countries: [...new Set([nextForm.region, ...(recent.countries || [])])].slice(0, 4)
     };
     setRecent(nextRecent);
     saveRecent(nextRecent);
+    setForm(nextForm);
     setLoading(true);
 
     try {
       const payload = {
-        platform: form.platform,
-        niche: `${form.niches.join(", ")} | Strength: ${form.strength} | Goal: ${form.goal}`,
-        region: form.region
+        platform: nextForm.platform,
+        niche: `${nextForm.niches.join(", ")} | Strength: ${nextForm.strength} | Goal: ${nextForm.goal}`,
+        region: nextForm.region
       };
       const data = await trendService.find(payload);
       setResult(data.trend.result);
@@ -310,26 +329,45 @@ const TrendFinder = () => {
     }
   };
 
+  const openRecent = (item) => {
+    const nextForm = parseTrendSearch(item);
+    setForm(nextForm);
+    setResult(item.result || null);
+    toast.success("Loaded saved trend search");
+  };
+
+  const deleteRecent = async (event, id) => {
+    event.stopPropagation();
+
+    try {
+      await trendService.remove(id);
+      setHistory((current) => current.filter((item) => item._id !== id));
+      toast.success("Trend search deleted");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Could not delete trend search");
+    }
+  };
+
   return (
     <div>
       <PageHeader
-        eyebrow="Growth"
-        title="Trend Finder"
-        description="AI trend suggestions by platform, niche, goal, trend strength, and region."
+        eyebrow="Ideas"
+        title="Find Post Ideas"
+        description="Choose a topic and country to get post ideas, hashtags, and hooks."
       />
       {!canUse ? (
-        <LockedFeature title="Trend Finder" requiredPlan="Pro" />
+        <LockedFeature title="Find Post Ideas" requiredPlan="Pro" />
       ) : (
         <div className="grid gap-5 xl:grid-cols-[0.92fr_1.08fr]">
           <Card className="h-fit">
             <div className="mb-5 flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-300">
-                  Discovery controls
+                  Search options
                 </p>
-                <h2 className="mt-2 text-2xl font-extrabold text-zinc-950 dark:text-white">Find your next angle</h2>
+                <h2 className="mt-2 text-2xl font-extrabold text-zinc-950 dark:text-white">Find your next post idea</h2>
               </div>
-              <Badge variant="warning">AI suggestions</Badge>
+              <Badge variant="warning">Smart ideas</Badge>
             </div>
             <div className="grid gap-5">
               <div>
@@ -383,7 +421,7 @@ const TrendFinder = () => {
                 options={goalOptions}
                 value={form.goal}
               />
-              <Button className="w-full" icon={Search} loading={loading} onClick={submit} size="lg" variant="accent">
+              <Button className="w-full" icon={Search} loading={loading} onClick={() => submit()} size="lg" variant="accent">
                 Find trends
               </Button>
             </div>
@@ -442,15 +480,58 @@ const TrendFinder = () => {
       {canUse && history.length > 0 && (
         <SectionContainer className="mt-5" title="Recent trend searches">
           <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
-            {history.slice(0, 6).map((item) => (
+            {history.slice(0, 6).map((item) => {
+              const savedForm = parseTrendSearch(item);
+
+              return (
               <div
-                className="rounded-xl border border-zinc-200 bg-white/90 p-3 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+                className="group min-w-0 rounded-xl border border-zinc-200 bg-white/90 p-3 text-left text-sm transition hover:border-cyan-300 hover:bg-cyan-50/70 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300/30 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-cyan-500 dark:hover:bg-cyan-950/20"
                 key={item._id}
+                onClick={() => openRecent(item)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openRecent(item);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
               >
-                <p className="font-extrabold text-zinc-950 dark:text-white">{item.platform}</p>
-                <p className="mt-1 line-clamp-2 text-zinc-600 dark:text-zinc-300">{item.niche}</p>
+                <div className="flex min-w-0 items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="font-extrabold text-zinc-950 dark:text-white">{item.platform}</p>
+                    <p className="mt-1 line-clamp-2 break-words text-zinc-600 dark:text-zinc-300">{item.niche}</p>
+                  </div>
+                  <button
+                    aria-label="Delete trend search"
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-red-200 bg-red-50 text-red-700 transition hover:bg-red-100 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-100"
+                    onClick={(event) => deleteRecent(event, item._id)}
+                    type="button"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Badge variant="brand">{savedForm.region}</Badge>
+                  <Badge variant="warning">{savedForm.strength}</Badge>
+                  <Badge variant="success">{savedForm.goal}</Badge>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-xs font-bold text-cyan-700 dark:text-cyan-300">Click to open saved result</span>
+                  <button
+                    className="rounded-lg border border-cyan-200 bg-cyan-50 px-3 py-2 text-xs font-extrabold text-cyan-950 transition hover:bg-cyan-100 dark:border-cyan-900/60 dark:bg-cyan-950/30 dark:text-cyan-100"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      submit(savedForm);
+                    }}
+                    type="button"
+                  >
+                    Run again
+                  </button>
+                </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </SectionContainer>
       )}

@@ -11,14 +11,14 @@ const AuthLayout = () => {
           <Logo />
           <div className="max-w-xl">
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-brand-600 dark:text-brand-300">
-              AI content command center
+              AI content helper
             </p>
             <h1 className="text-5xl font-extrabold leading-tight">
-              Convert every creative asset into a sharper growth play.
+              Turn every upload into better posts.
             </h1>
             <p className="mt-5 text-base font-medium leading-7 text-zinc-700 dark:text-zinc-300">
-              Upload a video or image, choose a platform, and get captions, hooks, tags,
-              titles, CTAs, engagement guidance and a score saved to your workspace.
+              Upload a video or image, choose where to post it, and get captions,
+              hooks, hashtags, titles, next steps, and a saved report.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-3">

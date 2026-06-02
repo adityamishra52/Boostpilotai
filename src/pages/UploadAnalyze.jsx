@@ -1,4 +1,4 @@
-import { CheckCircle2, Cpu, CreditCard, FileUp, Gauge, LockKeyhole, WandSparkles, X } from "lucide-react";
+import { CheckCircle2, CreditCard, FileUp, Gauge, LockKeyhole, WandSparkles, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -16,7 +16,6 @@ import ProgressBar from "../components/ProgressBar";
 import SectionContainer from "../components/SectionContainer";
 import { useAuth } from "../context/AuthContext";
 import { analysisService } from "../services/analysisService";
-import { formatFileSize } from "../utils/formatters";
 import {
   clearGuestAnalysisDraft,
   getGuestAnalysisDraft,
@@ -100,6 +99,9 @@ const UploadAnalyze = () => {
     }
 
     setLoading(true);
+    toast.loading("Creating your report. You can keep using BoostPilot while it works.", {
+      id: "report-generation"
+    });
 
     try {
       const data = await analysisService.analyze({ file: selectedFile, platform, contentType });
@@ -107,13 +109,15 @@ const UploadAnalyze = () => {
         updateUser(data.user);
       }
       await clearGuestAnalysisDraft();
-      toast.success("Analysis complete");
+      toast.success("Report ready", { id: "report-generation" });
       navigate(`/results/${data.analysis._id}`, { state: { analysis: data.analysis } });
     } catch (error) {
       if (error.response?.status === 402) {
         setUpgradeOpen(true);
       }
-      toast.error(error.response?.data?.message || "Analysis failed");
+      toast.error(error.response?.data?.message || "Report failed. Please try again.", {
+        id: "report-generation"
+      });
     } finally {
       setLoading(false);
     }
@@ -232,84 +236,109 @@ const UploadAnalyze = () => {
     (sum, item) => sum + item,
     0
   );
+  const workflowSteps = [
+    ["Upload file", Boolean(file)],
+    ["Choose site", Boolean(platform)],
+    ["Choose post type", Boolean(contentType)],
+    ["Get report", loading || readiness === 100]
+  ];
 
   return (
     <motion.div animate={{ opacity: 1, y: 0 }} className="pb-28 md:pb-0" initial={{ opacity: 0, y: 10 }}>
       <PageHeader
         action={<Badge variant={file ? "success" : "warning"}>{file ? "Asset ready" : "Awaiting media"}</Badge>}
-        description="Analyze creative strategy, media quality, platform fit, and export-ready reporting."
+        description="Upload an image or video, choose where you will post it, then get easy suggestions."
         eyebrow="Analyze"
-        title="Content intelligence studio"
+        title="Create a new report"
       />
 
-      <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="mx-auto max-w-5xl space-y-5">
+        <Card className="p-4 sm:p-5">
+          <div className="grid gap-3 md:grid-cols-4">
+            {workflowSteps.map(([label, done], index) => (
+              <div
+                className={`rounded-lg border p-3 transition ${
+                  done
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-950 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-100"
+                    : "border-zinc-200 bg-white/80 text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-300"
+                }`}
+                key={label}
+              >
+                <p className="text-xs font-bold uppercase tracking-[0.14em]">Step {index + 1}</p>
+                <p className="mt-1 text-sm font-extrabold">{label}</p>
+              </div>
+            ))}
+          </div>
+          <ProgressBar className="mt-4" value={readiness} />
+        </Card>
+
         <div className="space-y-5">
-          <SectionContainer icon={FileUp} title="Media asset">
+          <SectionContainer description="Start with one image or video." icon={FileUp} title="Upload file">
             <FileDropzone file={file} onFile={handleFile} />
           </SectionContainer>
 
-          <SectionContainer icon={Gauge} title="Content destination">
+          <SectionContainer description="Pick where you want to post this content." icon={Gauge} title="Choose site">
             <PlatformSelector onChange={handlePlatformChange} value={platform} />
           </SectionContainer>
 
-          <SectionContainer icon={CheckCircle2} title="Content format">
+          <SectionContainer description="Pick the post type. We choose a good option automatically when possible." icon={CheckCircle2} title="Choose post type">
             <ContentTypeSelector onChange={setContentType} platform={platform} value={contentType} />
           </SectionContainer>
-        </div>
 
-        <div className="space-y-5 xl:sticky xl:top-5 xl:h-fit">
-          <Card>
-            <div className="flex items-center justify-between">
-              <div>
+          <Card className="overflow-hidden p-0">
+            <div className="grid gap-0 lg:grid-cols-[1fr_auto]">
+              <div className="min-w-0 p-5 sm:p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-600 dark:text-brand-300">
-                  Launch readiness
+                  Get report
                 </p>
                 <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
-                  {readiness}%
+                  Ready to check
                 </h2>
-              </div>
-              <div className="grid h-12 w-12 place-items-center rounded-lg bg-gradient-to-br from-brand-500 via-signal to-coral text-white shadow-glow">
-                <Cpu size={22} />
-              </div>
-            </div>
-            <ProgressBar className="mt-4" value={readiness} />
-            <div className="mt-5 space-y-3 text-sm">
-              {[
-                ["Destination", platform],
-                ["Content format", contentType],
-                ["Credits", isAuthenticated ? (user?.credits ?? 0) : "Sign in"],
-                ["File size", file ? formatFileSize(file.size) : "None"],
-                ["AI output", "Creative + technical PDF"]
-              ].map(([label, value]) => (
-                <div
-                  className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white/90 px-3 py-3 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"
-                  key={label}
-                >
-                  <span className="font-medium text-zinc-700 dark:!text-zinc-300">{label}</span>
-                  <span className="text-right font-bold text-zinc-950 dark:!text-white">{value}</span>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                  BoostPilot will check your media and suggest captions, opening lines, hashtags, fixes, and a report.
+                </p>
+                {loading && (
+                  <div className="mt-4 rounded-lg border border-cyan-200 bg-cyan-50/90 p-4 text-sm font-semibold leading-6 text-cyan-950 dark:border-cyan-900/60 dark:bg-cyan-950/30 dark:text-cyan-100">
+                    We are creating your report in the background. This can take a little while, and your report will open automatically when it is ready.
+                  </div>
+                )}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Badge variant={file ? "success" : "warning"}>{file ? "Media selected" : "Media needed"}</Badge>
+                  <Badge variant="brand">{platform}</Badge>
+                  <Badge>{contentType}</Badge>
                 </div>
-              ))}
+              </div>
+              <div className="flex min-w-[240px] flex-col justify-center border-t border-zinc-200 bg-zinc-50/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/70 lg:border-l lg:border-t-0">
+                <Button
+                  className="w-full"
+                  icon={WandSparkles}
+                  loading={loading}
+                  onClick={handleSubmit}
+                  size="lg"
+                  variant="accent"
+                >
+                  {loading ? "Creating report..." : "Get report"}
+                </Button>
+                <p className="mt-3 text-center text-xs font-semibold leading-5 text-zinc-600 dark:text-zinc-300">
+                  {loading ? "You can continue using BoostPilot while this runs." : "We check sign-in and credits when you start."}
+                </p>
+              </div>
             </div>
-            <Button
-              className="mt-5 w-full"
-              icon={WandSparkles}
-              loading={loading}
-              onClick={handleSubmit}
-              size="lg"
-              variant="accent"
-            >
-              {loading ? "Analyzing..." : "Generate analysis"}
-            </Button>
           </Card>
 
           {loading && (
             <Card>
               <div className="flex items-center gap-3">
                 <div className="h-3 w-3 animate-ping rounded-full bg-brand-400" />
-                <p className="text-sm font-bold text-zinc-950 dark:text-white">AI pipeline running</p>
+                <div>
+                  <p className="text-sm font-bold text-zinc-950 dark:text-white">Creating your report</p>
+                  <p className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                    We are checking the file, writing suggestions, and saving the result for you.
+                  </p>
+                </div>
               </div>
               <div className="mt-4 space-y-4">
-                {["Media metadata", "Visual analysis", "Technical fit", "Report model"].map((item, index) => (
+                {["File details", "Media review", "Post fit", "Report writing"].map((item, index) => (
                   <div key={item}>
                     <div className="mb-2 flex items-center justify-between text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">
                       <span>{item}</span>
@@ -334,7 +363,7 @@ const UploadAnalyze = () => {
                 </div>
                 <h2 className="text-2xl font-extrabold text-zinc-950 dark:text-white">Upgrade to continue</h2>
                 <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
-                  You have 0 analysis credits. Choose a plan to unlock more AI analyses.
+                  You have 0 report credits. Choose a plan to create more reports.
                 </p>
               </div>
               <button
@@ -384,7 +413,7 @@ const UploadAnalyze = () => {
                   <LockKeyhole size={22} />
                 </div>
                 <h2 className="text-2xl font-extrabold text-zinc-950 dark:text-white">
-                  Sign in to generate your analysis
+                  Sign in to create your report
                 </h2>
                 <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
                   Your upload and selections are saved. Sign in to continue without losing progress.
@@ -421,7 +450,7 @@ const UploadAnalyze = () => {
               <div className="mb-3 grid h-11 w-11 place-items-center rounded-lg bg-gradient-to-br from-brand-500 via-signal to-coral text-white shadow-glow">
                 <WandSparkles size={22} />
               </div>
-              <h2 className="text-2xl font-extrabold text-zinc-950 dark:text-white">Continue your analysis?</h2>
+              <h2 className="text-2xl font-extrabold text-zinc-950 dark:text-white">Continue your report?</h2>
               <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
                 Your saved upload and selections are ready to continue.
               </p>
@@ -449,7 +478,7 @@ const UploadAnalyze = () => {
         <div className="mx-auto flex max-w-[520px] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
-              {file ? "Ready to analyze" : "Choose media first"}
+              {file ? "Ready for report" : "Choose media first"}
             </p>
             <p className="truncate text-sm font-extrabold text-zinc-950 dark:text-white">
               {file ? `${platform} ${contentType}` : "Image or video"}
@@ -462,7 +491,7 @@ const UploadAnalyze = () => {
             onClick={handleSubmit}
             variant="accent"
           >
-            {loading ? "Analyzing" : "Generate"}
+            {loading ? "Creating" : "Get report"}
           </Button>
         </div>
       </div>

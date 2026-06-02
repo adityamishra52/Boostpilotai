@@ -22,15 +22,14 @@ import { useAuth } from "../context/AuthContext";
 import Badge from "./Badge";
 import Logo from "./Logo";
 import Button from "./Button";
-import { planLabel } from "../utils/plans";
 
 const navItems = [
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
   { label: "Analyze", to: "/analyze", icon: UploadCloud },
   { label: "History", to: "/history", icon: Clock },
-  { label: "Trend Finder", to: "/trends", icon: TrendingUp },
-  { label: "Growth Coach", to: "/coach", icon: WandSparkles },
   { label: "Content Library", to: "/library", icon: Library },
+  { label: "Post Ideas", to: "/trends", icon: TrendingUp },
+  { label: "Growth Tips", to: "/coach", icon: WandSparkles },
   { label: "Pricing", to: "/pricing", icon: CreditCard },
   { label: "Settings", to: "/settings", icon: Settings }
 ];
@@ -80,9 +79,9 @@ const Sidebar = ({ open, onClose }) => {
               </Badge>
               <ShieldCheck size={17} className="text-brand-200" />
             </div>
-            <p className="text-lg font-extrabold tracking-tight">AI analysis desk</p>
+            <p className="text-lg font-extrabold tracking-tight">Create and improve</p>
             <p className="mt-2 text-xs leading-5 text-zinc-300">
-              Media quality, captions, hooks, and reports in one workflow.
+              Upload media, get better captions, and download reports.
             </p>
           </div>
 
@@ -93,40 +92,17 @@ const Sidebar = ({ open, onClose }) => {
               </div>
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-zinc-950 dark:text-white">
-                  {user?.name || "Guest workspace"}
+                  {user?.name || "Guest user"}
                 </p>
                 <p className="truncate text-xs font-medium text-zinc-600 dark:text-zinc-300">
-                  {user?.email || "Sign in to save analyses"}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <div className="min-w-0 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-800/90 dark:!text-white">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-700 dark:!text-zinc-200">
-                  Credits
-                </p>
-                <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:!text-white">
-                  {isAuthenticated ? (user?.credits ?? 0) : "-"}
-                </p>
-              </div>
-
-              <div className="min-w-0 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-800/90 dark:!text-white">
-                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-700 dark:!text-zinc-200">
-                  Plan
-                </p>
-                <p className="mt-1 truncate text-lg font-extrabold text-zinc-950 dark:!text-white">
-                  {isAuthenticated ? planLabel(user?.plan) : "Guest"}
-                </p>
-                <p className="truncate text-[10px] font-semibold capitalize text-zinc-700 dark:!text-zinc-200">
-                  {user?.billingCycle || "monthly"}
+                  {user?.email || "Sign in to save reports"}
                 </p>
               </div>
             </div>
           </div>
 
           <p className="mt-6 px-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-zinc-700 dark:text-zinc-200">
-            Workspace
+            Tools
           </p>
 
           <nav className="mt-2 space-y-1 pb-3">
@@ -183,10 +159,10 @@ const Sidebar = ({ open, onClose }) => {
           <div className="rounded-xl border border-zinc-200 bg-white p-3 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <div className="mb-2 flex items-center gap-2 text-sm font-bold text-zinc-950 dark:text-white">
               <BarChart3 className="shrink-0" size={18} />
-              <span className="truncate">Output quality</span>
+              <span className="truncate">What you can do</span>
             </div>
             <p className="line-clamp-2 text-xs leading-5 text-zinc-600 dark:text-zinc-300">
-              Gemini, technical checks, history, and PDF exports are wired together.
+              Analyze posts, save results, and download reports.
             </p>
             {isAuthenticated ? (
               <Button className="mt-4 w-full" icon={LogOut} onClick={logout} variant="secondary">

@@ -37,24 +37,24 @@ const GrowthCoach = () => {
 
   return (
     <div>
-      <PageHeader action={canUse && <Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">Generate</Button>} eyebrow="Coach" title="Growth Coach" description="Personalized growth guidance from your analysis history." />
-      {!canUse ? <LockedFeature title="Growth Coach" requiredPlan="Pro" /> : report ? (
+      <PageHeader action={canUse && <Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">Update tips</Button>} eyebrow="Coach" title="Growth Tips" description="Simple weekly tips based on your saved reports." />
+      {!canUse ? <LockedFeature title="Growth Tips" requiredPlan="Pro" /> : report ? (
         <div className="grid gap-5 xl:grid-cols-2">
           <SectionContainer icon={Brain} title={`Growth score: ${report.growthScore}/100`}>
             <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300">{report.platformStrategy}</p>
             <p className="mt-3 font-bold">{report.recommendedPostingFrequency}</p>
           </SectionContainer>
           <SectionContainer title="Doing well"><List items={report.doingWell} /></SectionContainer>
-          <SectionContainer title="Hurting growth"><List items={report.hurtingGrowth} /></SectionContainer>
-          <SectionContainer title="Weekly goals"><List items={report.weeklyGoals} /></SectionContainer>
-          <SectionContainer title="Monthly goals"><List items={report.monthlyGoals} /></SectionContainer>
-          <SectionContainer title="Content strategy"><List items={[...(report.bestContentTypes || []), report.hookQualityAdvice, report.ctaQualityAdvice]} /></SectionContainer>
+          <SectionContainer title="Needs work"><List items={report.hurtingGrowth} /></SectionContainer>
+          <SectionContainer title="This week"><List items={report.weeklyGoals} /></SectionContainer>
+          <SectionContainer title="This month"><List items={report.monthlyGoals} /></SectionContainer>
+          <SectionContainer title="Post tips"><List items={[...(report.bestContentTypes || []), report.hookQualityAdvice, report.ctaQualityAdvice]} /></SectionContainer>
           {report.twitterXCoaching?.length > 0 && (
             <SectionContainer title="Twitter/X coaching"><List items={report.twitterXCoaching} /></SectionContainer>
           )}
         </div>
       ) : (
-        <SectionContainer title="No coach report yet"><Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">Generate coach report</Button></SectionContainer>
+        <SectionContainer title="No tips yet"><Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">Get tips</Button></SectionContainer>
       )}
     </div>
   );

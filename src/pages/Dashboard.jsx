@@ -81,12 +81,12 @@ const Dashboard = () => {
       <PageHeader
         action={
           <Button as={Link} className="w-full sm:w-auto" icon={Sparkles} to="/analyze" variant="accent">
-            Analyze content
+            Create report
           </Button>
         }
-        description="Content intelligence, technical quality, and platform readiness in one workspace."
+        description="See your plan, credits, recent reports, and what to improve next."
         eyebrow={`Hi ${user?.name?.split(" ")[0] || "there"}`}
-        title="Growth command center"
+        title="Your home"
       />
 
       <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
@@ -99,30 +99,30 @@ const Dashboard = () => {
         />
         <StatCard
           accent="from-brand-500 to-signal"
-          detail={loading ? "Loading workspace" : "Saved to history"}
+          detail={loading ? "Loading" : "Saved reports"}
           icon={History}
-          label="Analyses"
+          label="Reports"
           value={loading ? "-" : stats?.totalAnalyses ?? 0}
         />
         <StatCard
           accent="from-mint to-brand-500"
-          detail="Average creative quality"
+          detail="Average result"
           icon={Gauge}
           label="Score"
           value={loading ? "-" : `${stats?.averageScore ?? 0}/100`}
         />
         <StatCard
           accent="from-signal to-coral"
-          detail="Most used destination"
+          detail="Most used site"
           icon={Rocket}
-          label="Top platform"
+          label="Top site"
           value={loading ? "-" : stats?.topPlatform || "None"}
         />
         <StatCard
           accent="from-amber-400 to-coral"
-          detail="Across saved media"
+          detail="Items to fix"
           icon={ShieldCheck}
-          label="Tech issues"
+          label="Fixes needed"
           value={loading ? "-" : technicalIssues}
         />
       </div>
@@ -134,25 +134,25 @@ const Dashboard = () => {
               <div className="mb-5 flex flex-wrap items-center gap-2">
                 <Badge variant="brand">
                   <Radio size={13} />
-                  AI pipeline
+                  How it works
                 </Badge>
-                <Badge variant="success">MongoDB synced</Badge>
+                <Badge variant="success">Saved safely</Badge>
               </div>
 
               <h2 className="text-2xl font-extrabold tracking-tight text-zinc-950 dark:text-white sm:text-3xl">
-                Upload, analyze, export.
+                Upload, improve, download.
               </h2>
 
               <p className="mt-3 max-w-xl text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">
-                Gemini analysis, technical checks, history, and PDF reports are ready for the next creative.
+                Add an image or video and get captions, opening lines, fixes, and a downloadable report.
               </p>
 
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Button as={Link} className="w-full sm:w-auto" icon={UploadCloud} to="/analyze" variant="accent">
-                  Start analysis
+                  Start report
                 </Button>
                 <Button as={Link} className="w-full sm:w-auto" icon={ArrowUpRight} to="/history" variant="secondary">
-                  Review library
+                  See saved work
                 </Button>
               </div>
             </div>
@@ -180,19 +180,19 @@ const Dashboard = () => {
                 </>
               ) : (
                 <p className="mt-3 text-sm font-medium text-zinc-600 dark:text-zinc-300">
-                  No saved analysis yet.
+                  No saved report yet.
                 </p>
               )}
             </div>
           </div>
         </Card>
 
-        <SectionContainer icon={Sparkles} title="AI activity">
+        <SectionContainer icon={Sparkles} title="Report progress">
           <div className="space-y-4">
             {[
-              ["Visual analysis", stats?.totalAnalyses ? 100 : 0],
-              ["Technical QA", technicalIssues ? 72 : 100],
-              ["PDF reporting", 100]
+              ["Media review", stats?.totalAnalyses ? 100 : 0],
+              ["Fix suggestions", technicalIssues ? 72 : 100],
+              ["Report download", 100]
             ].map(([label, value]) => (
               <div className="min-w-0" key={label}>
                 <div className="mb-2 flex min-w-0 items-center justify-between gap-3 text-sm">
@@ -225,12 +225,12 @@ const Dashboard = () => {
         }
         className="mt-5 min-w-0"
         icon={History}
-        title="Recent analyses"
+        title="Recent reports"
       >
         {recent.length === 0 && !loading ? (
           <EmptyState
-            description="Upload a media asset and saved results will appear here."
-            title="No analysis history yet"
+            description="Upload an image or video and your reports will appear here."
+            title="No reports yet"
           />
         ) : (
           <div className="min-w-0 space-y-3">

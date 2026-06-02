@@ -172,8 +172,8 @@ const AdminSettings = () => {
   return (
     <div>
       <PageHeader
-        action={<Badge variant="success">MongoDB binary QR</Badge>}
-        description="Control payment instructions, QR upload, and admin account security."
+        action={<Badge variant="success">QR saved</Badge>}
+        description="Manage payment instructions, QR upload, and admin account safety."
         eyebrow="Admin"
         title="Admin settings"
       />

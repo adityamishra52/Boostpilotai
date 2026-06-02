@@ -2,28 +2,28 @@ export const planOrder = ["free", "creator", "pro", "agency"];
 
 export const planFeatures = {
   free: [
-    "Basic AI analysis",
+    "Basic AI report",
     "YouTube, Instagram, Facebook, LinkedIn, and Twitter/X support",
-    "Basic captions and hooks",
+    "Basic captions and openings",
     "Limited credits",
     "Standard report"
   ],
   creator: [
     "Everything in Free",
     "YouTube, Instagram, Facebook, LinkedIn, and Twitter/X support",
-    "AI Rewrite Studio",
+    "Rewrite tool",
     "Content Library",
     "Better captions",
-    "Better hooks",
+    "Better openings",
     "More saved content",
     "No watermark"
   ],
   pro: [
     "Everything in Creator",
-    "Trend Finder",
-    "Growth Coach",
-    "Advanced platform strategy",
-    "Growth recommendations",
+    "Post ideas",
+    "Growth tips",
+    "Better posting tips",
+    "Growth tips",
     "Weekly content goals"
   ],
   agency: [
@@ -31,9 +31,9 @@ export const planFeatures = {
     "Admin/team-ready controls",
     "Higher limits",
     "Priority AI processing",
-    "Premium reports",
-    "Future team workspace/API access",
-    "Bulk repurposing with brand voice support",
+    "Better reports",
+    "Future team tools and API access",
+    "Bulk reuse with brand voice support",
     "Higher upload limits",
     "Multi-user management support"
   ]
@@ -47,7 +47,7 @@ export const plans = [
     yearlyPrice: "₹0",
     monthlyCredits: 5,
     yearlyCredits: 5,
-    description: "5 analyses/month",
+    description: "5 reports/month",
     audience: "Testing the workflow"
   },
   {
@@ -57,7 +57,7 @@ export const plans = [
     yearlyPrice: "₹3,490/year",
     monthlyCredits: 50,
     yearlyCredits: 600,
-    description: "50 analyses/month",
+    description: "50 reports/month",
     audience: "Solo creators",
     badge: "Best for creators"
   },
@@ -68,7 +68,7 @@ export const plans = [
     yearlyPrice: "₹9,990/year",
     monthlyCredits: 200,
     yearlyCredits: 2400,
-    description: "200 analyses/month",
+    description: "200 reports/month",
     audience: "Growing creator teams",
     recommended: true,
     badge: "Popular"
@@ -80,7 +80,7 @@ export const plans = [
     yearlyPrice: "₹14,990/year",
     monthlyCredits: 1000,
     yearlyCredits: 12000,
-    description: "1000 analyses/month",
+    description: "1000 reports/month",
     audience: "Client workflows",
     badge: "Best for agencies"
   }

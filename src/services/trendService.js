@@ -9,5 +9,10 @@ export const trendService = {
   async history() {
     const { data } = await api.get("/trends/history");
     return data;
+  },
+
+  async remove(id) {
+    const { data } = await api.delete(`/trends/${id}`);
+    return data;
   }
 };

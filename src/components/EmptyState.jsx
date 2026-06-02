@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 import Card from "./Card";
 
-const EmptyState = ({ title, description, actionLabel = "Analyze content", to = "/analyze" }) => {
+const EmptyState = ({ title, description, actionLabel = "Create report", to = "/analyze" }) => {
   return (
     <Card className="py-12 text-center">
       <div className="mx-auto grid h-14 w-14 place-items-center rounded-lg bg-gradient-to-br from-brand-400 to-signal text-white shadow-glow">

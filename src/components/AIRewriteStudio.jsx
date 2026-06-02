@@ -61,8 +61,8 @@ const AIRewriteStudio = ({ analysis, onAnalysisUpdate }) => {
 
   if (!canUse) {
     return (
-      <SectionContainer className="mt-5" title="AI Rewrite Studio">
-        <LockedFeature title="AI Rewrite Studio" requiredPlan="Creator" />
+      <SectionContainer className="mt-5" title="Rewrite Tool">
+        <LockedFeature title="Rewrite Tool" requiredPlan="Creator" />
       </SectionContainer>
     );
   }
@@ -70,8 +70,8 @@ const AIRewriteStudio = ({ analysis, onAnalysisUpdate }) => {
   return (
     <SectionContainer
       className="mt-5"
-      description="Rewrite your caption, title, hooks, and CTA into sharper platform-ready versions."
-      title="AI Rewrite Studio"
+      description="Create clearer captions, hooks, titles, and next steps for your post."
+      title="Rewrite Tool"
     >
       <div className="space-y-4">
         <div className="flex flex-wrap gap-2">

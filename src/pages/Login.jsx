@@ -58,7 +58,7 @@ const Login = () => {
           Sign in to your cockpit
         </h1>
         <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
-          Continue analyzing content and improving your creator pipeline.
+          Keep checking your posts and making them easier to publish.
         </p>
       </div>
 

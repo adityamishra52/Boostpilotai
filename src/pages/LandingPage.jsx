@@ -18,26 +18,26 @@ import { useAuth } from "../context/AuthContext";
 
 const features = [
   [
-    "GridFS media vault",
-    "Authenticated image and video previews stay private to owners and admins.",
+    "Private uploads",
+    "Only you and admins can view your images and videos.",
     ShieldCheck
   ],
   [
-    "Creative intelligence",
-    "Captions, hooks, titles, CTAs, hashtags, and platform-fit scores in one run.",
+    "Post ideas",
+    "Get captions, hooks, titles, hashtags, next steps, and scores in one report.",
     Sparkles
   ],
   [
-    "Export-ready reports",
-    "History, admin oversight, and PDF reports are built into the production workflow.",
+    "Easy reports",
+    "Save your history and download PDF reports when you need them.",
     FileText
   ]
 ];
 
 const stats = [
-  ["Private", "JWT media access"],
-  ["Fast", "GridFS streaming"],
-  ["Ready", "PDF exports"]
+  ["Private", "Safe media"],
+  ["Fast", "Quick previews"],
+  ["Ready", "PDF reports"]
 ];
 
 const LandingPage = () => {
@@ -64,25 +64,24 @@ const LandingPage = () => {
       <section className="mx-auto grid max-w-7xl gap-10 px-4 pb-16 pt-8 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:pb-24 lg:pt-14">
         <div className="flex flex-col justify-center">
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-cyan-600 dark:text-brand-300">
-            AI content launch desk
+            AI post helper
           </p>
 
           <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-slate-950 sm:text-6xl dark:text-white">
-            Turn every upload into platform-ready creative direction.
+            Turn every upload into better posts.
           </h1>
 
           <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 dark:text-zinc-300">
-            BoostPilot AI analyzes images and videos, stores private media in MongoDB GridFS,
-            generates strategy, and keeps every report ready for your team.
+            BoostPilot AI checks your images and videos, suggests better text, and saves a report you can download.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button as={Link} icon={ArrowRight} size="lg" to={workspacePath} variant="accent">
-              Open workspace
+              Open app
             </Button>
 
             <Button as={Link} icon={PlayCircle} size="lg" to="/analyze" variant="secondary">
-              Analyze content
+              Check content
             </Button>
           </div>
 
@@ -107,7 +106,7 @@ const LandingPage = () => {
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
 
               <span className="ml-auto text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-zinc-300">
-                Signal studio
+                Creator tools
               </span>
             </div>
 
@@ -120,7 +119,7 @@ const LandingPage = () => {
                 <div className="mt-4 flex items-center justify-between">
                   <div>
                     <p className="font-extrabold">Media preview</p>
-                    <p className="text-xs text-zinc-400">Owner-only access</p>
+                    <p className="text-xs text-zinc-400">Private view</p>
                   </div>
                   <LockKeyhole className="text-cyan-300" size={20} />
                 </div>
@@ -130,7 +129,7 @@ const LandingPage = () => {
                 <div className="rounded-xl border border-slate-200 bg-white p-4 text-slate-950 shadow-sm">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-extrabold text-slate-700">
-                      Launch readiness
+                      Ready to post
                     </p>
                     <p className="text-3xl font-extrabold text-slate-950">92%</p>
                   </div>
@@ -140,7 +139,7 @@ const LandingPage = () => {
                   </div>
                 </div>
 
-                {["Caption angle", "Hook strength", "Technical quality"].map((item, index) => (
+                {["Caption idea", "Opening line", "File quality"].map((item, index) => (
                   <div
                     className="rounded-xl border border-slate-200 bg-white p-4 text-slate-950 shadow-sm"
                     key={item}
@@ -154,10 +153,10 @@ const LandingPage = () => {
                         </p>
                         <p className="text-xs font-bold text-slate-700">
                           {index === 0
-                            ? "Short-form ready"
+                            ? "Ready for short posts"
                             : index === 1
-                            ? "Strong opening line"
-                            : "No blocking issues"}
+                            ? "Strong first line"
+                            : "No big problems"}
                         </p>
                       </div>
                     </div>
@@ -167,11 +166,11 @@ const LandingPage = () => {
                 <div className="rounded-xl border border-slate-200 bg-white p-4 text-slate-950 shadow-sm">
                   <div className="mb-3 flex items-center gap-2 text-sm font-extrabold text-slate-950">
                     <BarChart3 size={18} />
-                    Report exports
+                    Report downloads
                   </div>
 
                   <p className="text-sm font-semibold leading-6 text-slate-700">
-                    Strategy, technical checks, and admin history stay aligned from upload to PDF.
+                    Save your suggestions and download a clean PDF report.
                   </p>
                 </div>
               </div>

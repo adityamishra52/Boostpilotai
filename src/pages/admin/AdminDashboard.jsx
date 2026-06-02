@@ -37,26 +37,26 @@ const AdminDashboard = () => {
     <div>
       <PageHeader
         action={<Badge variant="brand">Admin</Badge>}
-        description="Monitor users, usage, uploads, and platform demand."
+        description="Watch users, usage, uploads, and popular sites."
         eyebrow="Overview"
         title="Admin dashboard"
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatCard accent="from-brand-500 to-signal" detail="Registered accounts" icon={Users} label="Users" value={loading ? "-" : analytics?.totalUsers || 0} />
-        <StatCard accent="from-signal to-coral" detail="All saved analyses" icon={FileText} label="Analyses" value={loading ? "-" : analytics?.totalAnalyses || 0} />
+        <StatCard accent="from-signal to-coral" detail="All saved reports" icon={FileText} label="Reports" value={loading ? "-" : analytics?.totalAnalyses || 0} />
         <StatCard accent="from-amber-400 to-coral" detail="Blocked accounts" icon={ShieldAlert} label="Blocked" value={loading ? "-" : analytics?.blockedUsers || 0} />
         <StatCard accent="from-mint to-brand-500" detail="Stored media records" icon={UploadCloud} label="Uploads" value={loading ? "-" : analytics?.uploadedFiles?.length || 0} />
         <StatCard accent="from-brand-400 to-signal" detail="Saved premium actions" icon={Crown} label="Premium" value={loading ? "-" : analytics?.totalPremiumActions || 0} />
-        <StatCard accent="from-cyan-400 to-emerald-500" detail="Analyses with repurposed content" icon={Repeat2} label="Repurpose" value={loading ? "-" : analytics?.repurposeUsage || 0} />
-        <StatCard accent="from-purple-400 to-cyan-500" detail="AI rewrite studio uses" icon={FileText} label="Rewrite" value={loading ? "-" : analytics?.rewriteUsage || 0} />
-        <StatCard accent="from-emerald-400 to-cyan-500" detail="Trend searches" icon={BarChart3} label="Trends" value={loading ? "-" : analytics?.trendFinderUsage || 0} />
-        <StatCard accent="from-orange-400 to-pink-500" detail="Coach reports" icon={Users} label="Coach" value={loading ? "-" : analytics?.coachUsage || 0} />
+        <StatCard accent="from-cyan-400 to-emerald-500" detail="Reports turned into new posts" icon={Repeat2} label="Reuse" value={loading ? "-" : analytics?.repurposeUsage || 0} />
+        <StatCard accent="from-purple-400 to-cyan-500" detail="Rewrite tool uses" icon={FileText} label="Rewrite" value={loading ? "-" : analytics?.rewriteUsage || 0} />
+        <StatCard accent="from-emerald-400 to-cyan-500" detail="Post idea searches" icon={BarChart3} label="Ideas" value={loading ? "-" : analytics?.trendFinderUsage || 0} />
+        <StatCard accent="from-orange-400 to-pink-500" detail="Growth tip reports" icon={Users} label="Tips" value={loading ? "-" : analytics?.coachUsage || 0} />
         <StatCard accent="from-zinc-700 to-zinc-950" detail="Saved library items" icon={UploadCloud} label="Library" value={loading ? "-" : analytics?.librarySavedItems || 0} />
       </div>
 
       <div className="mt-5 grid gap-5 xl:grid-cols-3">
-        <SectionContainer icon={BarChart3} title="Platform-wise usage">
+        <SectionContainer icon={BarChart3} title="Usage by site">
           <div className="space-y-3">
             {loading ? (
               <Skeleton className="h-28" />

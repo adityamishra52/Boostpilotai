@@ -22,18 +22,18 @@ const defaultSettings = {
 };
 
 const comparisonRows = [
-  { label: "Basic AI analysis", plan: "free" },
-  { label: "Basic captions/hooks", plan: "free" },
+  { label: "Basic AI report", plan: "free" },
+  { label: "Basic captions and openings", plan: "free" },
   { label: "Standard report", plan: "free" },
-  { label: "AI Rewrite Studio", plan: "creator" },
+  { label: "Rewrite tool", plan: "creator" },
   { label: "Content Library", plan: "creator" },
   { label: "No watermark", plan: "creator" },
-  { label: "Trend Finder", plan: "pro" },
-  { label: "Growth Coach", plan: "pro" },
-  { label: "Advanced platform strategy", plan: "pro" },
+  { label: "Post ideas", plan: "pro" },
+  { label: "Growth tips", plan: "pro" },
+  { label: "Better posting tips", plan: "pro" },
   { label: "Admin/team-ready controls", plan: "agency" },
   { label: "Priority AI processing", plan: "agency" },
-  { label: "Future team workspace/API access", plan: "agency" }
+  { label: "Future team tools and API access", plan: "agency" }
 ];
 
 const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
@@ -74,7 +74,7 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
             <div className="mt-7 rounded-lg border border-white/10 bg-white/10 p-5">
               <p className="text-sm font-medium text-zinc-200">Amount</p>
               <p className="mt-2 text-4xl font-extrabold">{amount}</p>
-              <p className="mt-2 text-sm font-medium text-zinc-200">{credits} analysis credits</p>
+              <p className="mt-2 text-sm font-medium text-zinc-200">{credits} report credits</p>
             </div>
             <p className="mt-5 text-sm font-medium leading-6 text-zinc-200">
               Your plan will not activate automatically. Admin will update your plan and credits after payment
@@ -213,7 +213,7 @@ const PricingPage = () => {
             ))}
           </div>
         }
-        description="Choose a plan, pay through UPI/barcode, then send the UTR or transaction number for admin activation."
+        description="Choose a plan, pay with UPI or QR code, then send the payment details so we can activate it."
         eyebrow="Pricing"
         title="Choose your BoostPilot plan"
       />
@@ -245,7 +245,7 @@ const PricingPage = () => {
               <div className="mt-5 rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
                 <div className="flex items-center gap-2 font-bold text-zinc-950 dark:!text-white">
                   <CreditCard size={18} />
-                  {creditsForPlan(plan, billingCycle)} analyses/{billingCycle === "yearly" ? "year" : "month"}
+                  {creditsForPlan(plan, billingCycle)} reports/{billingCycle === "yearly" ? "year" : "month"}
                 </div>
               </div>
               <ul className="mt-5 space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
@@ -264,10 +264,10 @@ const PricingPage = () => {
                   </div>
                   <p className="mt-1 leading-6">
                     {plan.id === "free"
-                      ? "Creator unlocks AI Rewrite Studio and Content Library."
+                      ? "Creator unlocks the rewrite tool and saved content."
                       : plan.id === "creator"
-                        ? "Pro unlocks Trend Finder, Growth Coach, and advanced strategy."
-                        : "Agency unlocks admin-ready controls, higher limits, and premium reports."}
+                        ? "Pro unlocks post ideas, growth tips, and better posting tips."
+                        : "Agency unlocks admin controls, higher limits, and better reports."}
                   </p>
                 </div>
               )}
@@ -290,9 +290,9 @@ const PricingPage = () => {
         <div className="border-b border-zinc-200 p-5 dark:border-zinc-800">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="text-lg font-extrabold text-zinc-950 dark:text-white">Feature matrix</h2>
+              <h2 className="text-lg font-extrabold text-zinc-950 dark:text-white">Compare plans</h2>
               <p className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
-                Compare locked premium actions and reporting upgrades across all four plans.
+                Compare what each plan includes.
               </p>
             </div>
             <Badge variant="brand">4 plans</Badge>
@@ -333,6 +333,19 @@ const PricingPage = () => {
           </table>
         </div>
       </Card>
+
+      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+        {[
+          ["How do upgrades start?", "Choose a paid plan, complete payment, then send the payment number or UTR for approval."],
+          ["Do credits change?", "No credit limits were changed in this redesign. Existing analysis limits and billing cycles remain intact."],
+          ["Can I switch later?", "Yes. Your saved reports, uploads, and library items stay in your account."]
+        ].map(([question, answer]) => (
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-glow" key={question}>
+            <h3 className="text-base font-extrabold text-zinc-950 dark:text-white">{question}</h3>
+            <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">{answer}</p>
+          </Card>
+        ))}
+      </div>
 
       {selectedPlan && (
         <PaymentModal

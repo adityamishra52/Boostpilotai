@@ -19,7 +19,7 @@ import { useAuth } from "../context/AuthContext";
 const navItems = [
   { label: "Dashboard", to: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Users", to: "/admin/users", icon: Users },
-  { label: "Analyses", to: "/admin/analyses", icon: FileText },
+  { label: "Reports", to: "/admin/analyses", icon: FileText },
   { label: "Features", to: "/admin/features", icon: SlidersHorizontal },
   { label: "Settings", to: "/admin/settings", icon: Settings }
 ];
@@ -37,9 +37,9 @@ const AdminLayout = () => {
           <div className="mb-4 grid h-11 w-11 place-items-center rounded-lg bg-white/10">
             <Shield size={22} />
           </div>
-          <p className="text-lg font-extrabold">Admin control room</p>
+          <p className="text-lg font-extrabold">Admin tools</p>
           <p className="mt-2 text-xs leading-5 text-zinc-300">
-            Users, credits, plans, analyses, and upload governance.
+            Users, credits, plans, reports, and upload safety.
           </p>
         </div>
         <nav className="mt-6 space-y-1">
