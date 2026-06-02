@@ -26,7 +26,6 @@ import Button from "./Button";
 import ProtectedMedia from "./ProtectedMedia";
 import SectionContainer from "./SectionContainer";
 
-const VIDEO_EDITING_UNAVAILABLE_MESSAGE = "Video preview editing not available on current server";
 const thumbnailStyles = ["Auto", "MrBeast", "Ali Abdaal", "Alex Hormozi", "Iman Gadzhi", "Faceless", "Tech", "News", "Minimal"];
 
 const copyActions = [
@@ -85,7 +84,7 @@ const fixOptionsForAnalysis = (analysis = {}) => {
           false
       }))
       .sort((a, b) => Number(b.selected) - Number(a.selected))
-      .slice(0, 6);
+      .slice(0, 10);
 
   if (kind === "video") {
     return pick([
@@ -97,8 +96,8 @@ const fixOptionsForAnalysis = (analysis = {}) => {
       },
       {
         id: "crop-shorts",
-        label: "Crop for Shorts/Reels",
-        description: "Converts framing for vertical feeds.",
+        label: "Crop for platform",
+        description: "Fits the video to the selected platform using padding when needed.",
         keywords: ["short", "reel", "vertical", "aspect"],
         defaultSelected: analysis.contentType === "Short" || analysis.contentType === "Reel"
       },
@@ -108,6 +107,12 @@ const fixOptionsForAnalysis = (analysis = {}) => {
         description: "Brightens the frame for mobile viewing.",
         keywords: ["brightness", "dark", "lighting"],
         defaultSelected: true
+      },
+      {
+        id: "clarity",
+        label: "Increase clarity",
+        description: "Improves readability without heavy processing.",
+        keywords: ["clarity", "readability", "blur"]
       },
       {
         id: "contrast",
@@ -122,6 +127,12 @@ const fixOptionsForAnalysis = (analysis = {}) => {
         keywords: ["safe", "margin", "text", "subtitle"]
       },
       {
+        id: "optimize-mobile",
+        label: "Optimize for mobile",
+        description: "Keeps the subject clear in smaller previews.",
+        keywords: ["mobile", "small", "preview"]
+      },
+      {
         id: "fps",
         label: "Optimize pacing",
         description: "Normalizes playback for a smoother preview.",
@@ -132,10 +143,23 @@ const fixOptionsForAnalysis = (analysis = {}) => {
 
   return pick([
     {
+      id: "crop-instagram",
+      label: "Crop for platform",
+      description: "Fits to the platform ratio without cutting the subject.",
+      keywords: ["crop", "aspect", "ratio", "dimension"]
+    },
+    {
       id: "brightness",
       label: "Increase brightness",
       description: "Lifts the image without changing the original.",
       keywords: ["brightness", "dark", "lighting"],
+      defaultSelected: true
+    },
+    {
+      id: "clarity",
+      label: "Increase clarity",
+      description: "Adds a subtle clarity lift for mobile viewing.",
+      keywords: ["clarity", "readability", "blur"],
       defaultSelected: true
     },
     {
@@ -153,16 +177,22 @@ const fixOptionsForAnalysis = (analysis = {}) => {
       defaultSelected: true
     },
     {
-      id: "crop-instagram",
-      label: "Crop for platform",
-      description: "Creates a feed-ready composition.",
-      keywords: ["crop", "aspect", "ratio", "dimension"]
-    },
-    {
       id: "safe-margins",
       label: "Add safe margins",
       description: "Keeps important content away from edges.",
       keywords: ["safe", "margin", "text"]
+    },
+    {
+      id: "subtitle-safe",
+      label: "Subtitle safe area",
+      description: "Keeps space clear for captions and platform overlays.",
+      keywords: ["subtitle", "safe", "caption"]
+    },
+    {
+      id: "optimize-mobile",
+      label: "Optimize for mobile",
+      description: "Preserves the subject in compact mobile previews.",
+      keywords: ["mobile", "small", "preview"]
     },
     {
       id: "saturation",
@@ -329,9 +359,8 @@ const MediaEnhancer = ({
   const editedFile = mediaFileFromAction(applyResult?.editedMedia);
   const kind = mediaKind(analysis);
   const canApplyImage = user?.role === "admin" || hasPlan(user, "pro");
-  const videoEditingUnavailable = kind === "video";
-  const canApply = !videoEditingUnavailable && canApplyImage;
-  const requiredApplyPlan = kind === "video" ? "agency" : "pro";
+  const canApply = canApplyImage;
+  const requiredApplyPlan = "pro";
 
   useEffect(() => {
     setSelectedFixes(options.filter((option) => option.selected).map((option) => option.id));
@@ -356,7 +385,6 @@ const MediaEnhancer = ({
               <Badge variant={kind === "video" ? "warning" : "success"}>
                 Apply: {planLabel(requiredApplyPlan)}
               </Badge>
-              {videoEditingUnavailable && <Badge variant="warning">{VIDEO_EDITING_UNAVAILABLE_MESSAGE}</Badge>}
               {editedFile && <Badge variant="success">Edited</Badge>}
             </div>
             <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
@@ -372,11 +400,7 @@ const MediaEnhancer = ({
           <Button icon={RotateCcw} onClick={reset} size="sm" variant="secondary">
             Reset
           </Button>
-          {videoEditingUnavailable ? (
-            <Button disabled icon={CheckCircle2} loading={loading} size="sm" variant="secondary">
-              Apply selected fixes
-            </Button>
-          ) : canApply ? (
+          {canApply ? (
             <Button
               disabled={!selectedFixes.length}
               icon={CheckCircle2}
@@ -397,9 +421,7 @@ const MediaEnhancer = ({
 
       {!canApply && (
         <p className="mt-3 rounded-lg border border-dashed border-zinc-300 bg-zinc-50/90 p-3 text-sm font-semibold text-zinc-700 dark:border-zinc-700 dark:bg-zinc-950/80 dark:text-zinc-200">
-          {videoEditingUnavailable
-            ? VIDEO_EDITING_UNAVAILABLE_MESSAGE
-            : `Creator can view the AI fix checklist. Applying ${kind} fixes requires ${planLabel(requiredApplyPlan)}.`}
+          {`Creator can view the AI fix checklist. Applying ${kind} fixes requires ${planLabel(requiredApplyPlan)}.`}
         </p>
       )}
 

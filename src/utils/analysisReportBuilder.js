@@ -76,32 +76,30 @@ export const buildAnalysisReport = (analysis = {}) => {
   const sections = [];
 
   if (isTwitter) {
-    addSection(sections, "Twitter/X Summary", output.summary);
-    addSection(sections, "Best Tweet", output.shortTweet || output.viralCaption || output.improvedPostVersion);
-    addSection(sections, "Viral Tweet", output.viralTweet);
-    addSection(sections, "Thread", uniqueList(output.threadVersion), { numbered: true });
-    addSection(sections, "Hashtags", uniqueList(output.hashtags));
+    addSection(sections, "SUMMARY", output.summary);
+    addSection(sections, "CAPTIONS", uniqueList(output.shortTweet || output.viralCaption || output.improvedPostVersion, output.viralTweet));
+    addSection(sections, "THREAD", uniqueList(output.threadVersion), { numbered: true });
+    addSection(sections, "HASHTAGS", uniqueList(output.hashtags));
     addSection(sections, "CTA", uniqueList(output.cta, output.ctaSuggestions));
-    addSection(sections, "Posting Strategy", uniqueList(output.bestPostingStyle, output.engagementStrategy, output.repostStrategy, output.replyPrompt));
-    addSection(sections, "Technical Recommendations", uniqueList(output.technicalSuggestions, technical.fixSuggestions, technical.recommendedDimensions, technical.recommendedDuration));
-    addSection(sections, "Alt Text Suggestion", output.altTextSuggestion);
+    addSection(sections, "TARGET AUDIENCE", output.targetAudience);
+    addSection(sections, "PLATFORM STRATEGY", uniqueList(output.bestPostingStyle, output.engagementStrategy, output.repostStrategy, output.replyPrompt));
+    addSection(sections, "TECHNICAL ISSUES", uniqueList(technical.qualityIssues));
+    addSection(sections, "IMPROVEMENTS", uniqueList(output.technicalSuggestions, technical.fixSuggestions, technical.recommendedDimensions, technical.recommendedDuration, output.altTextSuggestion), { numbered: true });
     return sections.map(renderSection).join("\n\n");
   }
 
-  addSection(sections, "Content Summary", output.summary);
-  addSection(sections, "Overall Score", output.contentScore !== undefined ? `${output.contentScore}/100` : "");
-  addSection(sections, "Suggested Title", suggestedTitle);
-  addSection(sections, "Alternative Titles", alternativeTitles);
-  addSection(sections, "Caption", output.viralCaption || output.improvedPostVersion);
-  addSection(sections, "Hashtags", uniqueList(output.hashtags));
-  addSection(sections, "Hooks", uniqueList(output.hookLines));
+  addSection(sections, "SUMMARY", uniqueList(output.summary, output.contentScore !== undefined ? `Overall score: ${output.contentScore}/100` : ""));
+  addSection(sections, "CAPTIONS", output.viralCaption || output.improvedPostVersion);
+  addSection(sections, "HOOKS", uniqueList(output.hookLines));
+  addSection(sections, "TITLES", uniqueList(suggestedTitle, alternativeTitles));
+  addSection(sections, "HASHTAGS", uniqueList(output.hashtags));
   addSection(sections, "CTA", uniqueList(output.cta, output.ctaSuggestions));
-  addSection(sections, "Strengths", uniqueList(engagement.strengths));
-  addSection(sections, "Weaknesses", uniqueList(engagement.weaknesses));
-  addSection(sections, "Technical Issues", uniqueList(technical.qualityIssues));
-  addSection(sections, "Recommended Fixes", recommendedFixes, { numbered: true });
-  addSection(sections, "Target Audience", output.targetAudience);
-  addSection(sections, "Platform Recommendation", platformRecommendation);
+  addSection(sections, "TARGET AUDIENCE", output.targetAudience);
+  addSection(sections, "STRENGTHS", uniqueList(engagement.strengths));
+  addSection(sections, "WEAKNESSES", uniqueList(engagement.weaknesses));
+  addSection(sections, "TECHNICAL ISSUES", uniqueList(technical.qualityIssues));
+  addSection(sections, "IMPROVEMENTS", recommendedFixes, { numbered: true });
+  addSection(sections, "PLATFORM STRATEGY", platformRecommendation);
 
   const rewrites = analysis.aiRewriteStudio || {};
   const latestRewrite = rewrites.latestMode ? rewrites[rewrites.latestMode] : null;

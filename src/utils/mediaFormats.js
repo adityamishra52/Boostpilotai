@@ -36,13 +36,33 @@ export const thumbnailFormatForAnalysis = ({ platform = "", contentType = "" } =
     };
   }
 
-  if (normalizedPlatform === "facebook" || normalizedPlatform === "linkedin") {
+  if (normalizedPlatform === "facebook") {
     return {
-      key: `${normalizedPlatform}-post`,
+      key: "facebook-post",
       label: "Post Cover Images",
-      description: "Generate feed-ready cover images using the uploaded media frame.",
-      aspectClass: "aspect-square",
-      ratio: "1:1"
+      description: "Generate 1200x630 Facebook cover images using the uploaded media frame.",
+      aspectClass: "aspect-[40/21]",
+      ratio: "1.91:1"
+    };
+  }
+
+  if (normalizedPlatform === "linkedin") {
+    return {
+      key: "linkedin-post",
+      label: "Post Cover Images",
+      description: "Generate 1200x627 LinkedIn cover images using the uploaded media frame.",
+      aspectClass: "aspect-[1200/627]",
+      ratio: "1.91:1"
+    };
+  }
+
+  if (normalizedPlatform === "twitter/x" || normalizedPlatform === "x") {
+    return {
+      key: "twitter-x-post",
+      label: "Twitter/X Media Images",
+      description: "Generate 1200x675 Twitter/X media images using the uploaded media frame.",
+      aspectClass: "aspect-video",
+      ratio: "16:9"
     };
   }
 
