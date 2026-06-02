@@ -12,7 +12,7 @@ export const planFeatures = {
     "Everything in Free",
     "YouTube, Instagram, Facebook, LinkedIn, and Twitter/X support",
     "AI Rewrite Studio",
-    "Viral Content Library",
+    "Content Library",
     "Better captions",
     "Better hooks",
     "More saved content",
@@ -24,8 +24,7 @@ export const planFeatures = {
     "Growth Coach",
     "Advanced platform strategy",
     "Growth recommendations",
-    "Weekly content goals",
-    "Advanced report insights"
+    "Weekly content goals"
   ],
   agency: [
     "Everything in Pro",
@@ -44,8 +43,8 @@ export const plans = [
   {
     id: "free",
     name: "Free",
-    monthlyPrice: "Rs 0",
-    yearlyPrice: "Rs 0",
+    monthlyPrice: "₹0",
+    yearlyPrice: "₹0",
     monthlyCredits: 5,
     yearlyCredits: 5,
     description: "5 analyses/month",
@@ -54,8 +53,8 @@ export const plans = [
   {
     id: "creator",
     name: "Creator",
-    monthlyPrice: "Rs 299/month",
-    yearlyPrice: "Rs 2,990/year",
+    monthlyPrice: "₹349/month",
+    yearlyPrice: "₹3,490/year",
     monthlyCredits: 50,
     yearlyCredits: 600,
     description: "50 analyses/month",
@@ -65,8 +64,8 @@ export const plans = [
   {
     id: "pro",
     name: "Pro",
-    monthlyPrice: "Rs 799/month",
-    yearlyPrice: "Rs 7,990/year",
+    monthlyPrice: "₹999/month",
+    yearlyPrice: "₹9,990/year",
     monthlyCredits: 200,
     yearlyCredits: 2400,
     description: "200 analyses/month",
@@ -77,8 +76,8 @@ export const plans = [
   {
     id: "agency",
     name: "Agency",
-    monthlyPrice: "Rs 1,999/month",
-    yearlyPrice: "Rs 19,990/year",
+    monthlyPrice: "₹1499/month",
+    yearlyPrice: "₹14,990/year",
     monthlyCredits: 1000,
     yearlyCredits: 12000,
     description: "1000 analyses/month",

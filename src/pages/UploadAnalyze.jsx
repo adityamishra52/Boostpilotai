@@ -347,9 +347,9 @@ const UploadAnalyze = () => {
             </div>
             <div className="grid gap-3 p-5 sm:grid-cols-3">
               {[
-                ["Creator", "Rs 299", "50 credits"],
-                ["Pro", "Rs 799", "200 credits"],
-                ["Agency", "Rs 1999", "1000 credits"]
+                ["Creator", "₹349", "50 credits"],
+                ["Pro", "₹999", "200 credits"],
+                ["Agency", "₹1499", "1000 credits"]
               ].map(([name, price, credits]) => (
                 <div
                   className="rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white"

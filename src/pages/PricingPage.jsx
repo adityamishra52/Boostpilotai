@@ -26,12 +26,11 @@ const comparisonRows = [
   { label: "Basic captions/hooks", plan: "free" },
   { label: "Standard report", plan: "free" },
   { label: "AI Rewrite Studio", plan: "creator" },
-  { label: "Viral Content Library", plan: "creator" },
+  { label: "Content Library", plan: "creator" },
   { label: "No watermark", plan: "creator" },
   { label: "Trend Finder", plan: "pro" },
   { label: "Growth Coach", plan: "pro" },
   { label: "Advanced platform strategy", plan: "pro" },
-  { label: "Advanced report insights", plan: "pro" },
   { label: "Admin/team-ready controls", plan: "agency" },
   { label: "Priority AI processing", plan: "agency" },
   { label: "Future team workspace/API access", plan: "agency" }
@@ -265,7 +264,7 @@ const PricingPage = () => {
                   </div>
                   <p className="mt-1 leading-6">
                     {plan.id === "free"
-                      ? "Creator unlocks AI Rewrite Studio and Viral Content Library."
+                      ? "Creator unlocks AI Rewrite Studio and Content Library."
                       : plan.id === "creator"
                         ? "Pro unlocks Trend Finder, Growth Coach, and advanced strategy."
                         : "Agency unlocks admin-ready controls, higher limits, and premium reports."}

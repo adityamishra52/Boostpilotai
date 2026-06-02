@@ -9,7 +9,8 @@ import {
   Maximize2,
   RotateCcw,
   Sparkles,
-  WandSparkles
+  WandSparkles,
+  X
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
@@ -607,6 +608,27 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
 
   const userCanUse = (requiredPlan) => user?.role === "admin" || hasPlan(user, requiredPlan);
 
+  useEffect(() => {
+    if (!fullscreen) {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setFullscreen(null);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [fullscreen]);
+
   const downloadMedia = async (file) => {
     try {
       const response = await mediaService.fetchBlob(file.mediaUrl || file.url);
@@ -823,21 +845,44 @@ const PremiumActionsPanel = ({ analysis, onAnalysisUpdate }) => {
       </div>
 
       {fullscreen && (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-black/80 p-4" onClick={() => setFullscreen(null)}>
+        <div
+          className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/82 p-2 backdrop-blur-md sm:p-4"
+          onClick={() => setFullscreen(null)}
+        >
           <div
-            className="w-full max-w-5xl rounded-lg border border-zinc-700 bg-zinc-950 p-3"
+            className="relative flex max-h-[90vh] w-full max-w-[96vw] flex-col overflow-hidden rounded-lg border border-white/10 bg-zinc-950 shadow-2xl sm:max-w-[92vw] lg:max-w-5xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <ProtectedMedia
-              alt={fullscreen.concept?.titleText || "Thumbnail fullscreen"}
-              className="w-full"
-              file={fullscreen.file}
-              mediaClassName={`${thumbnailFormat.aspectClass} max-h-[78vh] w-full object-contain`}
-              placeholderClassName={thumbnailFormat.aspectClass}
-            />
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-              <p className="font-bold text-white">{fullscreen.concept?.titleText}</p>
-              <Button icon={Download} onClick={() => downloadMedia(fullscreen.file)} size="sm" variant="accent">
+            <button
+              aria-label="Close fullscreen preview"
+              className="absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center rounded-lg bg-black/65 text-white shadow-lg transition hover:bg-black/85 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300/35"
+              onClick={() => setFullscreen(null)}
+              type="button"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="grid min-h-0 flex-1 place-items-center p-2 pt-12 sm:p-4 sm:pt-12">
+              <ProtectedMedia
+                alt={fullscreen.concept?.titleText || "Thumbnail fullscreen"}
+                className="mx-auto grid max-h-[75vh] max-w-full place-items-center rounded-lg bg-zinc-950"
+                file={fullscreen.file}
+                mediaClassName="mx-auto block max-h-[75vh] max-w-full object-contain sm:w-auto"
+                placeholderClassName={`${thumbnailFormat.aspectClass} max-h-[75vh] w-[min(86vw,960px)]`}
+              />
+            </div>
+
+            <div className="flex shrink-0 flex-col gap-3 border-t border-white/10 bg-zinc-950/95 p-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="min-w-0 break-words pr-2 text-sm font-bold leading-5 text-white sm:truncate">
+                {fullscreen.concept?.titleText || "Thumbnail preview"}
+              </p>
+              <Button
+                className="w-full justify-center sm:w-auto"
+                icon={Download}
+                onClick={() => downloadMedia(fullscreen.file)}
+                size="sm"
+                variant="accent"
+              >
                 Download PNG
               </Button>
             </div>
