@@ -40,7 +40,7 @@ const ContentLibrary = () => {
             <input className="h-11 rounded-lg border border-zinc-300 bg-white px-3 dark:border-zinc-700 dark:bg-zinc-950 md:col-span-2" placeholder="Search" value={filters.search} onChange={(e) => setFilters({ ...filters, search: e.target.value })} />
             <select className="h-11 rounded-lg border border-zinc-300 bg-white px-3 dark:border-zinc-700 dark:bg-zinc-950" value={filters.platform} onChange={(e) => setFilters({ ...filters, platform: e.target.value })}>
               <option value="">All platforms</option>
-              {["YouTube", "Instagram", "Facebook", "LinkedIn", "X", "Other"].map((item) => <option key={item}>{item}</option>)}
+              {["YouTube", "Instagram", "Facebook", "LinkedIn", "Twitter/X", "X", "Other"].map((item) => <option key={item}>{item}</option>)}
             </select>
             <Button onClick={load} variant="accent">Filter</Button>
           </div>

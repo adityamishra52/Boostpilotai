@@ -4,7 +4,8 @@ export const contentTypesByPlatform = {
   YouTube: ["Video", "Short", "Thumbnail"],
   Instagram: ["Post", "Reel", "Story", "Video"],
   LinkedIn: ["Post", "Image Post", "Video Post", "Carousel", "Video"],
-  Facebook: ["Post", "Image Post", "Video Post", "Story", "Video"]
+  Facebook: ["Post", "Image Post", "Video Post", "Story", "Video"],
+  "Twitter/X": ["Single Tweet", "Thread", "Image Post", "Video Post", "Promo Post"]
 };
 
 const helperText = {
@@ -16,7 +17,10 @@ const helperText = {
   "Image Post": "Feed image",
   "Video Post": "Feed video",
   Story: "Vertical story",
-  Carousel: "Multi-slide story"
+  Carousel: "Multi-slide story",
+  "Single Tweet": "Under 280 chars",
+  Thread: "5-8 tweet story",
+  "Promo Post": "Sales or launch"
 };
 
 const ContentTypeSelector = ({ platform, value, onChange }) => {

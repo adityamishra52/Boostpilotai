@@ -108,6 +108,10 @@ const ResultsPanel = ({ analysis }) => {
       cta: listValue(output?.cta || output?.ctaSuggestions),
       improvementSuggestions: listValue(output?.improvementSuggestions || output?.engagementSuggestions),
       platformSpecificSuggestions: listValue(output?.platformSpecificSuggestions),
+      twitterThread: listValue(output?.threadVersion),
+      engagementStrategy: listValue(output?.engagementStrategy),
+      technicalSuggestions: listValue(output?.technicalSuggestions),
+      repostStrategy: listValue(output?.repostStrategy),
       strengths: listValue(output?.engagementAnalysis?.strengths),
       weaknesses: listValue(output?.engagementAnalysis?.weaknesses),
       engagement: output?.engagementAnalysis || {},
@@ -128,6 +132,10 @@ const ResultsPanel = ({ analysis }) => {
     : 100;
 
   const fullCopy = buildAnalysisReport(analysis);
+  const isTwitter = analysis.platform === "Twitter/X" || analysis.platform === "X";
+  const tweetText = output.shortTweet || output.viralCaption || output.improvedPostVersion || "";
+  const viralTweetText = output.viralTweet || output.improvedPostVersion || "";
+  const threadText = data.twitterThread.join("\n\n");
 
   const handleDownload = async () => {
     setDownloading(true);
@@ -153,7 +161,7 @@ const ResultsPanel = ({ analysis }) => {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <CopyButton label="Copy report" text={fullCopy} />
+            <CopyButton label={isTwitter ? "Copy All" : "Copy report"} text={fullCopy} />
             <Button icon={Download} loading={downloading} onClick={handleDownload} variant="accent">
               Export PDF
             </Button>
@@ -220,6 +228,71 @@ const ResultsPanel = ({ analysis }) => {
           </p>
         </SectionContainer>
       </div>
+
+      {isTwitter && (
+        <div className="grid gap-5 xl:grid-cols-2">
+          <SectionContainer
+            action={<CopyButton label="Copy Tweet" text={tweetText} />}
+            icon={MessageCircle}
+            title="Tweet"
+          >
+            <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
+              {tweetText || "No tweet available."}
+            </p>
+          </SectionContainer>
+          <SectionContainer
+            action={<CopyButton label="Copy Tweet" text={viralTweetText} />}
+            icon={Sparkles}
+            title="Viral Tweet"
+          >
+            <p className="whitespace-pre-line rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
+              {viralTweetText || "No viral tweet available."}
+            </p>
+          </SectionContainer>
+          <SectionContainer
+            action={<CopyButton label="Copy Thread" text={threadText} />}
+            icon={Copy}
+            title="Thread"
+          >
+            <ListBlock items={data.twitterThread} numbered />
+          </SectionContainer>
+          <SectionContainer
+            action={<CopyButton text={[...data.engagementStrategy, ...data.repostStrategy, output.replyPrompt].filter(Boolean).join("\n")} />}
+            icon={BarChart3}
+            title="Engagement Strategy"
+          >
+            <ListBlock items={data.engagementStrategy} />
+            <div className="mt-4">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">Repost Strategy</p>
+              <ListBlock items={data.repostStrategy} />
+            </div>
+            {output.replyPrompt && (
+              <p className="mt-4 rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
+                {output.replyPrompt}
+              </p>
+            )}
+          </SectionContainer>
+          {output.altTextSuggestion && (
+            <SectionContainer
+              action={<CopyButton text={output.altTextSuggestion} />}
+              icon={Lightbulb}
+              title="Alt Text Suggestion"
+            >
+              <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
+                {output.altTextSuggestion}
+              </p>
+            </SectionContainer>
+          )}
+          <SectionContainer icon={Ruler} title="Posting Style">
+            <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
+              {output.bestPostingStyle || "Short, punchy, conversational, and built around one clear action."}
+            </p>
+            <div className="mt-4">
+              <ListBlock items={data.technicalSuggestions} />
+            </div>
+          </SectionContainer>
+        </div>
+      )}
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
         <SectionContainer icon={MonitorPlay} title="Media preview">

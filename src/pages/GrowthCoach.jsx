@@ -49,6 +49,9 @@ const GrowthCoach = () => {
           <SectionContainer title="Weekly goals"><List items={report.weeklyGoals} /></SectionContainer>
           <SectionContainer title="Monthly goals"><List items={report.monthlyGoals} /></SectionContainer>
           <SectionContainer title="Content strategy"><List items={[...(report.bestContentTypes || []), report.hookQualityAdvice, report.ctaQualityAdvice]} /></SectionContainer>
+          {report.twitterXCoaching?.length > 0 && (
+            <SectionContainer title="Twitter/X coaching"><List items={report.twitterXCoaching} /></SectionContainer>
+          )}
         </div>
       ) : (
         <SectionContainer title="No coach report yet"><Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">Generate coach report</Button></SectionContainer>

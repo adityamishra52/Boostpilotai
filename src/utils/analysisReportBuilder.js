@@ -72,7 +72,21 @@ export const buildAnalysisReport = (analysis = {}) => {
     output.platformSpecificSuggestions
   );
   const platformRecommendation = uniqueList(technical.platformFit, output.platformSpecificSuggestions);
+  const isTwitter = analysis.platform === "Twitter/X" || analysis.platform === "X";
   const sections = [];
+
+  if (isTwitter) {
+    addSection(sections, "Twitter/X Summary", output.summary);
+    addSection(sections, "Best Tweet", output.shortTweet || output.viralCaption || output.improvedPostVersion);
+    addSection(sections, "Viral Tweet", output.viralTweet);
+    addSection(sections, "Thread", uniqueList(output.threadVersion), { numbered: true });
+    addSection(sections, "Hashtags", uniqueList(output.hashtags));
+    addSection(sections, "CTA", uniqueList(output.cta, output.ctaSuggestions));
+    addSection(sections, "Posting Strategy", uniqueList(output.bestPostingStyle, output.engagementStrategy, output.repostStrategy, output.replyPrompt));
+    addSection(sections, "Technical Recommendations", uniqueList(output.technicalSuggestions, technical.fixSuggestions, technical.recommendedDimensions, technical.recommendedDuration));
+    addSection(sections, "Alt Text Suggestion", output.altTextSuggestion);
+    return sections.map(renderSection).join("\n\n");
+  }
 
   addSection(sections, "Content Summary", output.summary);
   addSection(sections, "Overall Score", output.contentScore !== undefined ? `${output.contentScore}/100` : "");

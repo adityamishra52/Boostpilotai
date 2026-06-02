@@ -3,12 +3,14 @@ export const planOrder = ["free", "creator", "pro", "agency"];
 export const planFeatures = {
   free: [
     "Basic AI analysis",
+    "YouTube, Instagram, Facebook, LinkedIn, and Twitter/X support",
     "Basic captions and hooks",
     "Limited credits",
     "Standard report"
   ],
   creator: [
     "Everything in Free",
+    "YouTube, Instagram, Facebook, LinkedIn, and Twitter/X support",
     "AI Rewrite Studio",
     "Viral Content Library",
     "Better captions",

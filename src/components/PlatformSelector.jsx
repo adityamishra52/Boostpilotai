@@ -1,11 +1,12 @@
-import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import clsx from "clsx";
 
 const platforms = [
-  { name: "YouTube", icon: Youtube, accent: "from-red-500 to-coral" },
-  { name: "Instagram", icon: Instagram, accent: "from-fuchsia-500 to-coral" },
-  { name: "Facebook", icon: Facebook, accent: "from-blue-500 to-brand-500" },
-  { name: "LinkedIn", icon: Linkedin, accent: "from-sky-500 to-blue-700" }
+  { name: "YouTube", subtitle: "Videos, shorts, thumbnails", icon: Youtube, accent: "from-red-500 to-coral" },
+  { name: "Instagram", subtitle: "Posts, reels, stories", icon: Instagram, accent: "from-fuchsia-500 to-coral" },
+  { name: "Facebook", subtitle: "Posts, stories, community", icon: Facebook, accent: "from-blue-500 to-brand-500" },
+  { name: "LinkedIn", subtitle: "Professional posts, carousels", icon: Linkedin, accent: "from-sky-500 to-blue-700" },
+  { name: "Twitter/X", subtitle: "Tweets, threads, media posts", icon: Twitter, accent: "from-zinc-800 to-sky-500" }
 ];
 
 const PlatformSelector = ({ value, onChange }) => {
@@ -33,7 +34,7 @@ const PlatformSelector = ({ value, onChange }) => {
             <span className="min-w-0">
               <span className="block break-words text-base font-bold leading-tight">{platform.name}</span>
               <span className={clsx("text-xs font-semibold", active ? "text-zinc-200 dark:text-brand-100" : "text-zinc-700 dark:!text-zinc-300")}>
-                Channel rules
+                {platform.subtitle}
               </span>
             </span>
           </button>

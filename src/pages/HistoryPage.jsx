@@ -16,7 +16,7 @@ import { analysisService } from "../services/analysisService";
 import { downloadBlob } from "../utils/download";
 import { formatDate, formatFileSize, platformAccent } from "../utils/formatters";
 
-const platforms = ["All", "YouTube", "Instagram", "Facebook", "LinkedIn"];
+const platforms = ["All", "YouTube", "Instagram", "Facebook", "LinkedIn", "Twitter/X"];
 
 const HistoryPage = () => {
   const [items, setItems] = useState([]);

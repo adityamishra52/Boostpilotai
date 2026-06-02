@@ -19,6 +19,7 @@ Platforms supported:
 - Instagram
 - Facebook
 - LinkedIn
+- Twitter/X
 
 Website:
 https://boostpilotai.vercel.app

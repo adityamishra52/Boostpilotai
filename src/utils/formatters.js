@@ -21,5 +21,7 @@ export const platformAccent = {
   YouTube: "from-red-500 to-coral",
   Instagram: "from-fuchsia-500 to-coral",
   Facebook: "from-blue-500 to-brand-500",
-  LinkedIn: "from-sky-500 to-blue-700"
+  LinkedIn: "from-sky-500 to-blue-700",
+  "Twitter/X": "from-zinc-800 to-sky-500",
+  X: "from-zinc-800 to-sky-500"
 };

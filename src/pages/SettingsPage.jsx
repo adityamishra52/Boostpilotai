@@ -11,7 +11,7 @@ import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { authService } from "../services/authService";
 
-const platforms = ["YouTube", "Instagram", "Facebook", "LinkedIn"];
+const platforms = ["YouTube", "Instagram", "Facebook", "LinkedIn", "Twitter/X"];
 
 const SettingsPage = () => {
   const { user, updateUser } = useAuth();

@@ -1,7 +1,7 @@
 {
   "name": "BoostPilot AI",
   "short_name": "BoostPilot AI",
-  "description": "AI content optimization for creators across YouTube, Instagram, Facebook, and LinkedIn.",
+  "description": "AI content optimization for creators across YouTube, Instagram, Facebook, LinkedIn, and Twitter/X.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

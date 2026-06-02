@@ -40,10 +40,10 @@ const getPreferredContentType = (platform, selectedFile) => {
   }
 
   const mediaPreference = selectedFile?.type?.startsWith("video/")
-    ? ["Video", "Video Post", "Reel", "Short", "Story"]
+    ? ["Video Post", "Video", "Reel", "Short", "Story"]
     : selectedFile?.type?.startsWith("image/")
-      ? ["Post", "Image Post", "Thumbnail", "Carousel"]
-      : [];
+      ? ["Image Post", "Post", "Thumbnail", "Carousel"]
+      : ["Single Tweet", "Post", "Video"];
 
   return mediaPreference.find((item) => options.includes(item)) || options[0];
 };

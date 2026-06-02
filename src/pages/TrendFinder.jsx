@@ -44,7 +44,7 @@ const platformSuggestions = {
   Instagram: ["Fitness", "Fashion", "Travel", "Food", "Photography"],
   Facebook: ["News", "Sports", "Health", "Food", "Real Estate"],
   LinkedIn: ["Business", "Marketing", "Leadership", "Startups", "AI & Technology"],
-  X: ["News", "Crypto", "AI & Technology", "Finance", "Startups"]
+  "Twitter/X": ["News", "Crypto", "AI & Technology", "Finance", "Startups"]
 };
 
 const countryOptions = [
@@ -337,7 +337,7 @@ const TrendFinder = () => {
                   Platform
                 </p>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {["YouTube", "Instagram", "Facebook", "LinkedIn", "X"].map((item) => (
+                  {["YouTube", "Instagram", "Facebook", "LinkedIn", "Twitter/X"].map((item) => (
                     <button
                       className={`rounded-xl border px-3 py-3 text-sm font-extrabold transition ${
                         form.platform === item
@@ -406,7 +406,16 @@ const TrendFinder = () => {
                 <h2 className="text-3xl font-extrabold text-zinc-950 dark:text-white">
                   {result.opportunityScore}/100 opportunity
                 </h2>
-                {["trendingTopics", "trendingKeywords", "trendingHashtags", "trendingHooks", "contentIdeas"].map((key) => (
+                {[
+                  "trendingTopics",
+                  "trendingKeywords",
+                  "trendingHashtags",
+                  "trendingHooks",
+                  "threadIdeas",
+                  "opinionPostIdeas",
+                  "engagementQuestions",
+                  "contentIdeas"
+                ].map((key) => (
                   <div key={key}>
                     <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">
                       {key.replace(/([A-Z])/g, " $1")}
