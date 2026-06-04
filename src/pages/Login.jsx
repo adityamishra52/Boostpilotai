@@ -1,4 +1,4 @@
-import { BarChart3, Lock, Mail, ShieldCheck, Sparkles } from "lucide-react";
+import { Lock, Mail, ShieldCheck, Sparkles } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -49,13 +49,13 @@ const Login = () => {
   };
 
   return (
-    <Card className="w-full !border-white/70 !bg-white/86 p-5 shadow-2xl backdrop-blur-2xl dark:!border-zinc-700/80 dark:!bg-zinc-900/86 sm:p-6">
-      <div className="mb-5">
+    <Card className="w-full !border-white/70 !bg-white/86 p-4 shadow-2xl backdrop-blur-2xl dark:!border-zinc-700/80 dark:!bg-zinc-900/86 sm:p-5">
+      <div className="mb-4">
         <div className="mb-3 inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-extrabold text-brand-800 dark:border-brand-400/30 dark:bg-brand-400/10 dark:text-brand-100">
           <Sparkles size={15} />
           AI content workspace
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+        <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950 dark:text-white sm:text-3xl">
           Sign in to continue your analysis
         </h1>
         <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
@@ -117,15 +117,6 @@ const Login = () => {
           Secure login
         </div>
         We never post anything without permission. Your upload is saved when you sign in from an analysis flow.
-      </div>
-
-      <div className="mt-3 grid gap-2 text-xs font-bold text-zinc-600 dark:text-zinc-300">
-        {["Private uploads", "No social posting", "Protected reports"].map((item) => (
-          <div className="flex items-center gap-2" key={item}>
-            <BarChart3 className="text-brand-500" size={15} />
-            {item}
-          </div>
-        ))}
       </div>
 
       <p className="mt-4 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">

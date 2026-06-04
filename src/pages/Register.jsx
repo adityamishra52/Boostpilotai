@@ -1,4 +1,4 @@
-import { BarChart3, Lock, Mail, ShieldCheck, Sparkles, User } from "lucide-react";
+import { Lock, Mail, ShieldCheck, Sparkles, User } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -47,13 +47,13 @@ const Register = () => {
   };
 
   return (
-    <Card className="w-full !border-white/70 !bg-white/86 p-5 shadow-2xl backdrop-blur-2xl dark:!border-zinc-700/80 dark:!bg-zinc-900/86 sm:p-6">
-      <div className="mb-5">
+    <Card className="w-full !border-white/70 !bg-white/86 p-4 shadow-2xl backdrop-blur-2xl dark:!border-zinc-700/80 dark:!bg-zinc-900/86 sm:p-5">
+      <div className="mb-4">
         <div className="mb-3 inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-extrabold text-brand-800 dark:border-brand-400/30 dark:bg-brand-400/10 dark:text-brand-100">
           <Sparkles size={15} />
           Start free
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+        <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950 dark:text-white sm:text-3xl">
           Create your free BoostPilot AI account
         </h1>
         <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
@@ -118,19 +118,10 @@ const Register = () => {
         </Button>
       </form>
 
-      <div className="mt-4 grid gap-2 rounded-lg border border-zinc-200 bg-zinc-50/90 p-3 text-sm font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-300">
+      <div className="mt-4 grid gap-2 rounded-lg border border-zinc-200 bg-zinc-50/90 p-3 text-sm font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-300 sm:grid-cols-2">
         {["Private media storage", "Secure authentication", "No auto posting", "Cancel anytime"].map((item) => (
           <div className="flex items-center gap-2" key={item}>
             <ShieldCheck className="text-emerald-500" size={16} />
-            {item}
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-3 grid gap-2 text-xs font-bold text-zinc-600 dark:text-zinc-300">
-        {["Creator-ready reports", "Content Library", "Platform suggestions"].map((item) => (
-          <div className="flex items-center gap-2" key={item}>
-            <BarChart3 className="text-brand-500" size={15} />
             {item}
           </div>
         ))}
