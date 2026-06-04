@@ -7,11 +7,14 @@ import AdminAnalyses from "../pages/admin/AdminAnalyses";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminFeatures from "../pages/admin/AdminFeatures";
 import AdminSettings from "../pages/admin/AdminSettings";
+import AdminSupport from "../pages/admin/AdminSupport";
 import AdminUsers from "../pages/admin/AdminUsers";
 import AdminLogin from "../pages/AdminLogin";
 import Dashboard from "../pages/Dashboard";
 import ContentLibrary from "../pages/ContentLibrary";
 import GrowthCoach from "../pages/GrowthCoach";
+import FeedbackPage from "../pages/FeedbackPage";
+import HelpCenter from "../pages/HelpCenter";
 import HistoryPage from "../pages/HistoryPage";
 import HowItWorks from "../pages/HowItWorks";
 import LandingPage from "../pages/LandingPage";
@@ -20,6 +23,7 @@ import PricingPage from "../pages/PricingPage";
 import Register from "../pages/Register";
 import ResultPage from "../pages/ResultPage";
 import SettingsPage from "../pages/SettingsPage";
+import SupportPage from "../pages/SupportPage";
 import TrendFinder from "../pages/TrendFinder";
 import UploadAnalyze from "../pages/UploadAnalyze";
 import AdminProtectedRoute from "./AdminProtectedRoute";
@@ -41,7 +45,10 @@ const AppRoutes = () => {
 
       <Route element={<DashboardLayout />}>
         <Route path="/analyze" element={<UploadAnalyze />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
+        <Route path="/help" element={<HelpCenter />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/support" element={<SupportPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/results/:id" element={<ResultPage />} />
@@ -60,6 +67,7 @@ const AppRoutes = () => {
           <Route path="/admin/users" element={<AdminUsers />} />
           <Route path="/admin/analyses" element={<AdminAnalyses />} />
           <Route path="/admin/features" element={<AdminFeatures />} />
+          <Route path="/admin/support" element={<AdminSupport />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
         </Route>
       </Route>

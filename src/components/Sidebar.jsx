@@ -2,6 +2,7 @@ import {
   BarChart3,
   Clock,
   CreditCard,
+  HelpCircle,
   Crown,
   Library,
   LayoutDashboard,
@@ -10,6 +11,7 @@ import {
   Radio,
   Settings,
   ShieldCheck,
+  LifeBuoy,
   TrendingUp,
   UploadCloud,
   WandSparkles,
@@ -31,6 +33,8 @@ const navItems = [
   { label: "Trend Finder", to: "/trends", icon: TrendingUp },
   { label: "Growth Coach", to: "/coach", icon: WandSparkles },
   { label: "Pricing", to: "/pricing", icon: CreditCard },
+  { label: "Help Center", to: "/help", icon: HelpCircle },
+  { label: "Support", to: "/support", icon: LifeBuoy },
   { label: "Settings", to: "/settings", icon: Settings }
 ];
 

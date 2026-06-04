@@ -1,6 +1,7 @@
 import {
   BarChart3,
   FileText,
+  LifeBuoy,
   SlidersHorizontal,
   LayoutDashboard,
   LogOut,
@@ -21,6 +22,7 @@ const navItems = [
   { label: "Users", to: "/admin/users", icon: Users },
   { label: "Reports", to: "/admin/analyses", icon: FileText },
   { label: "Features", to: "/admin/features", icon: SlidersHorizontal },
+  { label: "Support", to: "/admin/support", icon: LifeBuoy },
   { label: "Settings", to: "/admin/settings", icon: Settings }
 ];
 
