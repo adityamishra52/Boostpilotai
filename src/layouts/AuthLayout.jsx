@@ -20,9 +20,9 @@ const featureCards = [
 
 const AuthLayout = () => {
   return (
-    <main className="min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
+    <main className="min-h-screen overflow-x-hidden bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white lg:h-screen lg:overflow-hidden">
       <div className="grid min-h-screen lg:h-screen lg:grid-cols-[minmax(0,3fr)_minmax(420px,2fr)] lg:overflow-hidden">
-        <section className="relative hidden overflow-hidden border-r border-zinc-200 bg-[linear-gradient(135deg,#09090b_0%,#111827_52%,#172554_100%)] px-8 py-7 text-white dark:border-zinc-800 lg:flex lg:flex-col">
+        <section className="relative hidden min-h-0 overflow-hidden border-r border-zinc-200 bg-[linear-gradient(135deg,#09090b_0%,#111827_52%,#172554_100%)] px-8 py-6 text-white dark:border-zinc-800 lg:flex lg:h-screen lg:flex-col">
           <div className="relative z-10 flex items-center justify-between">
             <Logo inverse />
             <div className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-extrabold text-white">
@@ -30,12 +30,12 @@ const AuthLayout = () => {
             </div>
           </div>
 
-          <div className="relative z-10 grid flex-1 items-center py-10">
+          <div className="relative z-10 grid min-h-0 flex-1 items-center py-6">
             <div className="max-w-3xl">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-200">
                 BoostPilot AI
               </p>
-              <h1 className="mt-4 max-w-3xl text-5xl font-extrabold leading-tight tracking-tight xl:text-6xl">
+              <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight xl:text-5xl">
                 Create better content from every upload.
               </h1>
               <p className="mt-5 max-w-2xl text-base font-medium leading-8 text-zinc-300">
@@ -61,9 +61,9 @@ const AuthLayout = () => {
             </div>
           </div>
 
-          <div className="relative z-10 grid gap-4 xl:grid-cols-[1fr_0.85fr]">
+          <div className="relative z-10 grid max-h-[34vh] shrink-0 gap-4 overflow-hidden xl:grid-cols-[1fr_0.85fr]">
             <div className="rounded-lg border border-white/10 bg-white/10 p-4 shadow-2xl backdrop-blur-xl">
-              <div className="grid aspect-[16/9] place-items-center rounded-lg bg-gradient-to-br from-brand-400 via-signal to-coral">
+              <div className="grid aspect-[16/9] max-h-36 place-items-center rounded-lg bg-gradient-to-br from-brand-400 via-signal to-coral">
                 <UploadCloud size={48} />
               </div>
               <div className="mt-4 grid grid-cols-3 gap-3">
@@ -92,7 +92,7 @@ const AuthLayout = () => {
             </div>
           </div>
 
-          <div className="relative z-10 mt-6 flex flex-wrap gap-3 text-xs font-bold text-zinc-300">
+          <div className="relative z-10 mt-4 flex shrink-0 flex-wrap gap-3 text-xs font-bold text-zinc-300">
             {["Secure login", "Private uploads", "No social posting without permission"].map((item) => (
               <span className="inline-flex items-center gap-2" key={item}>
                 <ShieldCheck size={15} className="text-emerald-300" />
