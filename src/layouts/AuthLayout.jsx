@@ -20,8 +20,8 @@ const featureCards = [
 
 const AuthLayout = () => {
   return (
-    <main className="min-h-screen overflow-hidden bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
-      <div className="grid min-h-screen lg:grid-cols-[minmax(0,3fr)_minmax(420px,2fr)]">
+    <main className="min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
+      <div className="grid min-h-screen lg:h-screen lg:grid-cols-[minmax(0,3fr)_minmax(420px,2fr)] lg:overflow-hidden">
         <section className="relative hidden overflow-hidden border-r border-zinc-200 bg-[linear-gradient(135deg,#09090b_0%,#111827_52%,#172554_100%)] px-8 py-7 text-white dark:border-zinc-800 lg:flex lg:flex-col">
           <div className="relative z-10 flex items-center justify-between">
             <Logo inverse />
@@ -102,15 +102,19 @@ const AuthLayout = () => {
           </div>
         </section>
 
-        <section className="relative flex min-h-screen items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
-          <div className="absolute right-4 top-4 z-10">
-            <ThemeToggle />
-          </div>
-          <div className="relative z-10 w-full max-w-md">
-            <div className="mb-6 flex justify-center lg:hidden">
-              <Logo />
+        <section className="min-h-screen min-w-0 overflow-y-auto px-4 py-5 sm:px-6 lg:h-screen lg:min-h-0 lg:px-8">
+          <div className="mx-auto flex min-h-full w-full max-w-md flex-col">
+            <div className="mb-5 flex items-center justify-between gap-3">
+              <div className="lg:hidden">
+                <Logo />
+              </div>
+              <div className="ml-auto">
+                <ThemeToggle />
+              </div>
             </div>
-            <Outlet />
+            <div className="flex flex-1 items-center py-2">
+              <Outlet />
+            </div>
           </div>
         </section>
       </div>

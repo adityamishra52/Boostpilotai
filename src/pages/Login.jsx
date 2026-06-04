@@ -49,21 +49,21 @@ const Login = () => {
   };
 
   return (
-    <Card className="w-full !border-white/70 !bg-white/86 p-6 shadow-2xl backdrop-blur-2xl dark:!border-zinc-700/80 dark:!bg-zinc-900/86 sm:p-7">
-      <div className="mb-6">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-extrabold text-brand-800 dark:border-brand-400/30 dark:bg-brand-400/10 dark:text-brand-100">
+    <Card className="w-full !border-white/70 !bg-white/86 p-5 shadow-2xl backdrop-blur-2xl dark:!border-zinc-700/80 dark:!bg-zinc-900/86 sm:p-6">
+      <div className="mb-5">
+        <div className="mb-3 inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-extrabold text-brand-800 dark:border-brand-400/30 dark:bg-brand-400/10 dark:text-brand-100">
           <Sparkles size={15} />
           AI content workspace
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
           Sign in to continue your analysis
         </h1>
-        <p className="mt-3 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
+        <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
           Access your saved uploads, reports, rewrites, and Content Library.
         </p>
       </div>
 
-      <div className="mb-5 grid grid-cols-3 gap-2">
+      <div className="mb-4 grid grid-cols-3 gap-2">
         {[
           ["4.9/5", "Rating"],
           ["10k+", "Analyses"],
@@ -78,13 +78,13 @@ const Login = () => {
 
       <GoogleAuthButton disabled={loading} onSuccess={handleGoogle} />
 
-      <div className="my-5 flex items-center gap-3">
+      <div className="my-4 flex items-center gap-3">
         <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
         <span className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">or use email</span>
         <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
       </div>
 
-      <form className="space-y-4" onSubmit={handleSubmit}>
+      <form className="space-y-3" onSubmit={handleSubmit}>
         <Input
           autoComplete="email"
           icon={Mail}
@@ -111,7 +111,7 @@ const Login = () => {
         </Button>
       </form>
 
-      <div className="mt-5 rounded-lg border border-zinc-200 bg-zinc-50/90 p-4 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-300">
+      <div className="mt-4 rounded-lg border border-zinc-200 bg-zinc-50/90 p-3 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-300">
         <div className="mb-2 flex items-center gap-2 font-extrabold text-zinc-950 dark:text-white">
           <ShieldCheck size={17} />
           Secure login
@@ -119,7 +119,7 @@ const Login = () => {
         We never post anything without permission. Your upload is saved when you sign in from an analysis flow.
       </div>
 
-      <div className="mt-4 grid gap-2 text-xs font-bold text-zinc-600 dark:text-zinc-300">
+      <div className="mt-3 grid gap-2 text-xs font-bold text-zinc-600 dark:text-zinc-300">
         {["Private uploads", "No social posting", "Protected reports"].map((item) => (
           <div className="flex items-center gap-2" key={item}>
             <BarChart3 className="text-brand-500" size={15} />
@@ -128,7 +128,7 @@ const Login = () => {
         ))}
       </div>
 
-      <p className="mt-6 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
+      <p className="mt-4 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
         New to BoostPilot?{" "}
         <Link className="rounded font-bold text-brand-700 hover:text-brand-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 dark:text-brand-200 dark:hover:text-brand-100 dark:focus-visible:ring-brand-400/25" to={`/register?redirect=${encodeURIComponent(from)}`}>
           Create an account
