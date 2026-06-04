@@ -1,4 +1,4 @@
-import { Lock, Mail, ShieldCheck } from "lucide-react";
+import { BarChart3, Lock, Mail, ShieldCheck, Sparkles } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -49,17 +49,39 @@ const Login = () => {
   };
 
   return (
-    <Card className="w-full p-7">
-      <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-600 dark:text-brand-300">
-          Welcome back
-        </p>
-        <h1 className="mt-3 text-3xl font-extrabold text-zinc-950 dark:text-white">
-          Sign in to continue your analysis.
+    <Card className="w-full !border-white/70 !bg-white/86 p-6 shadow-2xl backdrop-blur-2xl dark:!border-zinc-700/80 dark:!bg-zinc-900/86 sm:p-7">
+      <div className="mb-6">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-extrabold text-brand-800 dark:border-brand-400/30 dark:bg-brand-400/10 dark:text-brand-100">
+          <Sparkles size={15} />
+          AI content workspace
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+          Sign in to continue your analysis
         </h1>
-        <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
-          Your saved reports, uploads, and Content Library stay private in your account.
+        <p className="mt-3 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
+          Access your saved uploads, reports, rewrites, and Content Library.
         </p>
+      </div>
+
+      <div className="mb-5 grid grid-cols-3 gap-2">
+        {[
+          ["4.9/5", "Rating"],
+          ["10k+", "Analyses"],
+          ["5", "Platforms"]
+        ].map(([value, label]) => (
+          <div className="rounded-lg border border-zinc-200 bg-white/90 p-3 text-center dark:border-zinc-700 dark:bg-zinc-950/70" key={label}>
+            <p className="text-base font-extrabold text-zinc-950 dark:text-white">{value}</p>
+            <p className="mt-1 text-[11px] font-bold text-zinc-500 dark:text-zinc-400">{label}</p>
+          </div>
+        ))}
+      </div>
+
+      <GoogleAuthButton disabled={loading} onSuccess={handleGoogle} />
+
+      <div className="my-5 flex items-center gap-3">
+        <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+        <span className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">or use email</span>
+        <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -89,20 +111,21 @@ const Login = () => {
         </Button>
       </form>
 
-      <div className="my-5 flex items-center gap-3">
-        <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
-        <span className="text-xs font-bold uppercase tracking-[0.16em] text-zinc-500">or</span>
-        <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
-      </div>
-
-      <GoogleAuthButton disabled={loading} onSuccess={handleGoogle} text="continue_with" />
-
       <div className="mt-5 rounded-lg border border-zinc-200 bg-zinc-50/90 p-4 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-300">
         <div className="mb-2 flex items-center gap-2 font-extrabold text-zinc-950 dark:text-white">
           <ShieldCheck size={17} />
           Secure login
         </div>
         We never post anything without permission. Your upload is saved when you sign in from an analysis flow.
+      </div>
+
+      <div className="mt-4 grid gap-2 text-xs font-bold text-zinc-600 dark:text-zinc-300">
+        {["Private uploads", "No social posting", "Protected reports"].map((item) => (
+          <div className="flex items-center gap-2" key={item}>
+            <BarChart3 className="text-brand-500" size={15} />
+            {item}
+          </div>
+        ))}
       </div>
 
       <p className="mt-6 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
