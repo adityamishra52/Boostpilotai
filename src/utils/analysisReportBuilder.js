@@ -80,26 +80,26 @@ export const buildAnalysisReport = (analysis = {}) => {
     addSection(sections, "CAPTIONS", uniqueList(output.shortTweet || output.viralCaption || output.improvedPostVersion, output.viralTweet));
     addSection(sections, "THREAD", uniqueList(output.threadVersion), { numbered: true });
     addSection(sections, "HASHTAGS", uniqueList(output.hashtags));
-    addSection(sections, "NEXT STEPS", uniqueList(output.cta, output.ctaSuggestions));
-    addSection(sections, "WHO THIS IS FOR", output.targetAudience);
-    addSection(sections, "POSTING TIPS", uniqueList(output.bestPostingStyle, output.engagementStrategy, output.repostStrategy, output.replyPrompt));
-    addSection(sections, "PROBLEMS FOUND", uniqueList(technical.qualityIssues));
-    addSection(sections, "WAYS TO IMPROVE", uniqueList(output.technicalSuggestions, technical.fixSuggestions, technical.recommendedDimensions, technical.recommendedDuration, output.altTextSuggestion), { numbered: true });
+    addSection(sections, "CTA", uniqueList(output.cta, output.ctaSuggestions));
+    addSection(sections, "TARGET AUDIENCE", output.targetAudience);
+    addSection(sections, "PLATFORM STRATEGY", uniqueList(output.bestPostingStyle, output.engagementStrategy, output.repostStrategy, output.replyPrompt));
+    addSection(sections, "TECHNICAL ISSUES", uniqueList(technical.qualityIssues));
+    addSection(sections, "IMPROVEMENTS", uniqueList(output.technicalSuggestions, technical.fixSuggestions, technical.recommendedDimensions, technical.recommendedDuration, output.altTextSuggestion), { numbered: true });
     return sections.map(renderSection).join("\n\n");
   }
 
   addSection(sections, "SUMMARY", uniqueList(output.summary, output.contentScore !== undefined ? `Overall score: ${output.contentScore}/100` : ""));
   addSection(sections, "CAPTIONS", output.viralCaption || output.improvedPostVersion);
-  addSection(sections, "OPENING LINES", uniqueList(output.hookLines));
+  addSection(sections, "HOOKS", uniqueList(output.hookLines));
   addSection(sections, "TITLES", uniqueList(suggestedTitle, alternativeTitles));
   addSection(sections, "HASHTAGS", uniqueList(output.hashtags));
-  addSection(sections, "NEXT STEPS", uniqueList(output.cta, output.ctaSuggestions));
-  addSection(sections, "WHO THIS IS FOR", output.targetAudience);
+  addSection(sections, "CTA", uniqueList(output.cta, output.ctaSuggestions));
+  addSection(sections, "TARGET AUDIENCE", output.targetAudience);
   addSection(sections, "STRENGTHS", uniqueList(engagement.strengths));
   addSection(sections, "WEAKNESSES", uniqueList(engagement.weaknesses));
-  addSection(sections, "PROBLEMS FOUND", uniqueList(technical.qualityIssues));
-  addSection(sections, "WAYS TO IMPROVE", recommendedFixes, { numbered: true });
-  addSection(sections, "POSTING TIPS", platformRecommendation);
+  addSection(sections, "TECHNICAL ISSUES", uniqueList(technical.qualityIssues));
+  addSection(sections, "IMPROVEMENTS", recommendedFixes, { numbered: true });
+  addSection(sections, "PLATFORM STRATEGY", platformRecommendation);
 
   const rewrites = analysis.aiRewriteStudio || {};
   const latestRewrite = rewrites.latestMode ? rewrites[rewrites.latestMode] : null;

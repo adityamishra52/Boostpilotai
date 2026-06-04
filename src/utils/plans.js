@@ -43,8 +43,8 @@ export const plans = [
   {
     id: "free",
     name: "Free",
-    monthlyPrice: "₹0",
-    yearlyPrice: "₹0",
+    monthlyPrice: "Rs 0",
+    yearlyPrice: "Rs 0",
     monthlyCredits: 5,
     yearlyCredits: 5,
     description: "5 reports/month",
@@ -53,8 +53,8 @@ export const plans = [
   {
     id: "creator",
     name: "Creator",
-    monthlyPrice: "₹349/month",
-    yearlyPrice: "₹3,490/year",
+    monthlyPrice: "Rs 349/month",
+    yearlyPrice: "Rs 3,490/year",
     monthlyCredits: 50,
     yearlyCredits: 600,
     description: "50 reports/month",
@@ -64,8 +64,8 @@ export const plans = [
   {
     id: "pro",
     name: "Pro",
-    monthlyPrice: "₹999/month",
-    yearlyPrice: "₹9,990/year",
+    monthlyPrice: "Rs 999/month",
+    yearlyPrice: "Rs 9,990/year",
     monthlyCredits: 200,
     yearlyCredits: 2400,
     description: "200 reports/month",
@@ -76,8 +76,8 @@ export const plans = [
   {
     id: "agency",
     name: "Agency",
-    monthlyPrice: "₹1499/month",
-    yearlyPrice: "₹14,990/year",
+    monthlyPrice: "Rs 1499/month",
+    yearlyPrice: "Rs 14,990/year",
     monthlyCredits: 1000,
     yearlyCredits: 12000,
     description: "1000 reports/month",
