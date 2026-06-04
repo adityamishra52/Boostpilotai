@@ -12,12 +12,15 @@ import AdminUsers from "../pages/admin/AdminUsers";
 import AdminLogin from "../pages/AdminLogin";
 import Dashboard from "../pages/Dashboard";
 import ContentLibrary from "../pages/ContentLibrary";
+import ContactPage from "../pages/ContactPage";
 import GrowthCoach from "../pages/GrowthCoach";
 import FeedbackPage from "../pages/FeedbackPage";
+import FeaturesPage from "../pages/FeaturesPage";
 import HelpCenter from "../pages/HelpCenter";
 import HistoryPage from "../pages/HistoryPage";
 import HowItWorks from "../pages/HowItWorks";
 import LandingPage from "../pages/LandingPage";
+import LegalPage from "../pages/LegalPage";
 import Login from "../pages/Login";
 import PricingPage from "../pages/PricingPage";
 import Register from "../pages/Register";
@@ -35,6 +38,11 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
+      <Route path="/features" element={<FeaturesPage />} />
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/privacy" element={<LegalPage type="privacy" />} />
+      <Route path="/terms" element={<LegalPage type="terms" />} />
       <Route element={<PublicRoute />}>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
@@ -47,7 +55,6 @@ const AppRoutes = () => {
         <Route path="/analyze" element={<UploadAnalyze />} />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/help" element={<HelpCenter />} />
-        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />

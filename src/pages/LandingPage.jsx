@@ -16,9 +16,10 @@ import {
 import { Link } from "react-router-dom";
 
 import Button from "../components/Button";
-import Logo from "../components/Logo";
-import ThemeToggle from "../components/ThemeToggle";
+import PublicFooter from "../components/PublicFooter";
+import PublicNavbar from "../components/PublicNavbar";
 import { useAuth } from "../context/AuthContext";
+import { usePageMeta } from "../hooks/usePageMeta";
 import { plans } from "../utils/plans";
 
 const workflow = [
@@ -47,26 +48,15 @@ const faqs = [
 const LandingPage = () => {
   const { isAuthenticated } = useAuth();
   const startPath = isAuthenticated ? "/analyze" : "/register?redirect=/analyze";
+  usePageMeta({
+    title: "BoostPilot AI - AI Content Optimization",
+    description: "Analyze uploads, improve captions, save content, and export reports for every major social platform.",
+    url: "https://boostpilotai.vercel.app/"
+  });
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
-      <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-white/90 backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/90">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
-          <Logo />
-          <nav className="hidden items-center gap-5 text-sm font-bold text-zinc-700 dark:text-zinc-200 md:flex">
-            <a href="#how">How it works</a>
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <Link to="/how-it-works">Guide</Link>
-          </nav>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Button as={Link} to={isAuthenticated ? "/dashboard" : "/login"} variant="secondary">
-              {isAuthenticated ? "Dashboard" : "Sign in"}
-            </Button>
-          </div>
-        </div>
-      </header>
+      <PublicNavbar />
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-14">
         <div className="flex flex-col justify-center">
@@ -134,7 +124,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section id="how" className="border-y border-zinc-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-900/40">
+      <section className="border-y border-zinc-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-900/40">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -160,7 +150,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section id="features" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-4 lg:grid-cols-3">
           {valueCards.map(([title, text, Icon]) => (
             <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900" key={title}>
@@ -195,7 +185,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section id="pricing" className="border-y border-zinc-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-900/40">
+      <section className="border-y border-zinc-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-900/40">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -230,6 +220,7 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
+      <PublicFooter />
     </main>
   );
 };

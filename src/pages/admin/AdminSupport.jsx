@@ -7,34 +7,40 @@ import Button from "../../components/Button";
 import Card from "../../components/Card";
 import PageHeader from "../../components/PageHeader";
 import SectionContainer from "../../components/SectionContainer";
+import { contactService } from "../../services/contactService";
 import { supportService } from "../../services/supportService";
 
 const ticketStatuses = ["all", "open", "in_progress", "resolved", "closed"];
 const feedbackStatuses = ["all", "new", "reviewing", "planned", "resolved", "closed"];
 const categories = ["all", "Technical Issue", "Billing", "Feature Request", "Bug Report", "Account Problem", "General Question"];
+const contactStatuses = ["all", "new", "read", "replied", "closed"];
 
 const formatStatus = (status) => String(status || "").replace(/_/g, " ");
 
 const AdminSupport = () => {
   const [tickets, setTickets] = useState([]);
   const [feedback, setFeedback] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const [ticketStatus, setTicketStatus] = useState("all");
   const [ticketCategory, setTicketCategory] = useState("all");
   const [feedbackStatus, setFeedbackStatus] = useState("all");
+  const [contactStatus, setContactStatus] = useState("all");
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
     setLoading(true);
     try {
-      const [ticketData, feedbackData] = await Promise.all([
+      const [ticketData, feedbackData, contactData] = await Promise.all([
         supportService.adminTickets({
           ...(ticketStatus !== "all" ? { status: ticketStatus } : {}),
           ...(ticketCategory !== "all" ? { category: ticketCategory } : {})
         }),
-        supportService.adminFeedback(feedbackStatus !== "all" ? { status: feedbackStatus } : {})
+        supportService.adminFeedback(feedbackStatus !== "all" ? { status: feedbackStatus } : {}),
+        contactService.adminMessages(contactStatus !== "all" ? { status: contactStatus } : {})
       ]);
       setTickets(ticketData.tickets || []);
       setFeedback(feedbackData.feedback || []);
+      setContacts(contactData.messages || []);
     } catch (error) {
       toast.error(error.response?.data?.message || "Unable to load support inbox");
     } finally {
@@ -44,15 +50,16 @@ const AdminSupport = () => {
 
   useEffect(() => {
     load();
-  }, [ticketStatus, ticketCategory, feedbackStatus]);
+  }, [ticketStatus, ticketCategory, feedbackStatus, contactStatus]);
 
   const totals = useMemo(
     () => ({
       openTickets: tickets.filter((item) => item.status === "open").length,
       urgentTickets: tickets.filter((item) => item.priority === "Urgent").length,
-      newFeedback: feedback.filter((item) => item.status === "new").length
+      newFeedback: feedback.filter((item) => item.status === "new").length,
+      newContacts: contacts.filter((item) => item.status === "new").length
     }),
-    [feedback, tickets]
+    [contacts, feedback, tickets]
   );
 
   const changeTicketStatus = async (id, status) => {
@@ -62,6 +69,16 @@ const AdminSupport = () => {
       toast.success("Ticket status updated");
     } catch (error) {
       toast.error(error.response?.data?.message || "Unable to update ticket");
+    }
+  };
+
+  const changeContactStatus = async (id, status) => {
+    try {
+      const data = await contactService.updateStatus(id, status);
+      setContacts((current) => current.map((item) => (item._id === id ? { ...item, status: data.message.status } : item)));
+      toast.success("Contact status updated");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Unable to update contact message");
     }
   };
 
@@ -84,11 +101,12 @@ const AdminSupport = () => {
         title="Support inbox"
       />
 
-      <div className="mb-5 grid gap-3 md:grid-cols-3">
+      <div className="mb-5 grid gap-3 md:grid-cols-4">
         {[
           ["Open tickets", totals.openTickets],
           ["Urgent tickets", totals.urgentTickets],
-          ["New feedback", totals.newFeedback]
+          ["New feedback", totals.newFeedback],
+          ["New contacts", totals.newContacts]
         ].map(([label, value]) => (
           <Card className="p-4" key={label}>
             <p className="text-sm font-bold text-zinc-600 dark:text-zinc-300">{label}</p>
@@ -133,7 +151,8 @@ const AdminSupport = () => {
           </div>
         </SectionContainer>
 
-        <SectionContainer icon={MessageSquare} title="Feedback requests" description="Feature requests, bugs, and improvement ideas.">
+        <div className="grid gap-5">
+          <SectionContainer icon={MessageSquare} title="Feedback requests" description="Feature requests, bugs, and improvement ideas.">
           <div className="mb-4">
             <select className="h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-950 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white" onChange={(event) => setFeedbackStatus(event.target.value)} value={feedbackStatus}>
               {feedbackStatuses.map((item) => <option key={item} value={item}>{formatStatus(item)}</option>)}
@@ -160,7 +179,32 @@ const AdminSupport = () => {
             ))}
             {!feedback.length && <p className="rounded-lg border border-dashed border-zinc-300 p-5 text-sm font-semibold text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">No feedback matches the current filters.</p>}
           </div>
-        </SectionContainer>
+          </SectionContainer>
+          <SectionContainer icon={MessageSquare} title="Contact messages" description="Public contact page submissions.">
+          <div className="mb-4">
+            <select className="h-11 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-950 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white" onChange={(event) => setContactStatus(event.target.value)} value={contactStatus}>
+              {contactStatuses.map((item) => <option key={item} value={item}>{formatStatus(item)}</option>)}
+            </select>
+          </div>
+          <div className="grid gap-3">
+            {contacts.map((item) => (
+              <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-700 dark:bg-zinc-950/70" key={item._id}>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="brand">{item.category}</Badge>
+                  <Badge variant="neutral">{formatStatus(item.status)}</Badge>
+                </div>
+                <h3 className="mt-3 font-extrabold text-zinc-950 dark:text-white">{item.subject}</h3>
+                <p className="mt-1 text-sm font-semibold text-zinc-600 dark:text-zinc-300">{item.name} - {item.email}</p>
+                <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-zinc-700 dark:text-zinc-300">{item.message}</p>
+                <select className="mt-3 h-10 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm font-bold text-zinc-950 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white" onChange={(event) => changeContactStatus(item._id, event.target.value)} value={item.status}>
+                  {contactStatuses.filter((status) => status !== "all").map((status) => <option key={status} value={status}>{formatStatus(status)}</option>)}
+                </select>
+              </div>
+            ))}
+            {!contacts.length && <p className="rounded-lg border border-dashed border-zinc-300 p-5 text-sm font-semibold text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">No contact messages match the current filters.</p>}
+          </div>
+          </SectionContainer>
+        </div>
       </div>
     </div>
   );

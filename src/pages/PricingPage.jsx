@@ -7,7 +7,10 @@ import Badge from "../components/Badge";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import PageHeader from "../components/PageHeader";
+import PublicFooter from "../components/PublicFooter";
+import PublicNavbar from "../components/PublicNavbar";
 import { useAuth } from "../context/AuthContext";
+import { usePageMeta } from "../hooks/usePageMeta";
 import { billingService } from "../services/billingService";
 import { creditsForPlan, featuresForPlan, hasPlan, plans, priceForPlan } from "../utils/plans";
 
@@ -134,6 +137,11 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
 
 const PricingPage = () => {
   const { user } = useAuth();
+  usePageMeta({
+    title: "BoostPilot AI Pricing",
+    description: "Compare BoostPilot AI plans for creator analysis, AI Rewrite, Content Library, Trend Finder, Growth Coach, and Agency support.",
+    url: "https://boostpilotai.vercel.app/pricing"
+  });
   const [billingCycle, setBillingCycle] = useState("monthly");
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [settings, setSettings] = useState(defaultSettings);
@@ -193,8 +201,10 @@ const PricingPage = () => {
   };
 
   return (
-    <motion.div animate={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 10 }}>
-      <PageHeader
+    <main className="min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
+      <PublicNavbar />
+      <motion.div animate={{ opacity: 1, y: 0 }} className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8" initial={{ opacity: 0, y: 10 }}>
+        <PageHeader
         action={
           <div className="inline-flex rounded-lg border border-zinc-300 bg-white p-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             {["monthly", "yearly"].map((cycle) => (
@@ -355,16 +365,18 @@ const PricingPage = () => {
         ))}
       </div>
 
-      {selectedPlan && (
-        <PaymentModal
-          billingCycle={billingCycle}
-          onClose={() => setSelectedPlan(null)}
-          plan={selectedPlan}
-          qrSrc={qrObjectUrl}
-          settings={settings}
-        />
-      )}
-    </motion.div>
+        {selectedPlan && (
+          <PaymentModal
+            billingCycle={billingCycle}
+            onClose={() => setSelectedPlan(null)}
+            plan={selectedPlan}
+            qrSrc={qrObjectUrl}
+            settings={settings}
+          />
+        )}
+      </motion.div>
+      <PublicFooter />
+    </main>
   );
 };
 

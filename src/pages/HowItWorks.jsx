@@ -2,8 +2,9 @@ import { CheckCircle2, FileText, Library, LockKeyhole, ShieldCheck, Sparkles, Up
 import { Link } from "react-router-dom";
 
 import Button from "../components/Button";
-import Logo from "../components/Logo";
-import ThemeToggle from "../components/ThemeToggle";
+import PublicFooter from "../components/PublicFooter";
+import PublicNavbar from "../components/PublicNavbar";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 const steps = [
   "Create an account or continue with Google.",
@@ -31,17 +32,15 @@ const faqs = [
 ];
 
 const HowItWorks = () => {
+  usePageMeta({
+    title: "How BoostPilot AI Works",
+    description: "Learn how BoostPilot AI turns uploads into captions, hooks, hashtags, reports, and reusable content.",
+    url: "https://boostpilotai.vercel.app/how-it-works"
+  });
+
   return (
     <main className="min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
-      <header className="border-b border-zinc-200/80 bg-white/90 backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/90">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
-          <Logo />
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Button as={Link} to="/analyze" variant="accent">Start analysis</Button>
-          </div>
-        </div>
-      </header>
+      <PublicNavbar />
 
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <section className="rounded-lg border border-zinc-200 bg-white p-6 shadow-soft dark:border-zinc-700 dark:bg-zinc-900 sm:p-8">
@@ -50,6 +49,10 @@ const HowItWorks = () => {
           <p className="mt-4 max-w-3xl text-base leading-8 text-zinc-700 dark:text-zinc-300">
             BoostPilot AI helps you turn one uploaded image or video into better captions, hooks, hashtags, platform suggestions, quality checks, and exportable reports.
           </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button as={Link} to="/" variant="secondary">Back to Home</Button>
+            <Button as={Link} to="/analyze" variant="accent">Start analysis</Button>
+          </div>
         </section>
 
         <section className="mt-5 grid gap-5 lg:grid-cols-2">
@@ -133,6 +136,7 @@ const HowItWorks = () => {
           </div>
         </section>
       </div>
+      <PublicFooter />
     </main>
   );
 };
