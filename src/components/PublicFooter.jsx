@@ -11,11 +11,11 @@ const sections = [
 ];
 
 const socials = [
-  ["Facebook", "https://facebook.com", Facebook],
-  ["Instagram", "https://instagram.com", Instagram],
-  ["LinkedIn", "https://linkedin.com", Linkedin],
-  ["Twitter/X", "https://x.com", Twitter],
-  ["YouTube", "https://youtube.com", Youtube]
+  ["Facebook", "https://facebook.com/boostpilotai", Facebook],
+  ["Instagram", "https://instagram.com/boostpilotai", Instagram],
+  ["LinkedIn", "https://linkedin.com/company/boostpilotai", Linkedin],
+  ["Twitter/X", "https://x.com/boostpilotai", Twitter],
+  ["YouTube", "https://youtube.com/@boostpilotai", Youtube]
 ];
 
 const PublicFooter = () => {

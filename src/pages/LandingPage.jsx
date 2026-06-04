@@ -49,8 +49,8 @@ const LandingPage = () => {
   const { isAuthenticated } = useAuth();
   const startPath = isAuthenticated ? "/analyze" : "/register?redirect=/analyze";
   usePageMeta({
-    title: "BoostPilot AI - AI Content Optimization",
-    description: "Analyze uploads, improve captions, save content, and export reports for every major social platform.",
+    title: "BoostPilot AI - AI Content Optimization for Creators",
+    description: "BoostPilot AI helps creators optimize images and videos using AI. Generate captions, hashtags, hooks, platform-fit scores, trend insights, growth suggestions, AI rewrites, and export-ready reports for YouTube, Instagram, Facebook, LinkedIn, and Twitter/X.",
     url: "https://boostpilotai.vercel.app/"
   });
 
@@ -64,10 +64,10 @@ const LandingPage = () => {
             AI content optimization
           </p>
           <h1 className="mt-4 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">
-            Turn any image or video into platform-ready content.
+            BoostPilot AI - AI Content Optimization for Creators
           </h1>
           <p className="mt-5 max-w-2xl text-base font-medium leading-8 text-zinc-700 dark:text-zinc-300">
-            BoostPilot AI analyzes your content and generates captions, hooks, hashtags, growth suggestions, and reports for YouTube, Instagram, Facebook, LinkedIn, and Twitter/X.
+            Analyze images and videos, generate captions, hashtags, hooks, trend insights, growth suggestions, and reports.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button as={Link} icon={ArrowRight} size="lg" to={startPath} variant="accent">

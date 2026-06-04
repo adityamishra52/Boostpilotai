@@ -4,7 +4,7 @@ import clsx from "clsx";
 const Logo = ({ compact = false, inverse = false }) => {
   return (
     <div className="flex items-center gap-3">
-      <div className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-brand-400 via-signal to-coral text-white shadow-glow">
+      <div aria-label="BoostPilot AI logo" className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-brand-400 via-signal to-coral text-white shadow-glow" role="img">
         <Sparkles size={20} />
       </div>
       {!compact && (

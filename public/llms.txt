@@ -1,31 +1,282 @@
 # BoostPilot AI
 
-BoostPilot AI is an AI-powered content optimization platform.
-
-Features:
-- AI image analysis
-- AI video analysis
-- Caption generation
-- Hook generation
-- Hashtag suggestions
-- Platform optimization
-- Technical quality analysis
-- Export-ready reports
-- YouTube thumbnail ideas
-- Creator workflow tools
-
-Platforms supported:
-- YouTube
-- Instagram
-- Facebook
-- LinkedIn
-- Twitter/X
+BoostPilot AI is an AI-powered content optimization platform for creators, marketers, freelancers, agencies, and social media teams.
 
 Website:
 https://boostpilotai.vercel.app
 
-Public pages:
-- https://boostpilotai.vercel.app/
-- https://boostpilotai.vercel.app/login
-- https://boostpilotai.vercel.app/register
-- https://boostpilotai.vercel.app/pricing
+## What BoostPilot AI Does
+
+BoostPilot AI analyzes uploaded images and videos and generates platform-ready content suggestions.
+
+The platform helps users:
+
+* Generate captions
+* Generate hooks
+* Generate hashtags
+* Improve content quality
+* Optimize content for specific platforms
+* Analyze media quality
+* Create export-ready reports
+* Generate AI rewrites
+* Discover content trends
+* Get creator growth suggestions
+* Save reusable content
+* Generate YouTube thumbnail concepts
+
+## Core Features
+
+### AI Content Analysis
+
+Analyze:
+
+* Images
+* Videos
+* Social media creatives
+* Marketing assets
+
+Outputs include:
+
+* Captions
+* Hooks
+* Hashtags
+* Content summaries
+* Improvement suggestions
+* Platform-fit recommendations
+* Quality scores
+
+### AI Rewrite Studio
+
+Generate:
+
+* Shorter captions
+* Longer captions
+* Viral-style rewrites
+* Professional rewrites
+* Platform-specific rewrites
+* Call-to-action improvements
+
+### Trend Finder
+
+Discover:
+
+* Trending topics
+* Trending content ideas
+* Platform-specific opportunities
+* Niche suggestions
+* Content inspiration
+
+### Growth Coach
+
+Receive:
+
+* Content strategy recommendations
+* Audience growth suggestions
+* Posting improvements
+* Creator workflow guidance
+* Performance recommendations
+
+### Content Library
+
+Store and reuse:
+
+* Captions
+* Hooks
+* Hashtags
+* Titles
+* Rewritten content
+* Saved reports
+
+### AI Media Enhancer
+
+Improve media using:
+
+* Platform cropping
+* Safe margins
+* Composition adjustments
+* Visibility improvements
+* Social-media readiness checks
+
+### Thumbnail Studio
+
+Generate:
+
+* Thumbnail ideas
+* Thumbnail concepts
+* Thumbnail text suggestions
+* Creator-style thumbnail variations
+
+## Supported Platforms
+
+BoostPilot AI supports:
+
+* YouTube
+* Instagram
+* Facebook
+* LinkedIn
+* Twitter/X
+
+## Target Users
+
+### Creators
+
+Content creators can:
+
+* Improve captions
+* Generate hooks
+* Create better posts
+* Optimize uploads
+
+### Marketers
+
+Marketing teams can:
+
+* Improve social campaigns
+* Generate platform-specific content
+* Analyze media quality
+
+### Agencies
+
+Agencies can:
+
+* Manage multiple client workflows
+* Generate reports
+* Create optimized content faster
+
+### Freelancers
+
+Freelancers can:
+
+* Improve client deliverables
+* Generate social content
+* Build content strategies
+
+## Pricing Plans
+
+### Free
+
+Includes:
+
+* Basic AI analysis
+* Basic captions
+* Basic hooks
+* Limited monthly analyses
+
+### Creator
+
+Includes:
+
+* AI Rewrite Studio
+* Content Library
+* No watermark
+* Increased monthly usage
+
+### Pro
+
+Includes:
+
+* Trend Finder
+* Growth Coach
+* Advanced creator tools
+* Higher monthly usage limits
+
+### Agency
+
+Includes:
+
+* Everything in Pro
+* Team-ready workflows
+* Priority processing
+* Agency-focused tools
+
+## Public Pages
+
+Home:
+https://boostpilotai.vercel.app/
+
+How It Works:
+https://boostpilotai.vercel.app/how-it-works
+
+Features:
+https://boostpilotai.vercel.app/features
+
+Pricing:
+https://boostpilotai.vercel.app/pricing
+
+Contact:
+https://boostpilotai.vercel.app/contact
+
+Login:
+https://boostpilotai.vercel.app/login
+
+Register:
+https://boostpilotai.vercel.app/register
+
+## Keywords
+
+BoostPilot AI
+
+Boost Pilot AI
+
+BoostPilot
+
+BoostPilotAI
+
+AI Content Optimization
+
+AI Caption Generator
+
+AI Hashtag Generator
+
+AI Hook Generator
+
+AI Content Analyzer
+
+AI Creator Tool
+
+Social Media AI
+
+AI Marketing Assistant
+
+Content Optimization Platform
+
+YouTube Optimization Tool
+
+Instagram Caption Generator
+
+Facebook Post Optimization
+
+LinkedIn Content Generator
+
+Twitter X Content Optimization
+
+Creator Growth Platform
+
+AI Rewrite Tool
+
+Trend Discovery Tool
+
+Content Strategy AI
+
+AI Media Analysis
+
+AI Thumbnail Generator
+
+Creator Workflow Software
+
+Social Media Growth Tool
+
+Marketing Content AI
+
+AI Content Workflow Platform
+
+## Contact
+
+Website:
+https://boostpilotai.vercel.app
+
+Platform:
+BoostPilot AI Creator Tools
+
+Last Updated:
+2026-06-04
