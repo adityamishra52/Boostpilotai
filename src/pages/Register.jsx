@@ -1,4 +1,4 @@
-import { Lock, Mail, User } from "lucide-react";
+import { Lock, Mail, ShieldCheck, User } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -40,7 +40,7 @@ const Register = () => {
       toast.success("Workspace ready");
       navigate(redirect, { replace: true });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Google sign-in failed. Please try again.");
+      toast.error(error.response?.data?.message || "Google sign-in failed. Please try again or use email login.");
     } finally {
       setLoading(false);
     }
@@ -53,10 +53,10 @@ const Register = () => {
           Start free
         </p>
         <h1 className="mt-3 text-3xl font-extrabold text-zinc-950 dark:text-white">
-          Build your AI content desk
+          Create your free BoostPilot AI account.
         </h1>
         <p className="mt-2 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
-          Create an account and save every analysis to your private history.
+          Start free, save reports, and keep your uploaded media private.
         </p>
       </div>
 
@@ -102,7 +102,16 @@ const Register = () => {
         <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
       </div>
 
-      <GoogleAuthButton disabled={loading} onSuccess={handleGoogle} text="signup_with" />
+      <GoogleAuthButton disabled={loading} onSuccess={handleGoogle} text="continue_with" />
+
+      <div className="mt-5 grid gap-2 rounded-lg border border-zinc-200 bg-zinc-50/90 p-4 text-sm font-semibold text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-300">
+        {["Private media storage", "Secure authentication", "No auto posting", "Cancel anytime"].map((item) => (
+          <div className="flex items-center gap-2" key={item}>
+            <ShieldCheck className="text-emerald-500" size={16} />
+            {item}
+          </div>
+        ))}
+      </div>
 
       <p className="mt-6 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
         Already have an account?{" "}

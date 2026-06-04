@@ -1,4 +1,4 @@
-import { CheckCircle2, CreditCard, FileUp, Gauge, LockKeyhole, WandSparkles, X } from "lucide-react";
+import { CheckCircle2, Copy, CreditCard, FileUp, Gauge, LockKeyhole, WandSparkles, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -61,6 +61,7 @@ const UploadAnalyze = () => {
   const [restoreOpen, setRestoreOpen] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [draftChecked, setDraftChecked] = useState(false);
+  const [reuseItem, setReuseItem] = useState(location.state?.libraryItem || null);
 
   const handlePlatformChange = (nextPlatform) => {
     setPlatform(nextPlatform);
@@ -193,10 +194,15 @@ const UploadAnalyze = () => {
       setRestoreOpen(true);
       toast.success("Signed in with Google");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Google sign-in failed. Please try again.");
+      toast.error(error.response?.data?.message || "Google sign-in failed. Please try again or use email login.");
     } finally {
       setGoogleLoading(false);
     }
+  };
+
+  const copyReuseContent = async () => {
+    await navigator.clipboard.writeText(reuseItem.content);
+    toast.success("Copied");
   };
 
   const handleContinueDraft = async () => {
@@ -232,6 +238,21 @@ const UploadAnalyze = () => {
     };
   }, [draftChecked, isAuthenticated, location.search]);
 
+  useEffect(() => {
+    if (reuseItem) {
+      return;
+    }
+
+    try {
+      const saved = JSON.parse(sessionStorage.getItem("boostpilot_reuse_library_item") || "null");
+      if (saved?._id) {
+        setReuseItem(saved);
+      }
+    } catch {
+      sessionStorage.removeItem("boostpilot_reuse_library_item");
+    }
+  }, [reuseItem]);
+
   const readiness = [file ? 34 : 0, platform ? 33 : 0, contentType ? 33 : 0].reduce(
     (sum, item) => sum + item,
     0
@@ -240,7 +261,7 @@ const UploadAnalyze = () => {
     ["Upload file", Boolean(file)],
     ["Choose site", Boolean(platform)],
     ["Choose post type", Boolean(contentType)],
-    ["Get report", loading || readiness === 100]
+    ["Generate Analysis", loading || readiness === 100]
   ];
 
   return (
@@ -249,7 +270,7 @@ const UploadAnalyze = () => {
         action={<Badge variant={file ? "success" : "warning"}>{file ? "Asset ready" : "Awaiting media"}</Badge>}
         description="Upload an image or video, choose where you will post it, then get easy suggestions."
         eyebrow="Analyze"
-        title="Create a new report"
+        title="Generate a content analysis"
       />
 
       <div className="mx-auto max-w-5xl space-y-5">
@@ -273,15 +294,48 @@ const UploadAnalyze = () => {
         </Card>
 
         <div className="space-y-5">
-          <SectionContainer description="Start with one image or video." icon={FileUp} title="Upload file">
+          {reuseItem && (
+            <Card className="p-4 sm:p-5">
+              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                <div className="min-w-0">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-600 dark:text-brand-300">
+                    Reusing saved content
+                  </p>
+                  <h2 className="mt-1 break-words text-lg font-extrabold text-zinc-950 dark:text-white">
+                    {reuseItem.title || reuseItem.type || "Saved content"}
+                  </h2>
+                  <p className="mt-2 max-h-36 overflow-auto whitespace-pre-line rounded-lg border border-zinc-200 bg-zinc-50/80 p-3 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-200">
+                    {reuseItem.content}
+                  </p>
+                </div>
+                <div className="flex shrink-0 flex-wrap gap-2">
+                  <Button icon={Copy} onClick={copyReuseContent} variant="secondary">
+                    Copy
+                  </Button>
+                  <Button
+                    icon={X}
+                    onClick={() => {
+                      setReuseItem(null);
+                      sessionStorage.removeItem("boostpilot_reuse_library_item");
+                    }}
+                    variant="secondary"
+                  >
+                    Clear
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          )}
+
+          <SectionContainer description="Upload an image or video you want to improve." icon={FileUp} title="Step 1: Upload Media">
             <FileDropzone file={file} onFile={handleFile} />
           </SectionContainer>
 
-          <SectionContainer description="Pick where you want to post this content." icon={Gauge} title="Choose site">
+          <SectionContainer description="Choose where you want to post it." icon={Gauge} title="Step 2: Choose Platform">
             <PlatformSelector onChange={handlePlatformChange} value={platform} />
           </SectionContainer>
 
-          <SectionContainer description="Pick the post type. We choose a good option automatically when possible." icon={CheckCircle2} title="Choose post type">
+          <SectionContainer description="We'll suggest the best content format automatically when possible." icon={CheckCircle2} title="Step 3: Choose Content Format">
             <ContentTypeSelector onChange={setContentType} platform={platform} value={contentType} />
           </SectionContainer>
 
@@ -289,7 +343,7 @@ const UploadAnalyze = () => {
             <div className="grid gap-0 lg:grid-cols-[1fr_auto]">
               <div className="min-w-0 p-5 sm:p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-600 dark:text-brand-300">
-                  Get report
+                  Step 4: Generate Analysis
                 </p>
                 <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
                   Ready to check
@@ -317,7 +371,7 @@ const UploadAnalyze = () => {
                   size="lg"
                   variant="accent"
                 >
-                  {loading ? "Creating report..." : "Get report"}
+                  {loading ? "Creating report..." : "Generate Analysis"}
                 </Button>
                 <p className="mt-3 text-center text-xs font-semibold leading-5 text-zinc-600 dark:text-zinc-300">
                   {loading ? "You can continue using BoostPilot while this runs." : "We check sign-in and credits when you start."}
@@ -478,7 +532,7 @@ const UploadAnalyze = () => {
         <div className="mx-auto flex max-w-[520px] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
-              {file ? "Ready for report" : "Choose media first"}
+              {file ? "Ready for analysis" : "Choose media first"}
             </p>
             <p className="truncate text-sm font-extrabold text-zinc-950 dark:text-white">
               {file ? `${platform} ${contentType}` : "Image or video"}
@@ -491,7 +545,7 @@ const UploadAnalyze = () => {
             onClick={handleSubmit}
             variant="accent"
           >
-            {loading ? "Creating" : "Get report"}
+            {loading ? "Creating" : "Analyze"}
           </Button>
         </div>
       </div>

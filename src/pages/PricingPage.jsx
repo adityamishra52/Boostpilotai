@@ -23,17 +23,17 @@ const defaultSettings = {
 
 const comparisonRows = [
   { label: "Basic AI report", plan: "free" },
-  { label: "Basic captions and openings", plan: "free" },
-  { label: "Standard report", plan: "free" },
-  { label: "Rewrite tool", plan: "creator" },
+  { label: "Captions, hooks, and hashtags", plan: "free" },
+  { label: "Media quality checks", plan: "free" },
+  { label: "AI Rewrite Studio", plan: "creator" },
   { label: "Content Library", plan: "creator" },
-  { label: "No watermark", plan: "creator" },
-  { label: "Post ideas", plan: "pro" },
-  { label: "Growth tips", plan: "pro" },
-  { label: "Better posting tips", plan: "pro" },
-  { label: "Admin/team-ready controls", plan: "agency" },
-  { label: "Priority AI processing", plan: "agency" },
-  { label: "Future team tools and API access", plan: "agency" }
+  { label: "Save and reuse generated text", plan: "creator" },
+  { label: "Trend Finder", plan: "pro" },
+  { label: "Growth Coach", plan: "pro" },
+  { label: "Weekly content goals", plan: "pro" },
+  { label: "Higher limits", plan: "agency" },
+  { label: "Advanced workflows", plan: "agency" },
+  { label: "Admin/team-ready usage", plan: "agency" }
 ];
 
 const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
@@ -213,9 +213,9 @@ const PricingPage = () => {
             ))}
           </div>
         }
-        description="Choose a plan, pay with UPI or QR code, then send the payment details so we can activate it."
+        description="Start with basic analysis, then unlock saved content, rewrites, trends, coaching, and higher limits as you grow."
         eyebrow="Pricing"
-        title="Choose your BoostPilot plan"
+        title="Choose the plan that fits your content workflow"
       />
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -241,7 +241,15 @@ const PricingPage = () => {
                   {isCurrent && <Badge variant="success">Current</Badge>}
                 </div>
               </div>
-              <p className="mt-3 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">{plan.audience}</p>
+              <p className="mt-3 text-sm font-medium leading-6 text-zinc-600 dark:text-zinc-300">
+                {plan.id === "free"
+                  ? "Basic analysis for testing the workflow."
+                  : plan.id === "creator"
+                    ? "AI Rewrite plus Content Library for solo creators."
+                    : plan.id === "pro"
+                      ? "Trend Finder plus Growth Coach for growing content."
+                      : "Higher limits and advanced workflows for teams."}
+              </p>
               <div className="mt-5 rounded-lg border border-zinc-200 bg-white/90 p-4 text-zinc-950 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-white">
                 <div className="flex items-center gap-2 font-bold text-zinc-950 dark:!text-white">
                   <CreditCard size={18} />

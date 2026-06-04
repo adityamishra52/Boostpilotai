@@ -13,6 +13,7 @@ import Dashboard from "../pages/Dashboard";
 import ContentLibrary from "../pages/ContentLibrary";
 import GrowthCoach from "../pages/GrowthCoach";
 import HistoryPage from "../pages/HistoryPage";
+import HowItWorks from "../pages/HowItWorks";
 import LandingPage from "../pages/LandingPage";
 import Login from "../pages/Login";
 import PricingPage from "../pages/PricingPage";
@@ -29,6 +30,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/how-it-works" element={<HowItWorks />} />
       <Route element={<PublicRoute />}>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />

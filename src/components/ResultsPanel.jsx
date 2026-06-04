@@ -29,6 +29,7 @@ import Card from "./Card";
 import CopyButton from "./CopyButton";
 import ProgressBar from "./ProgressBar";
 import ProtectedMedia from "./ProtectedMedia";
+import SaveToLibraryButton from "./SaveToLibraryButton";
 import ScoreRing from "./ScoreRing";
 import SectionContainer from "./SectionContainer";
 
@@ -95,6 +96,8 @@ const EngagementMetric = ({ label, value }) => (
   </div>
 );
 
+const ActionGroup = ({ children }) => <div className="flex flex-wrap gap-2">{children}</div>;
+
 const ResultsPanel = ({ analysis }) => {
   const output = analysis?.aiOutput;
   const [downloading, setDownloading] = useState(false);
@@ -149,6 +152,15 @@ const ResultsPanel = ({ analysis }) => {
       setDownloading(false);
     }
   };
+
+  const libraryPayload = ({ type, title, content, tags = [] }) => ({
+    analysisId: analysis._id,
+    platform: analysis.platform,
+    type,
+    title,
+    content,
+    tags: [analysis.contentType, ...tags].filter(Boolean)
+  });
 
   return (
     <div className="space-y-5">
@@ -219,7 +231,12 @@ const ResultsPanel = ({ analysis }) => {
           </p>
         </SectionContainer>
         <SectionContainer
-          action={<CopyButton text={output.improvedPostVersion || ""} />}
+          action={(
+            <ActionGroup>
+              <CopyButton text={output.improvedPostVersion || ""} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "caption", title: "Better post version", content: output.improvedPostVersion || "" })} />
+            </ActionGroup>
+          )}
           icon={Sparkles}
           title="Better post version"
         >
@@ -231,8 +248,13 @@ const ResultsPanel = ({ analysis }) => {
 
       {isTwitter && (
         <div className="grid gap-5 xl:grid-cols-2">
-          <SectionContainer
-            action={<CopyButton label="Copy Tweet" text={tweetText} />}
+        <SectionContainer
+          action={(
+            <ActionGroup>
+              <CopyButton label="Copy Tweet" text={tweetText} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "caption", title: "Tweet", content: tweetText })} />
+            </ActionGroup>
+          )}
             icon={MessageCircle}
             title="Tweet"
           >
@@ -240,8 +262,13 @@ const ResultsPanel = ({ analysis }) => {
               {tweetText || "No tweet available."}
             </p>
           </SectionContainer>
-          <SectionContainer
-            action={<CopyButton label="Copy Tweet" text={viralTweetText} />}
+        <SectionContainer
+            action={(
+              <ActionGroup>
+                <CopyButton label="Copy Tweet" text={viralTweetText} />
+                <SaveToLibraryButton payload={libraryPayload({ type: "caption", title: "Viral Tweet", content: viralTweetText })} />
+              </ActionGroup>
+            )}
             icon={Sparkles}
             title="Viral Tweet"
           >
@@ -249,15 +276,25 @@ const ResultsPanel = ({ analysis }) => {
               {viralTweetText || "No viral tweet available."}
             </p>
           </SectionContainer>
-          <SectionContainer
-            action={<CopyButton label="Copy Thread" text={threadText} />}
+        <SectionContainer
+            action={(
+              <ActionGroup>
+                <CopyButton label="Copy Thread" text={threadText} />
+                <SaveToLibraryButton payload={libraryPayload({ type: "caption", title: "Thread", content: threadText })} />
+              </ActionGroup>
+            )}
             icon={Copy}
             title="Thread"
           >
             <ListBlock items={data.twitterThread} numbered />
           </SectionContainer>
-          <SectionContainer
-            action={<CopyButton text={[...data.engagementStrategy, ...data.repostStrategy, output.replyPrompt].filter(Boolean).join("\n")} />}
+        <SectionContainer
+            action={(
+              <ActionGroup>
+                <CopyButton text={[...data.engagementStrategy, ...data.repostStrategy, output.replyPrompt].filter(Boolean).join("\n")} />
+                <SaveToLibraryButton payload={libraryPayload({ type: "other", title: "Reply and repost plan", content: [...data.engagementStrategy, ...data.repostStrategy, output.replyPrompt].filter(Boolean).join("\n") })} />
+              </ActionGroup>
+            )}
             icon={BarChart3}
             title="Reply and repost plan"
           >
@@ -274,7 +311,12 @@ const ResultsPanel = ({ analysis }) => {
           </SectionContainer>
           {output.altTextSuggestion && (
             <SectionContainer
-              action={<CopyButton text={output.altTextSuggestion} />}
+              action={(
+                <ActionGroup>
+                  <CopyButton text={output.altTextSuggestion} />
+                  <SaveToLibraryButton payload={libraryPayload({ type: "other", title: "Image description", content: output.altTextSuggestion })} />
+                </ActionGroup>
+              )}
               icon={Lightbulb}
               title="Image description"
             >
@@ -307,7 +349,12 @@ const ResultsPanel = ({ analysis }) => {
         </SectionContainer>
 
         <SectionContainer
-          action={<CopyButton text={output.viralCaption} />}
+          action={(
+            <ActionGroup>
+              <CopyButton text={output.viralCaption} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "caption", title: "Suggested caption", content: output.viralCaption })} />
+            </ActionGroup>
+          )}
           icon={Megaphone}
           title="Suggested caption"
         >
@@ -326,21 +373,36 @@ const ResultsPanel = ({ analysis }) => {
 
       <div className="grid gap-5 xl:grid-cols-2">
         <SectionContainer
-          action={<CopyButton text={data.titleIdeas.join("\n")} />}
+          action={(
+            <ActionGroup>
+              <CopyButton text={data.titleIdeas.join("\n")} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "title", title: "Title ideas", content: data.titleIdeas.join("\n") })} />
+            </ActionGroup>
+          )}
           icon={WandSparkles}
           title="Title ideas"
         >
           <ListBlock items={data.titleIdeas} numbered />
         </SectionContainer>
         <SectionContainer
-          action={<CopyButton text={data.hookLines.join("\n")} />}
+          action={(
+            <ActionGroup>
+              <CopyButton text={data.hookLines.join("\n")} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "hook", title: "Opening lines", content: data.hookLines.join("\n") })} />
+            </ActionGroup>
+          )}
           icon={MessageCircle}
           title="Opening lines"
         >
           <ListBlock items={data.hookLines} numbered />
         </SectionContainer>
         <SectionContainer
-          action={<CopyButton text={data.cta.join("\n")} />}
+          action={(
+            <ActionGroup>
+              <CopyButton text={data.cta.join("\n")} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "cta", title: "Next step options", content: data.cta.join("\n") })} />
+            </ActionGroup>
+          )}
           icon={Copy}
           title="Next step options"
         >
@@ -361,7 +423,12 @@ const ResultsPanel = ({ analysis }) => {
           <ListBlock items={data.platformSpecificSuggestions} />
         </SectionContainer>
         <SectionContainer
-          action={<CopyButton text={data.hashtags.join(" ")} />}
+          action={(
+            <ActionGroup>
+              <CopyButton text={data.hashtags.join(" ")} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "hashtags", title: "Hashtags", content: data.hashtags.join(" "), tags: data.hashtags })} />
+            </ActionGroup>
+          )}
           icon={Tags}
           title="Hashtags"
         >

@@ -1,4 +1,4 @@
-import { ArrowLeft, BarChart3, Copy, Download, Hash, MessageCircle, Plus, Sparkles, Tags, WandSparkles } from "lucide-react";
+import { ArrowLeft, BarChart3, Copy, Download, Hash, Library, MessageCircle, Plus, Sparkles, Tags, WandSparkles } from "lucide-react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import PageHeader from "../components/PageHeader";
 import PremiumActionsPanel from "../components/PremiumActionsPanel";
 import RepurposeContentPanel from "../components/RepurposeContentPanel";
 import ResultsPanel from "../components/ResultsPanel";
+import SaveToLibraryButton from "../components/SaveToLibraryButton";
 import SectionContainer from "../components/SectionContainer";
 import CopyButton from "../components/CopyButton";
 import { analysisService } from "../services/analysisService";
@@ -19,6 +20,8 @@ import { buildAnalysisReport } from "../utils/analysisReportBuilder";
 import { downloadBlob } from "../utils/download";
 
 const listValue = (items) => (Array.isArray(items) ? items.filter(Boolean) : []);
+
+const ActionGroup = ({ children }) => <div className="flex flex-wrap gap-2">{children}</div>;
 
 const ListPanel = ({ items, numbered = false }) => {
   const values = listValue(items);
@@ -117,7 +120,8 @@ const ResultPage = () => {
     { id: "enhancer", label: "Improve Media", icon: Sparkles },
     { id: "thumbnails", label: "Thumbnails", icon: Tags },
     { id: "coach", label: "Tips", icon: BarChart3 },
-    { id: "export", label: "Download", icon: Download }
+    { id: "library", label: "Content Library", icon: Library },
+    { id: "export", label: "Export", icon: Download }
   ];
   const reportText = buildAnalysisReport(analysis);
   const captions = listValue([
@@ -139,6 +143,14 @@ const ResultPage = () => {
       setDownloading(false);
     }
   };
+  const libraryPayload = ({ type, title, content, tags = [] }) => ({
+    analysisId: analysis._id,
+    platform: analysis.platform,
+    type,
+    title,
+    content,
+    tags: [analysis.contentType, ...tags].filter(Boolean)
+  });
 
   return (
     <motion.div animate={{ opacity: 1, y: 0 }} className="pb-28 md:pb-0" initial={{ opacity: 0, y: 10 }}>
@@ -153,7 +165,7 @@ const ResultPage = () => {
         title="Your report"
       />
 
-      <div className="mb-5 rounded-lg border border-zinc-200 bg-white/90 p-2 shadow-sm backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/88">
+      <div className="mb-5 rounded-lg border border-zinc-200 bg-white/90 p-2 shadow-sm backdrop-blur-xl dark:!border-zinc-700 dark:!bg-zinc-950/95">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,136px),1fr))] gap-2">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -163,8 +175,8 @@ const ResultPage = () => {
               <button
                 className={`inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-lg px-3 py-2 text-center text-sm font-bold leading-tight transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-300/35 ${
                   active
-                    ? "bg-zinc-950 text-white shadow-soft dark:bg-brand-400/20"
-                    : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                    ? "bg-zinc-950 text-white shadow-soft dark:!bg-brand-400/20 dark:!text-white"
+                    : "border border-transparent text-zinc-700 hover:bg-zinc-100 dark:!border-zinc-800 dark:!bg-zinc-900/80 dark:!text-zinc-100 dark:hover:!bg-zinc-800"
                 }`}
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -182,23 +194,59 @@ const ResultPage = () => {
 
       {activeTab === "captions" && (
         <div className="grid gap-5 xl:grid-cols-[1fr_0.8fr]">
-          <SectionContainer action={<CopyButton text={captions.join("\n\n")} />} icon={MessageCircle} title="Captions">
+          <SectionContainer
+            action={(
+              <ActionGroup>
+                <CopyButton text={captions.join("\n\n")} />
+                <SaveToLibraryButton payload={libraryPayload({ type: "caption", title: "Captions", content: captions.join("\n\n") })} />
+              </ActionGroup>
+            )}
+            icon={MessageCircle}
+            title="Captions"
+          >
             <ListPanel items={captions} />
           </SectionContainer>
-          <SectionContainer action={<CopyButton text={ctas.join("\n")} />} icon={Copy} title="Next steps">
+          <SectionContainer
+            action={(
+              <ActionGroup>
+                <CopyButton text={ctas.join("\n")} />
+                <SaveToLibraryButton payload={libraryPayload({ type: "cta", title: "Next steps", content: ctas.join("\n") })} />
+              </ActionGroup>
+            )}
+            icon={Copy}
+            title="Next steps"
+          >
             <ListPanel items={ctas} />
           </SectionContainer>
         </div>
       )}
 
       {activeTab === "hooks" && (
-        <SectionContainer action={<CopyButton text={listValue(output.hookLines).join("\n")} />} icon={Sparkles} title="Opening lines">
+        <SectionContainer
+          action={(
+            <ActionGroup>
+              <CopyButton text={listValue(output.hookLines).join("\n")} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "hook", title: "Opening lines", content: listValue(output.hookLines).join("\n") })} />
+            </ActionGroup>
+          )}
+          icon={Sparkles}
+          title="Opening lines"
+        >
           <ListPanel items={output.hookLines} numbered />
         </SectionContainer>
       )}
 
       {activeTab === "hashtags" && (
-        <SectionContainer action={<CopyButton text={listValue(output.hashtags).join(" ")} />} icon={Hash} title="Hashtags">
+        <SectionContainer
+          action={(
+            <ActionGroup>
+              <CopyButton text={listValue(output.hashtags).join(" ")} />
+              <SaveToLibraryButton payload={libraryPayload({ type: "hashtags", title: "Hashtags", content: listValue(output.hashtags).join(" "), tags: listValue(output.hashtags) })} />
+            </ActionGroup>
+          )}
+          icon={Hash}
+          title="Hashtags"
+        >
           <div className="flex flex-wrap gap-2">
             {listValue(output.hashtags).map((tag) => <Badge key={tag} variant="brand">{tag}</Badge>)}
           </div>
@@ -225,6 +273,17 @@ const ResultPage = () => {
               ...(output.platformSpecificSuggestions || [])
             ]}
           />
+        </SectionContainer>
+      )}
+
+      {activeTab === "library" && (
+        <SectionContainer icon={Library} title="Save and reuse content">
+          <p className="rounded-lg border border-zinc-200 bg-white/88 p-4 text-sm leading-7 text-zinc-800 dark:!border-zinc-700 dark:!bg-zinc-900/90 dark:!text-zinc-100">
+            Use the Save to Library buttons on captions, hooks, hashtags, titles, and rewrites. Saved items are available in Content Library, where you can copy, edit, favorite, delete, or reuse them in a new analysis.
+          </p>
+          <Button as={Link} className="mt-4" icon={Library} to="/library" variant="accent">
+            Open Content Library
+          </Button>
         </SectionContainer>
       )}
 

@@ -46,7 +46,7 @@ const Topbar = ({ onMenu }) => {
     const quickLinks = [
       { detail: "Create a new report", label: "New report", to: "/analyze" },
       { detail: "Search saved reports", label: "History", to: "/history" },
-      { detail: "Find topic ideas", label: "Post Ideas", to: "/trends" },
+      { detail: "Find topic ideas", label: "Trend Finder", to: "/trends" },
       { detail: "Reuse saved captions", label: "Content Library", to: "/library" },
       { detail: "Change account options", label: "Settings", to: "/settings" }
     ];

@@ -1,15 +1,15 @@
-import { RefreshCw, Save } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 import { useAuth } from "../context/AuthContext";
 import { analysisService } from "../services/analysisService";
-import { libraryService } from "../services/libraryService";
 import { hasPlan } from "../utils/plans";
 import Badge from "./Badge";
 import Button from "./Button";
 import CopyButton from "./CopyButton";
 import LockedFeature from "./LockedFeature";
+import SaveToLibraryButton from "./SaveToLibraryButton";
 import SectionContainer from "./SectionContainer";
 
 const modes = [
@@ -41,21 +41,6 @@ const AIRewriteStudio = ({ analysis, onAnalysisUpdate }) => {
       toast.error(error.response?.data?.message || "Rewrite failed");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const saveToLibrary = async (version) => {
-    try {
-      await libraryService.create({
-        analysisId: analysis._id,
-        platform: analysis.platform,
-        type: "rewrite",
-        title: version.label,
-        content: version.text
-      });
-      toast.success("Saved to library");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Could not save");
     }
   };
 
@@ -101,12 +86,19 @@ const AIRewriteStudio = ({ analysis, onAnalysisUpdate }) => {
               <div className="rounded-lg border border-zinc-200 bg-white/90 p-4 dark:border-zinc-700 dark:bg-zinc-900/90" key={version.id}>
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                   <Badge variant="brand">{version.label}</Badge>
-                  <div className="flex gap-2">
-                    <CopyButton text={version.text} />
-                    <Button icon={Save} onClick={() => saveToLibrary(version)} size="sm" variant="secondary">
-                      Save
-                    </Button>
-                  </div>
+                    <div className="flex gap-2">
+                      <CopyButton text={version.text} />
+                      <SaveToLibraryButton
+                        payload={{
+                          analysisId: analysis._id,
+                          platform: analysis.platform,
+                          type: "rewrite",
+                          title: version.label,
+                          content: version.text,
+                          tags: [analysis.contentType, mode].filter(Boolean)
+                        }}
+                      />
+                    </div>
                 </div>
                 <p className="whitespace-pre-line text-sm leading-7 text-zinc-700 dark:text-zinc-200">{version.text}</p>
               </div>

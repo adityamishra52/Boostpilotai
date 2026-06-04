@@ -5,12 +5,43 @@ import toast from "react-hot-toast";
 import Button from "../components/Button";
 import LockedFeature from "../components/LockedFeature";
 import PageHeader from "../components/PageHeader";
+import SaveToLibraryButton from "../components/SaveToLibraryButton";
 import SectionContainer from "../components/SectionContainer";
 import { useAuth } from "../context/AuthContext";
 import { coachService } from "../services/coachService";
 import { hasPlan } from "../utils/plans";
 
 const List = ({ items = [] }) => <div className="grid gap-2">{items.map((item) => <div className="rounded-lg border border-zinc-200 bg-white/90 p-3 text-sm dark:border-zinc-700 dark:bg-zinc-900" key={item}>{item}</div>)}</div>;
+
+const formatCoachReport = (report) => {
+  if (!report) return "";
+
+  return [
+    `Growth score: ${report.growthScore}/100`,
+    report.platformStrategy,
+    report.recommendedPostingFrequency,
+    "",
+    "Doing well",
+    ...(report.doingWell || []),
+    "",
+    "Needs work",
+    ...(report.hurtingGrowth || []),
+    "",
+    "This week",
+    ...(report.weeklyGoals || []),
+    "",
+    "This month",
+    ...(report.monthlyGoals || []),
+    "",
+    "Post tips",
+    ...(report.bestContentTypes || []),
+    report.hookQualityAdvice,
+    report.ctaQualityAdvice,
+    "",
+    "Twitter/X coaching",
+    ...(report.twitterXCoaching || [])
+  ].filter((item) => item !== undefined && item !== null).join("\n");
+};
 
 const GrowthCoach = () => {
   const { user } = useAuth();
@@ -37,8 +68,29 @@ const GrowthCoach = () => {
 
   return (
     <div>
-      <PageHeader action={canUse && <Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">Update tips</Button>} eyebrow="Coach" title="Growth Tips" description="Simple weekly tips based on your saved reports." />
-      {!canUse ? <LockedFeature title="Growth Tips" requiredPlan="Pro" /> : report ? (
+      <PageHeader
+        action={canUse && (
+          <div className="flex flex-wrap gap-2">
+            {report && (
+              <SaveToLibraryButton
+                payload={{
+                  platform: "Other",
+                  type: "coach",
+                  title: "Growth Coach plan",
+                  content: formatCoachReport(report),
+                  tags: ["growth coach", "plan"]
+                }}
+                size="md"
+              />
+            )}
+            <Button icon={RefreshCw} loading={loading} onClick={generate} variant="accent">Update tips</Button>
+          </div>
+        )}
+        eyebrow="Coach"
+        title="Growth Coach"
+        description="Simple weekly tips based on your saved reports."
+      />
+      {!canUse ? <LockedFeature title="Growth Coach" requiredPlan="Pro" /> : report ? (
         <div className="grid gap-5 xl:grid-cols-2">
           <SectionContainer icon={Brain} title={`Growth score: ${report.growthScore}/100`}>
             <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300">{report.platformStrategy}</p>

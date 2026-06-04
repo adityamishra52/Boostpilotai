@@ -28,8 +28,8 @@ const navItems = [
   { label: "Analyze", to: "/analyze", icon: UploadCloud },
   { label: "History", to: "/history", icon: Clock },
   { label: "Content Library", to: "/library", icon: Library },
-  { label: "Post Ideas", to: "/trends", icon: TrendingUp },
-  { label: "Growth Tips", to: "/coach", icon: WandSparkles },
+  { label: "Trend Finder", to: "/trends", icon: TrendingUp },
+  { label: "Growth Coach", to: "/coach", icon: WandSparkles },
   { label: "Pricing", to: "/pricing", icon: CreditCard },
   { label: "Settings", to: "/settings", icon: Settings }
 ];

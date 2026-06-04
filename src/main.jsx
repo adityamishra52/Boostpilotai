@@ -20,7 +20,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               position="top-right"
               toastOptions={{
                 className: "dark:!bg-zinc-900 dark:!text-white",
-                duration: 2600
+                duration: 3000,
+                error: {
+                  duration: 4000
+                },
+                loading: {
+                  duration: Infinity
+                },
+                success: {
+                  duration: 3000
+                }
               }}
             />
           </AuthProvider>

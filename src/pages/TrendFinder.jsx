@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import LockedFeature from "../components/LockedFeature";
 import PageHeader from "../components/PageHeader";
+import SaveToLibraryButton from "../components/SaveToLibraryButton";
 import SectionContainer from "../components/SectionContainer";
 import { useAuth } from "../context/AuthContext";
 import { trendService } from "../services/trendService";
@@ -73,6 +74,27 @@ const readRecent = () => {
 };
 
 const saveRecent = (next) => localStorage.setItem(recentKey, JSON.stringify(next));
+
+const formatTrendReport = ({ result, form }) => {
+  if (!result) return "";
+
+  const sections = [
+    ["Opportunity", [`${result.opportunityScore}/100`, result.sourceLabel, form.strength, form.goal]],
+    ["Trending Topics", result.trendingTopics],
+    ["Trending Keywords", result.trendingKeywords],
+    ["Trending Hashtags", result.trendingHashtags],
+    ["Trending Hooks", result.trendingHooks],
+    ["Thread Ideas", result.threadIdeas],
+    ["Opinion Post Ideas", result.opinionPostIdeas],
+    ["Engagement Questions", result.engagementQuestions],
+    ["Content Ideas", result.contentIdeas]
+  ];
+
+  return sections
+    .map(([label, values]) => [label, ...(values || [])].filter(Boolean).join("\n"))
+    .filter(Boolean)
+    .join("\n\n");
+};
 
 const parseTrendSearch = (item = {}) => {
   const parts = String(item.niche || "")
@@ -352,11 +374,11 @@ const TrendFinder = () => {
     <div>
       <PageHeader
         eyebrow="Ideas"
-        title="Find Post Ideas"
+        title="Trend Finder"
         description="Choose a topic and country to get post ideas, hashtags, and hooks."
       />
       {!canUse ? (
-        <LockedFeature title="Find Post Ideas" requiredPlan="Pro" />
+        <LockedFeature title="Trend Finder" requiredPlan="Pro" />
       ) : (
         <div className="grid gap-5 xl:grid-cols-[0.92fr_1.08fr]">
           <Card className="h-fit">
@@ -437,9 +459,20 @@ const TrendFinder = () => {
             ) : result ? (
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <Badge variant="warning">{result.sourceLabel}</Badge>
-                  <Badge variant="brand">{form.strength}</Badge>
-                  <Badge variant="success">{form.goal}</Badge>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="warning">{result.sourceLabel}</Badge>
+                    <Badge variant="brand">{form.strength}</Badge>
+                    <Badge variant="success">{form.goal}</Badge>
+                  </div>
+                  <SaveToLibraryButton
+                    payload={{
+                      platform: form.platform,
+                      type: "trend",
+                      title: `${form.platform} trend report`,
+                      content: formatTrendReport({ result, form }),
+                      tags: [...form.niches, form.region, form.goal].filter(Boolean)
+                    }}
+                  />
                 </div>
                 <h2 className="text-3xl font-extrabold text-zinc-950 dark:text-white">
                   {result.opportunityScore}/100 opportunity
