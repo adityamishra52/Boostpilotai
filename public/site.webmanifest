@@ -1,11 +1,14 @@
 {
   "name": "BoostPilot AI",
   "short_name": "BoostPilot",
-  "description": "AI content optimization for creators",
+  "description": "AI content optimization for creators, marketers, and agencies.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
+  "categories": ["business", "productivity", "social", "utilities"],
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

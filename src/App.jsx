@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import AppRoutes from "./routes/AppRoutes";
 import FloatingHelpWidget from "./components/FloatingHelpWidget";
+import SEO from "./components/SEO";
 import { resetPageScroll } from "./utils/scrollReset";
 
 const App = () => {
@@ -41,6 +42,7 @@ const App = () => {
 
   return (
     <div onClickCapture={handleInternalLinkClick}>
+      <SEO />
       <AppRoutes />
       <FloatingHelpWidget />
     </div>

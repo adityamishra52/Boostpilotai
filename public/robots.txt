@@ -1,9 +1,36 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /history
+Disallow: /library
+Disallow: /coach
+Disallow: /trends
+Disallow: /results/
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://boostpilotai.vercel.app/sitemap.xml
-
-Disallow: /dashboard/
-Disallow: /admin/
-Disallow: /settings/
-Disallow: /history/

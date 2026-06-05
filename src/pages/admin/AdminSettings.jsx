@@ -229,6 +229,8 @@ const AdminSettings = () => {
                 <img
                   alt="Payment QR preview"
                   className="max-h-56 max-w-full rounded-md object-contain"
+                  decoding="async"
+                  loading="lazy"
                   src={previewSrc}
                 />
               ) : (

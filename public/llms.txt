@@ -194,11 +194,17 @@ Includes:
 Home:
 https://boostpilotai.vercel.app/
 
+About:
+https://boostpilotai.vercel.app/about
+
 How It Works:
 https://boostpilotai.vercel.app/how-it-works
 
 Features:
 https://boostpilotai.vercel.app/features
+
+AI Content Optimization Guide:
+https://boostpilotai.vercel.app/blog/ai-content-optimization
 
 Pricing:
 https://boostpilotai.vercel.app/pricing
@@ -211,6 +217,36 @@ https://boostpilotai.vercel.app/login
 
 Register:
 https://boostpilotai.vercel.app/register
+
+Analyze:
+https://boostpilotai.vercel.app/analyze
+
+Image Analysis:
+https://boostpilotai.vercel.app/image-analysis
+
+Video Analysis:
+https://boostpilotai.vercel.app/video-analysis
+
+Caption Generator:
+https://boostpilotai.vercel.app/caption-generator
+
+Hook Generator:
+https://boostpilotai.vercel.app/hook-generator
+
+Hashtag Generator:
+https://boostpilotai.vercel.app/hashtag-generator
+
+Thumbnail Generator:
+https://boostpilotai.vercel.app/thumbnail-generator
+
+Content Optimizer:
+https://boostpilotai.vercel.app/content-optimizer
+
+Help Center:
+https://boostpilotai.vercel.app/help
+
+Support:
+https://boostpilotai.vercel.app/support
 
 ## Keywords
 
@@ -279,4 +315,4 @@ Platform:
 BoostPilot AI Creator Tools
 
 Last Updated:
-2026-06-04
+2026-06-05

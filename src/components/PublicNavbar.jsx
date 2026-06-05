@@ -8,8 +8,10 @@ import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
+  ["About", "/about"],
   ["How it works", "/how-it-works"],
   ["Features", "/features"],
+  ["Guide", "/blog/ai-content-optimization"],
   ["Pricing", "/pricing"],
   ["Contact", "/contact"]
 ];

@@ -92,6 +92,8 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
                   <img
                     alt="Payment barcode"
                     className="max-h-40 max-w-full rounded-md object-contain"
+                    decoding="async"
+                    loading="lazy"
                     src={displayQrSrc}
                   />
                 ) : (

@@ -25,7 +25,7 @@ const MediaPreviewModal = ({ open, onClose, src, type, title }) => {
           {isVideo ? (
             <video className="mx-auto max-h-[78vh] w-full object-contain" controls src={src} />
           ) : (
-            <img alt={title || "Media preview"} className="mx-auto max-h-[78vh] w-full object-contain" src={src} />
+            <img alt={title || "Media preview"} className="mx-auto max-h-[78vh] w-full object-contain" decoding="async" loading="lazy" src={src} />
           )}
         </div>
       </motion.div>

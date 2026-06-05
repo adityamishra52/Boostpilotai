@@ -10,6 +10,8 @@ import AdminSettings from "../pages/admin/AdminSettings";
 import AdminSupport from "../pages/admin/AdminSupport";
 import AdminUsers from "../pages/admin/AdminUsers";
 import AdminLogin from "../pages/AdminLogin";
+import AboutPage from "../pages/AboutPage";
+import BlogPostPage from "../pages/BlogPostPage";
 import Dashboard from "../pages/Dashboard";
 import ContentLibrary from "../pages/ContentLibrary";
 import ContactPage from "../pages/ContactPage";
@@ -37,8 +39,10 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/about" element={<AboutPage />} />
       <Route path="/how-it-works" element={<HowItWorks />} />
       <Route path="/features" element={<FeaturesPage />} />
+      <Route path="/blog/ai-content-optimization" element={<BlogPostPage />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/privacy" element={<LegalPage type="privacy" />} />
@@ -53,6 +57,13 @@ const AppRoutes = () => {
 
       <Route element={<DashboardLayout />}>
         <Route path="/analyze" element={<UploadAnalyze />} />
+        <Route path="/image-analysis" element={<UploadAnalyze />} />
+        <Route path="/video-analysis" element={<UploadAnalyze />} />
+        <Route path="/caption-generator" element={<UploadAnalyze />} />
+        <Route path="/hook-generator" element={<UploadAnalyze />} />
+        <Route path="/hashtag-generator" element={<UploadAnalyze />} />
+        <Route path="/thumbnail-generator" element={<UploadAnalyze />} />
+        <Route path="/content-optimizer" element={<UploadAnalyze />} />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/help" element={<HelpCenter />} />
         <Route path="/support" element={<SupportPage />} />

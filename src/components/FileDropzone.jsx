@@ -75,7 +75,7 @@ const FileDropzone = ({ file, onFile }) => {
               {file.type.startsWith("video") ? (
                 <video className="h-full w-full object-cover" muted src={previewUrl} />
               ) : (
-                <img alt={file.name} className="h-full w-full object-cover" src={previewUrl} />
+                <img alt={file.name} className="h-full w-full object-cover" decoding="async" loading="lazy" src={previewUrl} />
               )}
               <div className="absolute left-3 top-3 rounded-md bg-black/55 px-2 py-1 text-xs font-bold text-white backdrop-blur">
                 {file.type.startsWith("video") ? "Video" : "Image"}

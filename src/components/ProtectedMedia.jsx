@@ -115,6 +115,8 @@ const ProtectedMedia = ({
           <img
             alt={alt || file?.originalName || "Media preview"}
             className={mediaClassName}
+            decoding="async"
+            loading="lazy"
             src={state.objectUrl}
             onError={handleMediaError}
           />
