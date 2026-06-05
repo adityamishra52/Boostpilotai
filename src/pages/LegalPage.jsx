@@ -22,7 +22,7 @@ const LegalPage = ({ type }) => {
   });
 
   return (
-    <main className="min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
+    <main className="min-h-dvh bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
       <PublicNavbar />
       <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-soft dark:border-zinc-700 dark:bg-zinc-900 sm:p-8">

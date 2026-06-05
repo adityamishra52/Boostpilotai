@@ -30,8 +30,8 @@ const AdminLayout = () => {
   const { logout, user } = useAuth();
 
   return (
-    <div className="premium-grid min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white lg:flex">
-      <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-zinc-200 bg-white/95 p-4 backdrop-blur-2xl dark:border-zinc-800 dark:bg-zinc-950/95 lg:flex">
+    <div className="premium-grid min-h-dvh bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white lg:flex">
+      <aside className="sticky top-0 hidden h-dvh w-72 shrink-0 flex-col border-r border-zinc-200 bg-white/95 p-4 backdrop-blur-2xl dark:border-zinc-800 dark:bg-zinc-950/95 lg:flex">
         <div className="rounded-lg border border-zinc-200 bg-white p-3 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
           <Logo />
         </div>

@@ -1,7 +1,7 @@
 import { ArrowLeft, BarChart3, Copy, Download, Hash, Library, MessageCircle, Plus, Sparkles, Tags, WandSparkles } from "lucide-react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import Badge from "../components/Badge";
@@ -18,6 +18,7 @@ import CopyButton from "../components/CopyButton";
 import { analysisService } from "../services/analysisService";
 import { buildAnalysisReport } from "../utils/analysisReportBuilder";
 import { downloadBlob } from "../utils/download";
+import { resetPageScroll } from "../utils/scrollReset";
 
 const listValue = (items) => (Array.isArray(items) ? items.filter(Boolean) : []);
 
@@ -56,6 +57,10 @@ const ResultPage = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [downloading, setDownloading] = useState(false);
 
+  useLayoutEffect(() => {
+    resetPageScroll();
+  }, [id]);
+
   const handleBack = () => {
     if (window.history.length > 1) {
       navigate(-1);
@@ -70,6 +75,7 @@ const ResultPage = () => {
 
     if (analysis?._id === id) {
       setLoading(false);
+      resetPageScroll();
       return undefined;
     }
 
@@ -78,6 +84,7 @@ const ResultPage = () => {
         const data = await analysisService.get(id);
         if (mounted) {
           setAnalysis(data.analysis);
+          resetPageScroll();
         }
       } catch (error) {
         toast.error(error.response?.data?.message || "Unable to load result");

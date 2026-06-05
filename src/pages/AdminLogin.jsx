@@ -44,8 +44,8 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="premium-grid min-h-screen bg-cloud px-4 py-8 text-zinc-950 dark:bg-zinc-950 dark:text-white">
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center">
+    <div className="premium-grid min-h-dvh bg-cloud px-4 py-8 text-zinc-950 dark:bg-zinc-950 dark:text-white">
+      <div className="mx-auto flex min-h-[calc(100dvh-4rem)] w-full max-w-6xl items-center">
         <div className="grid w-full gap-6 lg:grid-cols-[1fr_440px] lg:items-center">
           <div className="hidden lg:block">
             <Logo />

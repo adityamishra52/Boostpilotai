@@ -21,6 +21,7 @@ import {
   getGuestAnalysisDraft,
   saveGuestAnalysisDraft
 } from "../utils/guestAnalysisDraft";
+import { resetPageScroll } from "../utils/scrollReset";
 
 const allowedTypes = [
   "image/jpeg",
@@ -111,6 +112,7 @@ const UploadAnalyze = () => {
       }
       await clearGuestAnalysisDraft();
       toast.success("Report ready", { id: "report-generation" });
+      resetPageScroll();
       navigate(`/results/${data.analysis._id}`, { state: { analysis: data.analysis } });
     } catch (error) {
       if (error.response?.status === 402) {
@@ -189,8 +191,10 @@ const UploadAnalyze = () => {
 
     try {
       await loginWithGoogle(credential);
+      resetPageScroll();
       setLoginRequiredOpen(false);
       await restoreDraft();
+      resetPageScroll();
       setRestoreOpen(true);
       toast.success("Signed in with Google");
     } catch (error) {
@@ -223,6 +227,7 @@ const UploadAnalyze = () => {
       const draft = await restoreDraft();
 
       if (mounted && draft && (shouldContinue || draft.fileSaved || draft.fileMetadata)) {
+        resetPageScroll();
         setRestoreOpen(true);
       }
 
@@ -265,7 +270,7 @@ const UploadAnalyze = () => {
   ];
 
   return (
-    <motion.div animate={{ opacity: 1, y: 0 }} className="pb-28 md:pb-0" initial={{ opacity: 0, y: 10 }}>
+    <motion.div animate={{ opacity: 1, y: 0 }} className="pb-56 md:pb-0" initial={{ opacity: 0, y: 10 }}>
       <PageHeader
         action={<Badge variant={file ? "success" : "warning"}>{file ? "Asset ready" : "Awaiting media"}</Badge>}
         description="Upload an image or video, choose where you will post it, then get easy suggestions."
@@ -528,7 +533,7 @@ const UploadAnalyze = () => {
         </div>
       )}
 
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-zinc-200/80 bg-white/92 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-16px_40px_rgba(15,23,42,0.14)] backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/92 md:hidden">
+      <div className="fixed inset-x-0 bottom-[calc(4.9rem+env(safe-area-inset-bottom))] z-30 border-y border-zinc-200/80 bg-white/92 px-4 py-3 shadow-[0_-16px_40px_rgba(15,23,42,0.14)] backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/92 md:hidden">
         <div className="mx-auto flex max-w-[520px] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">

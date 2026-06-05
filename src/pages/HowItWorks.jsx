@@ -39,7 +39,7 @@ const HowItWorks = () => {
   });
 
   return (
-    <main className="min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
+    <main className="min-h-dvh bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
       <PublicNavbar />
 
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">

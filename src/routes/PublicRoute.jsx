@@ -2,6 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import LoadingScreen from "../components/LoadingScreen";
 import { useAuth } from "../context/AuthContext";
+import { resetPageScroll } from "../utils/scrollReset";
 
 const PublicRoute = () => {
   const { booting, isAuthenticated } = useAuth();
@@ -13,6 +14,7 @@ const PublicRoute = () => {
   }
 
   if (isAuthenticated) {
+    resetPageScroll();
     return <Navigate to={redirect} replace />;
   }
 

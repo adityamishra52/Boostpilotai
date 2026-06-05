@@ -20,7 +20,7 @@ const FloatingHelpWidget = () => {
   }
 
   return (
-    <div className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] right-4 z-40 lg:bottom-5 lg:right-5">
+    <div className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] right-4 z-30 hidden sm:block lg:bottom-5 lg:right-5">
       {open && (
         <div className="mb-3 w-[min(92vw,320px)] rounded-xl border border-zinc-200 bg-white p-3 shadow-2xl backdrop-blur-2xl dark:border-zinc-700 dark:bg-zinc-900">
           <div className="mb-2 flex items-center justify-between gap-3 px-1">

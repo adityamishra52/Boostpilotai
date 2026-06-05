@@ -28,6 +28,8 @@ import ProtectedMedia from "./ProtectedMedia";
 import SectionContainer from "./SectionContainer";
 
 const thumbnailStyles = ["Auto", "MrBeast", "Ali Abdaal", "Alex Hormozi", "Iman Gadzhi", "Faceless", "Tech", "News", "Minimal"];
+const VIDEO_EDITING_UNAVAILABLE_MESSAGE =
+  "Video editing is not available on this server plan yet. Please use image editing.";
 
 const copyActions = [
   {
@@ -359,8 +361,9 @@ const MediaEnhancer = ({
   const options = useMemo(() => fixOptionsForAnalysis(analysis), [analysis]);
   const editedFile = mediaFileFromAction(applyResult?.editedMedia);
   const kind = mediaKind(analysis);
+  const isImage = kind === "image";
   const canApplyImage = user?.role === "admin" || hasPlan(user, "pro");
-  const canApply = canApplyImage;
+  const canApply = isImage && canApplyImage;
   const requiredApplyPlan = "pro";
 
   useEffect(() => {
@@ -383,8 +386,8 @@ const MediaEnhancer = ({
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="font-extrabold text-zinc-950 dark:text-white">Improve Media</h3>
               <Badge variant="brand">Creator</Badge>
-              <Badge variant={kind === "video" ? "warning" : "success"}>
-                Apply: {planLabel(requiredApplyPlan)}
+              <Badge variant={isImage ? "success" : "warning"}>
+                {isImage ? `Apply: ${planLabel(requiredApplyPlan)}` : "Image only"}
               </Badge>
               {editedFile && <Badge variant="success">Edited</Badge>}
             </div>
@@ -401,7 +404,11 @@ const MediaEnhancer = ({
           <Button icon={RotateCcw} onClick={reset} size="sm" variant="secondary">
             Reset
           </Button>
-          {canApply ? (
+          {!isImage ? (
+            <Button disabled icon={Lock} size="sm" variant="secondary">
+              Image only
+            </Button>
+          ) : canApply ? (
             <Button
               disabled={!selectedFixes.length}
               icon={CheckCircle2}
@@ -420,9 +427,15 @@ const MediaEnhancer = ({
         </div>
       </div>
 
-      {!canApply && (
+      {!isImage && (
+        <p className="mt-3 rounded-lg border border-dashed border-amber-300 bg-amber-50/90 p-3 text-sm font-semibold text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/35 dark:text-amber-100">
+          Apply selected fixes is available for images only. Video reports can still use preview, recommendations, thumbnails, and text tools.
+        </p>
+      )}
+
+      {isImage && !canApply && (
         <p className="mt-3 rounded-lg border border-dashed border-zinc-300 bg-zinc-50/90 p-3 text-sm font-semibold text-zinc-700 dark:border-zinc-700 dark:bg-zinc-950/80 dark:text-zinc-200">
-          {`Creator can view the AI fix checklist. Applying ${kind} fixes requires ${planLabel(requiredApplyPlan)}.`}
+          {`Creator can view the AI fix checklist. Applying image fixes requires ${planLabel(requiredApplyPlan)}.`}
         </p>
       )}
 

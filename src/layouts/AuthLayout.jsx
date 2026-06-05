@@ -15,9 +15,9 @@ const platforms = ["YouTube", "Instagram", "Facebook", "LinkedIn", "Twitter/X"];
 
 const AuthLayout = () => {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
-      <div className="grid min-h-screen lg:grid-cols-[55fr_45fr]">
-        <section className="hidden min-h-screen border-r border-zinc-200 bg-[linear-gradient(135deg,#09090b_0%,#111827_48%,#172554_100%)] p-10 text-white dark:border-zinc-800 lg:flex lg:flex-col lg:justify-between xl:p-12">
+    <main className="min-h-dvh overflow-x-hidden bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
+      <div className="grid min-h-dvh lg:grid-cols-[55fr_45fr]">
+        <section className="hidden min-h-dvh border-r border-zinc-200 bg-[linear-gradient(135deg,#09090b_0%,#111827_48%,#172554_100%)] p-10 text-white dark:border-zinc-800 lg:flex lg:flex-col lg:justify-between xl:p-12">
           <div>
             <div className="mb-10 flex items-start justify-between gap-6">
               <Logo inverse />
@@ -80,7 +80,7 @@ const AuthLayout = () => {
           </div>
         </section>
 
-        <section className="flex min-h-screen min-w-0 items-center justify-center bg-[linear-gradient(180deg,#f8fafc_0%,#eef2f7_100%)] p-4 dark:bg-[linear-gradient(180deg,#050507_0%,#09090b_100%)] sm:p-6 lg:p-10">
+        <section className="flex min-h-dvh min-w-0 items-center justify-center bg-[linear-gradient(180deg,#f8fafc_0%,#eef2f7_100%)] p-4 dark:bg-[linear-gradient(180deg,#050507_0%,#09090b_100%)] sm:p-6 lg:p-10">
           <div className="w-full max-w-[520px]">
             <div className="mb-6 flex items-center justify-between gap-3 lg:justify-end">
               <div className="lg:hidden">

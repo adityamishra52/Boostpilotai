@@ -119,7 +119,7 @@ const Topbar = ({ onMenu }) => {
   );
 
   return (
-    <header className="sticky top-0 z-20 shrink-0 border-b border-zinc-200/80 bg-white/86 shadow-[0_10px_35px_rgba(15,23,42,0.06)] backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/88" ref={wrapperRef}>
+    <header className="sticky top-0 z-50 shrink-0 border-b border-zinc-200/80 bg-white/92 shadow-[0_10px_35px_rgba(15,23,42,0.06)] backdrop-blur-2xl dark:border-zinc-800/80 dark:bg-zinc-950/94" ref={wrapperRef}>
       <div className="mx-auto flex min-h-16 w-full max-w-[1440px] items-center gap-2 px-3 py-2.5 sm:gap-3 sm:px-5 lg:px-8">
         <Button
           aria-label="Open navigation"

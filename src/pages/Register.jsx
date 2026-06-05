@@ -8,6 +8,7 @@ import Card from "../components/Card";
 import GoogleAuthButton from "../components/GoogleAuthButton";
 import Input from "../components/Input";
 import { useAuth } from "../context/AuthContext";
+import { resetPageScroll } from "../utils/scrollReset";
 
 const Register = () => {
   const { loginWithGoogle, register } = useAuth();
@@ -23,6 +24,7 @@ const Register = () => {
 
     try {
       await register(form);
+      resetPageScroll();
       toast.success("Workspace created");
       navigate(redirect, { replace: true });
     } catch (error) {
@@ -37,6 +39,7 @@ const Register = () => {
 
     try {
       await loginWithGoogle(credential);
+      resetPageScroll();
       toast.success("Workspace ready");
       navigate(redirect, { replace: true });
     } catch (error) {

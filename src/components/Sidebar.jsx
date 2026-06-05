@@ -54,7 +54,7 @@ const Sidebar = ({ open, onClose }) => {
 
       <aside
         className={clsx(
-          "fixed inset-y-0 left-0 z-50 flex h-screen h-dvh max-h-dvh w-[288px] max-w-[86vw] flex-col overflow-hidden border-r border-zinc-200 bg-white shadow-2xl transition-transform duration-300 will-change-transform dark:border-zinc-800 dark:bg-zinc-950 lg:static lg:z-auto lg:h-full lg:max-h-none lg:w-[280px] lg:min-w-[280px] lg:max-w-[280px] lg:translate-x-0 lg:shadow-none",
+          "fixed inset-y-0 left-0 z-50 flex h-dvh max-h-dvh w-[288px] max-w-[86vw] flex-col overflow-hidden border-r border-zinc-200 bg-white shadow-2xl transition-transform duration-300 will-change-transform dark:border-zinc-800 dark:bg-zinc-950 lg:static lg:z-auto lg:h-full lg:max-h-none lg:w-[280px] lg:min-w-[280px] lg:max-w-[280px] lg:translate-x-0 lg:shadow-none",
           open ? "translate-x-0" : "-translate-x-full"
         )}
         aria-label="Primary navigation"

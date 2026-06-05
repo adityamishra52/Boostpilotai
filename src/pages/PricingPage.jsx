@@ -55,7 +55,7 @@ const PaymentModal = ({ billingCycle, onClose, plan, qrSrc, settings }) => {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-zinc-950/65 px-3 py-4 backdrop-blur-sm sm:px-4">
       <div className="flex min-h-full items-center justify-center">
-        <Card className="max-h-[calc(100vh-2rem)] w-full max-w-3xl overflow-y-auto p-0">
+        <Card className="max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto p-0">
           <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
           <div className="min-w-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 p-5 text-white sm:p-6">
             <div className="flex items-start justify-between gap-4">
@@ -201,7 +201,7 @@ const PricingPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
+    <main className="min-h-dvh bg-cloud text-zinc-950 dark:bg-zinc-950 dark:text-white">
       <PublicNavbar />
       <motion.div animate={{ opacity: 1, y: 0 }} className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8" initial={{ opacity: 0, y: 10 }}>
         <PageHeader

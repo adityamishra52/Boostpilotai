@@ -8,6 +8,7 @@ import Card from "../components/Card";
 import GoogleAuthButton from "../components/GoogleAuthButton";
 import Input from "../components/Input";
 import { useAuth } from "../context/AuthContext";
+import { resetPageScroll } from "../utils/scrollReset";
 
 const Login = () => {
   const { login, loginWithGoogle } = useAuth();
@@ -25,6 +26,7 @@ const Login = () => {
 
     try {
       await login(form);
+      resetPageScroll();
       toast.success("Welcome back to BoostPilot");
       navigate(from, { replace: true });
     } catch (error) {
@@ -39,6 +41,7 @@ const Login = () => {
 
     try {
       await loginWithGoogle(credential);
+      resetPageScroll();
       toast.success("Welcome to BoostPilot");
       navigate(from, { replace: true });
     } catch (error) {
