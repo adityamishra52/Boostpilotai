@@ -46,15 +46,20 @@ const withDraftStore = async (mode, callback) => {
 
 export const saveGuestAnalysisDraft = async (draft) => {
   const timestamp = Date.now();
+  const files = Array.isArray(draft.files)
+    ? draft.files.filter(Boolean)
+    : draft.file
+      ? [draft.file]
+      : [];
   const metadata = {
     key: GUEST_ANALYSIS_DRAFT_KEY,
-    fileMetadata: draft.file
-      ? {
-          name: draft.file.name,
-          size: draft.file.size,
-          type: draft.file.type,
-          lastModified: draft.file.lastModified
-        }
+    fileMetadata: files.length
+      ? files.map((file) => ({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          lastModified: file.lastModified
+        }))
       : null,
     platform: draft.platform,
     contentType: draft.contentType,
@@ -64,12 +69,13 @@ export const saveGuestAnalysisDraft = async (draft) => {
     fileSaved: false
   };
 
-  if (draft.file && supportsIndexedDb()) {
+  if (files.length && supportsIndexedDb()) {
     try {
       await withDraftStore("readwrite", (store) =>
         store.put({
           ...metadata,
-          file: draft.file,
+          file: files[0] || null,
+          files,
           fileSaved: true
         })
       );

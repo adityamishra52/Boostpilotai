@@ -73,7 +73,46 @@ export const buildAnalysisReport = (analysis = {}) => {
   );
   const platformRecommendation = uniqueList(technical.platformFit, output.platformSpecificSuggestions);
   const isTwitter = analysis.platform === "Twitter/X" || analysis.platform === "X";
+  const isMultiImage = analysis.mediaType === "multi_image" || (analysis.files || []).length > 1;
   const sections = [];
+
+  if (isMultiImage) {
+    addSection(sections, "OVERALL POST SUMMARY", uniqueList(output.multiImageSummary, output.summary));
+    addSection(sections, "PLATFORM", uniqueList(analysis.platform, output.platformRecommendation));
+    addSection(sections, "CONTENT FORMAT", analysis.contentType || "Multi-image Post");
+    addSection(sections, "IMAGE COUNT", `${(analysis.files || []).length || 1} images`);
+    addSection(sections, "RECOMMENDED IMAGE ORDER", uniqueList((output.suggestedImageOrder || []).map((value) => `Image ${value}`)));
+    addSection(
+      sections,
+      "IMAGE-BY-IMAGE ANALYSIS",
+      (output.imageBreakdown || []).map(
+        (item) =>
+          `Image ${item.order} (${item.role}): ${item.summary} Strengths: ${uniqueList(item.strengths).join("; ") || "None"}. Weaknesses: ${uniqueList(item.weaknesses).join("; ") || "None"}. Recommendations: ${uniqueList(item.recommendations).join("; ") || "None"}.`
+      )
+    );
+    addSection(
+      sections,
+      "CAPTION",
+      uniqueList(
+        output.linkedinCaption,
+        output.instagramCaption,
+        output.facebookCaption,
+        output.twitterPost,
+        output.viralCaption
+      )
+    );
+    addSection(sections, "HASHTAGS", uniqueList(output.hashtags));
+    addSection(sections, "CTA", uniqueList(output.cta, output.ctaSuggestions));
+    addSection(sections, "TARGET AUDIENCE", output.targetAudience);
+    addSection(sections, "TECHNICAL ISSUES", uniqueList(technical.qualityIssues));
+    addSection(
+      sections,
+      "RECOMMENDED FIXES",
+      uniqueList(output.technicalSuggestions, technical.fixSuggestions, output.weakImages, output.recommendedImageRemovals),
+      { numbered: true }
+    );
+    return sections.map(renderSection).join("\n\n");
+  }
 
   if (isTwitter) {
     addSection(sections, "SUMMARY", output.summary);

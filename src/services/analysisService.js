@@ -1,9 +1,19 @@
 import api from "./api";
 
 export const analysisService = {
-  async analyze({ file, platform, contentType }) {
+  async analyze({ file, files = [], platform, contentType }) {
     const formData = new FormData();
-    formData.append("file", file);
+
+    if (Array.isArray(files) && files.length > 1) {
+      files.forEach((item) => {
+        formData.append("files", item);
+      });
+    } else if (file) {
+      formData.append("file", file);
+    } else if (files[0]) {
+      formData.append("file", files[0]);
+    }
+
     formData.append("platform", platform);
     formData.append("contentType", contentType);
 

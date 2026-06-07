@@ -21,28 +21,45 @@ import {
   getGuestAnalysisDraft,
   saveGuestAnalysisDraft
 } from "../utils/guestAnalysisDraft";
+import { multiImageLimitForPlan } from "../utils/plans";
 import { resetPageScroll } from "../utils/scrollReset";
 
 const allowedTypes = [
   "image/jpeg",
+  "image/jpg",
   "image/png",
   "image/webp",
   "video/mp4",
   "video/quicktime",
   "video/webm"
 ];
+const maxImageBytes = 10 * 1024 * 1024;
 
-const getPreferredContentType = (platform, selectedFile) => {
+const multiImageContentTypeByPlatform = {
+  LinkedIn: "Carousel",
+  Instagram: "Carousel Post",
+  Facebook: "Multi-image Post",
+  "Twitter/X": "Multi-image Post",
+  YouTube: "Post"
+};
+
+const getPreferredContentType = (platform, selectedFiles = []) => {
   const options = contentTypesByPlatform[platform] || [];
+  const primaryFile = selectedFiles[0] || null;
+  const isMultiImage = selectedFiles.length > 1 && selectedFiles.every((file) => file?.type?.startsWith("image/"));
 
   if (!options.length) {
     return "";
   }
 
-  const mediaPreference = selectedFile?.type?.startsWith("video/")
+  if (isMultiImage) {
+    return multiImageContentTypeByPlatform[platform] || options[0];
+  }
+
+  const mediaPreference = primaryFile?.type?.startsWith("video/")
     ? ["Video Post", "Video", "Reel", "Short", "Story"]
-    : selectedFile?.type?.startsWith("image/")
-      ? ["Image Post", "Post", "Thumbnail", "Carousel"]
+    : primaryFile?.type?.startsWith("image/")
+      ? ["Image Post", "Post", "Thumbnail", "Carousel", "Carousel Post", "Multi-image Post"]
       : ["Single Tweet", "Post", "Video"];
 
   return mediaPreference.find((item) => options.includes(item)) || options[0];
@@ -53,7 +70,7 @@ const UploadAnalyze = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const defaultPlatform = user?.preferences?.defaultPlatform || "Instagram";
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [platform, setPlatform] = useState(defaultPlatform);
   const [contentType, setContentType] = useState(getPreferredContentType(defaultPlatform));
   const [loading, setLoading] = useState(false);
@@ -63,35 +80,75 @@ const UploadAnalyze = () => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [draftChecked, setDraftChecked] = useState(false);
   const [reuseItem, setReuseItem] = useState(location.state?.libraryItem || null);
+  const multiImageLimit = multiImageLimitForPlan(user?.plan);
+  const primaryFile = files[0] || null;
+  const hasMultipleImages = files.length > 1 && files.every((item) => item.type?.startsWith("image/"));
+  const isVideoSelection = primaryFile?.type?.startsWith("video/");
 
   const handlePlatformChange = (nextPlatform) => {
     setPlatform(nextPlatform);
-    setContentType(getPreferredContentType(nextPlatform, file));
+    setContentType(getPreferredContentType(nextPlatform, files));
   };
 
-  const handleFile = (selectedFile) => {
-    if (!selectedFile) {
-      setFile(null);
+  const handleFiles = (selectedFiles) => {
+    if (!selectedFiles?.length) {
+      setFiles([]);
       return;
     }
 
-    if (!allowedTypes.includes(selectedFile.type)) {
-      toast.error("Upload JPG, PNG, WebP, MP4, MOV, or WebM");
+    if (selectedFiles.some((selectedFile) => !allowedTypes.includes(selectedFile.type))) {
+      toast.error("Upload JPG, JPEG, PNG, WebP, MP4, MOV, or WebM");
       return;
     }
 
-    if (selectedFile.size > 100 * 1024 * 1024) {
-      toast.error("File must be 100 MB or smaller");
+    const hasMixedMedia =
+      selectedFiles.some((item) => item.type.startsWith("image/")) &&
+      selectedFiles.some((item) => item.type.startsWith("video/"));
+
+    if (hasMixedMedia) {
+      toast.error("Choose either images or one video. Mixed uploads are not supported.");
       return;
     }
 
-    setFile(selectedFile);
-    setContentType(getPreferredContentType(platform, selectedFile));
+    const imageSelections = selectedFiles.filter((item) => item.type.startsWith("image/"));
+    const videoSelections = selectedFiles.filter((item) => item.type.startsWith("video/"));
+
+    if (videoSelections.length > 1) {
+      toast.error("Choose only one video at a time.");
+      return;
+    }
+
+    if (imageSelections.some((item) => item.size > maxImageBytes)) {
+      toast.error("Each image must be 10 MB or smaller.");
+      return;
+    }
+
+    if (imageSelections.length > multiImageLimit) {
+      toast.error(
+        multiImageLimit >= 10
+          ? "Your plan supports up to 10 images per post."
+          : multiImageLimit >= 5
+            ? "Multi-image analysis with more than 5 images requires Pro."
+            : "Free plan supports up to 3 images per multi-image post."
+      );
+      return;
+    }
+
+    if (videoSelections.length === 1 && videoSelections[0].size > 100 * 1024 * 1024) {
+      toast.error("Video must be 100 MB or smaller.");
+      return;
+    }
+
+    setFiles(selectedFiles);
+    setContentType(getPreferredContentType(platform, selectedFiles));
+    if (platform === "YouTube" && imageSelections.length > 1) {
+      toast("YouTube is not ideal for a multi-image post.");
+    }
   };
 
-  const submitAnalysis = async (selectedFile = file) => {
-    if (!selectedFile) {
-      toast.error("Choose a file before analyzing");
+  const submitAnalysis = async (selectedFiles = files) => {
+    if (!selectedFiles.length) {
+      toast.error("Choose media before analyzing");
       return;
     }
 
@@ -106,7 +163,12 @@ const UploadAnalyze = () => {
     });
 
     try {
-      const data = await analysisService.analyze({ file: selectedFile, platform, contentType });
+      const data = await analysisService.analyze({
+        file: selectedFiles[0],
+        files: selectedFiles,
+        platform,
+        contentType
+      });
       if (data.user) {
         updateUser(data.user);
       }
@@ -128,23 +190,24 @@ const UploadAnalyze = () => {
 
   const saveCurrentDraft = async () => {
     const draft = await saveGuestAnalysisDraft({
-      file,
+      file: files[0] || null,
+      files,
       platform,
       contentType,
       selectedOptions: {},
       formState: { platform, contentType }
     });
 
-    if (file && !draft.fileSaved) {
-      toast("Your selections were saved. Please select the file again after sign-in.");
+    if (files.length && !draft.fileSaved) {
+      toast("Your selections were saved. Please select the media again after sign-in.");
     }
 
     return draft;
   };
 
   const handleSubmit = async () => {
-    if (!file) {
-      toast.error("Choose a file before analyzing");
+    if (!files.length) {
+      toast.error("Choose media before analyzing");
       return;
     }
 
@@ -154,7 +217,7 @@ const UploadAnalyze = () => {
       return;
     }
 
-    await submitAnalysis(file);
+    await submitAnalysis(files);
   };
 
   const restoreDraft = async () => {
@@ -172,10 +235,12 @@ const UploadAnalyze = () => {
       setContentType(draft.contentType);
     }
 
-    if (draft.file) {
-      setFile(draft.file);
+    if (draft.files?.length) {
+      setFiles(draft.files);
+    } else if (draft.file) {
+      setFiles([draft.file]);
     } else if (draft.fileMetadata) {
-      toast("Your selections were restored. Please select the file again to continue.");
+      toast("Your selections were restored. Please select the media again to continue.");
     }
 
     return draft;
@@ -211,7 +276,7 @@ const UploadAnalyze = () => {
 
   const handleContinueDraft = async () => {
     setRestoreOpen(false);
-    await submitAnalysis(file);
+    await submitAnalysis(files);
   };
 
   useEffect(() => {
@@ -258,12 +323,12 @@ const UploadAnalyze = () => {
     }
   }, [reuseItem]);
 
-  const readiness = [file ? 34 : 0, platform ? 33 : 0, contentType ? 33 : 0].reduce(
+  const readiness = [files.length ? 34 : 0, platform ? 33 : 0, contentType ? 33 : 0].reduce(
     (sum, item) => sum + item,
     0
   );
   const workflowSteps = [
-    ["Upload file", Boolean(file)],
+    ["Upload file", Boolean(files.length)],
     ["Choose site", Boolean(platform)],
     ["Choose post type", Boolean(contentType)],
     ["Generate Analysis", loading || readiness === 100]
@@ -272,7 +337,7 @@ const UploadAnalyze = () => {
   return (
     <motion.div animate={{ opacity: 1, y: 0 }} className="pb-56 md:pb-0" initial={{ opacity: 0, y: 10 }}>
       <PageHeader
-        action={<Badge variant={file ? "success" : "warning"}>{file ? "Asset ready" : "Awaiting media"}</Badge>}
+        action={<Badge variant={files.length ? "success" : "warning"}>{files.length ? "Asset ready" : "Awaiting media"}</Badge>}
         description="Upload an image or video, choose where you will post it, then get easy suggestions."
         eyebrow="Analyze"
         title="Generate a content analysis"
@@ -333,7 +398,7 @@ const UploadAnalyze = () => {
           )}
 
           <SectionContainer description="Upload an image or video you want to improve." icon={FileUp} title="Step 1: Upload Media">
-            <FileDropzone file={file} onFile={handleFile} />
+            <FileDropzone files={files} multiImageLimit={multiImageLimit} onFiles={handleFiles} />
           </SectionContainer>
 
           <SectionContainer description="Choose where you want to post it." icon={Gauge} title="Step 2: Choose Platform">
@@ -362,9 +427,11 @@ const UploadAnalyze = () => {
                   </div>
                 )}
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <Badge variant={file ? "success" : "warning"}>{file ? "Media selected" : "Media needed"}</Badge>
+                  <Badge variant={files.length ? "success" : "warning"}>{files.length ? "Media selected" : "Media needed"}</Badge>
                   <Badge variant="brand">{platform}</Badge>
                   <Badge>{contentType}</Badge>
+                  {hasMultipleImages && <Badge variant="success">{files.length} images</Badge>}
+                  {isVideoSelection && <Badge>Single video</Badge>}
                 </div>
               </div>
               <div className="flex min-w-[240px] flex-col justify-center border-t border-zinc-200 bg-zinc-50/90 p-5 dark:border-zinc-800 dark:bg-zinc-900/70 lg:border-l lg:border-t-0">
@@ -515,7 +582,7 @@ const UploadAnalyze = () => {
               </p>
             </div>
             <div className="flex flex-col gap-3 p-5 sm:flex-row">
-              <Button className="flex-1" disabled={!file} loading={loading} onClick={handleContinueDraft} variant="accent">
+              <Button className="flex-1" disabled={!files.length} loading={loading} onClick={handleContinueDraft} variant="accent">
                 Continue
               </Button>
               <Button
@@ -537,10 +604,10 @@ const UploadAnalyze = () => {
         <div className="mx-auto flex max-w-[520px] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
-              {file ? "Ready for analysis" : "Choose media first"}
+              {files.length ? "Ready for analysis" : "Choose media first"}
             </p>
             <p className="truncate text-sm font-extrabold text-zinc-950 dark:text-white">
-              {file ? `${platform} ${contentType}` : "Image or video"}
+              {files.length ? `${platform} ${contentType}` : "Image or video"}
             </p>
           </div>
           <Button

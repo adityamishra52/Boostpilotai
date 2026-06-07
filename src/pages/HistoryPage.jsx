@@ -124,7 +124,9 @@ const HistoryPage = () => {
                 const output = item.aiOutput || {};
                 const tech = output.technicalAnalysis || {};
                 const file = item.file || {};
+                const mediaFiles = Array.isArray(item.files) && item.files.length ? item.files : file ? [file] : [];
                 const fileName = file.originalName || "Uploaded media";
+                const totalSize = mediaFiles.reduce((sum, media) => sum + (media?.size || 0), 0) || file.size || 0;
                 const copyText = [
                   output.summary,
                   output.viralCaption,
@@ -163,6 +165,7 @@ const HistoryPage = () => {
                             </h2>
                             <Badge variant="neutral">{item.platform}</Badge>
                             {item.contentType && <Badge variant="brand">{item.contentType}</Badge>}
+                            {mediaFiles.length > 1 && <Badge variant="success">{mediaFiles.length} images</Badge>}
                             {tech.platformFit && (
                               <Badge
                                 className="max-w-full whitespace-normal break-words text-left sm:max-w-[520px]"
@@ -173,7 +176,7 @@ const HistoryPage = () => {
                             )}
                           </div>
                           <p className="mt-1 text-sm font-medium text-zinc-600 dark:text-zinc-300">
-                            {formatDate(item.createdAt)} - {formatFileSize(file.size)}
+                            {formatDate(item.createdAt)} - {formatFileSize(totalSize)}
                             {tech.width ? ` - ${tech.width}x${tech.height}` : ""}
                           </p>
                           <p className="mt-3 line-clamp-2 break-words text-sm font-medium leading-6 text-zinc-700 dark:text-zinc-300">

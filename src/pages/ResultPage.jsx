@@ -132,6 +132,10 @@ const ResultPage = () => {
   ];
   const reportText = buildAnalysisReport(analysis);
   const captions = listValue([
+    output.linkedinCaption,
+    output.instagramCaption,
+    output.facebookCaption,
+    output.twitterPost,
     output.viralCaption,
     output.improvedPostVersion,
     output.shortTweet,

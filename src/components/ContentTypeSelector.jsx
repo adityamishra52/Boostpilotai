@@ -2,10 +2,10 @@ import clsx from "clsx";
 
 export const contentTypesByPlatform = {
   YouTube: ["Video", "Short", "Thumbnail"],
-  Instagram: ["Post", "Reel", "Story", "Video"],
-  LinkedIn: ["Post", "Image Post", "Video Post", "Carousel", "Video"],
-  Facebook: ["Post", "Image Post", "Video Post", "Story", "Video"],
-  "Twitter/X": ["Single Tweet", "Thread", "Image Post", "Video Post", "Promo Post"]
+  Instagram: ["Post", "Carousel Post", "Reel", "Story", "Video"],
+  LinkedIn: ["Post", "Image Post", "Carousel", "Video Post", "Video"],
+  Facebook: ["Post", "Image Post", "Multi-image Post", "Video Post", "Story", "Video"],
+  "Twitter/X": ["Single Tweet", "Thread", "Image Post", "Multi-image Post", "Video Post", "Promo Post"]
 };
 
 const helperText = {
@@ -18,6 +18,8 @@ const helperText = {
   "Video Post": "Feed video",
   Story: "Vertical story",
   Carousel: "Multi-slide story",
+  "Carousel Post": "Swipe gallery",
+  "Multi-image Post": "Ordered image set",
   "Single Tweet": "Under 280 chars",
   Thread: "5-8 tweet story",
   "Promo Post": "Sales or launch"

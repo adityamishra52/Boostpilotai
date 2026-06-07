@@ -79,6 +79,8 @@ const AdminAnalyses = () => {
               <tbody>
                 {analyses.map((item) => {
                   const file = item.file || {};
+                  const mediaFiles = Array.isArray(item.files) && item.files.length ? item.files : file ? [file] : [];
+                  const totalSize = mediaFiles.reduce((sum, media) => sum + (media?.size || 0), 0) || file.size || 0;
                   const fileName = file.originalName || "Uploaded media";
 
                   return (
@@ -103,12 +105,13 @@ const AdminAnalyses = () => {
                         <Badge variant="neutral">
                           {item.platform} {item.contentType}
                         </Badge>
+                        {mediaFiles.length > 1 && <div className="mt-2"><Badge variant="success">{mediaFiles.length} images</Badge></div>}
                       </td>
                       <td className="px-3 py-3 font-bold text-zinc-950 dark:text-white">
                         {item.aiOutput?.contentScore ?? 0}
                       </td>
                       <td className="px-3 py-3 text-zinc-600 dark:text-zinc-300">
-                        {formatFileSize(file.size || 0)}
+                        {formatFileSize(totalSize)}
                       </td>
                       <td className="px-3 py-3 text-zinc-600 dark:text-zinc-300">{formatDate(item.createdAt)}</td>
                       <td className="px-3 py-3 text-right">

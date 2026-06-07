@@ -102,6 +102,20 @@ export const hasPlan = (userOrPlan, requiredPlan = "free") => {
   return planOrder.indexOf(current) >= planOrder.indexOf(required);
 };
 
+export const multiImageLimitForPlan = (userOrPlan) => {
+  const plan = normalizePlan(typeof userOrPlan === "string" ? userOrPlan : userOrPlan?.plan);
+
+  switch (plan) {
+    case "agency":
+    case "pro":
+      return 10;
+    case "creator":
+      return 5;
+    default:
+      return 3;
+  }
+};
+
 export const priceForPlan = (plan, billingCycle) =>
   billingCycle === "yearly" ? plan.yearlyPrice : plan.monthlyPrice;
 

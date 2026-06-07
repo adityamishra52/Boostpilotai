@@ -127,7 +127,9 @@ const ResultsPanel = ({ analysis }) => {
   }
 
   const file = analysis.file || {};
+  const mediaFiles = listValue(analysis.files?.length ? analysis.files : [analysis.file].filter(Boolean));
   const fileName = file.originalName || "Uploaded media";
+  const isMultiImage = analysis.mediaType === "multi_image" || mediaFiles.length > 1;
   const fitIsStrong = data.technical.platformFit?.toLowerCase().includes("strong");
   const resolutionProgress = Math.min(100, Math.round(((data.technical.width || 0) / 1080) * 100));
   const durationProgress = data.technical.durationSeconds
@@ -187,6 +189,7 @@ const ResultsPanel = ({ analysis }) => {
             <div className="mb-4 flex min-w-0 flex-wrap items-start gap-2">
               <Badge variant="brand">{analysis.platform}</Badge>
               {analysis.contentType && <Badge>{analysis.contentType}</Badge>}
+              {isMultiImage && <Badge variant="success">{mediaFiles.length} images</Badge>}
               <Badge
                 className="max-w-full !whitespace-normal text-left leading-snug sm:max-w-[42rem] [&>svg]:mt-0.5 [&>svg]:shrink-0"
                 variant={fitIsStrong ? "success" : "warning"}
@@ -209,13 +212,13 @@ const ResultsPanel = ({ analysis }) => {
             <div className="mt-5 grid grid-cols-2 gap-3 text-center">
               <div className="rounded-lg border border-zinc-200 bg-white p-3 text-zinc-950 dark:!border-zinc-800 dark:!bg-zinc-900/90 dark:!text-white">
                 <p className="text-lg font-extrabold text-zinc-950 dark:!text-white">
-                  {data.technical.aspectRatio || "N/A"}
+                  {isMultiImage ? mediaFiles.length : data.technical.aspectRatio || "N/A"}
                 </p>
-                <p className="text-xs font-semibold text-zinc-700 dark:!text-zinc-300">Aspect</p>
+                <p className="text-xs font-semibold text-zinc-700 dark:!text-zinc-300">{isMultiImage ? "Images" : "Aspect"}</p>
               </div>
               <div className="rounded-lg border border-zinc-200 bg-white p-3 text-zinc-950 dark:!border-zinc-800 dark:!bg-zinc-900/90 dark:!text-white">
                 <p className="text-lg font-extrabold text-zinc-950 dark:!text-white">
-                  {data.technical.fileSizeMB || "N/A"} MB
+                  {data.technical.totalFileSizeMB || data.technical.fileSizeMB || "N/A"} MB
                 </p>
                 <p className="text-xs font-semibold text-zinc-700 dark:!text-zinc-300">File size</p>
               </div>
@@ -223,6 +226,107 @@ const ResultsPanel = ({ analysis }) => {
           </div>
         </div>
       </Card>
+
+      {isMultiImage && (
+        <>
+          <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
+            <SectionContainer icon={MonitorPlay} title="Image grid">
+              <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+                {mediaFiles.map((item, index) => (
+                  <div
+                    className="overflow-hidden rounded-lg border border-zinc-200 bg-white/88 p-2 dark:!border-zinc-700 dark:!bg-zinc-900/90"
+                    key={`${item.mediaId || item.mediaFileId || item.originalName}-${index}`}
+                  >
+                    <ProtectedMedia
+                      alt={item.originalName || `Image ${index + 1}`}
+                      className="w-full"
+                      file={item}
+                      mediaClassName="aspect-square w-full object-cover"
+                      placeholderClassName="aspect-square text-sm"
+                    />
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                      <Badge variant={index === 0 ? "success" : "neutral"}>{index === 0 ? "Primary" : `Image ${index + 1}`}</Badge>
+                      <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-300">{item.originalName}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </SectionContainer>
+            <SectionContainer
+              action={(
+                <ActionGroup>
+                  <CopyButton label="Copy LinkedIn Caption" text={output.linkedinCaption || output.viralCaption || ""} />
+                  <SaveToLibraryButton payload={libraryPayload({ type: "multi_image_caption", title: `${analysis.platform} multi-image caption`, content: output.linkedinCaption || output.instagramCaption || output.facebookCaption || output.twitterPost || output.viralCaption || "" })} />
+                </ActionGroup>
+              )}
+              icon={Megaphone}
+              title={analysis.platform === "LinkedIn" ? "LinkedIn Multi-image Post Strategy" : "Platform caption strategy"}
+            >
+              <div className="space-y-3">
+                {[
+                  ["LinkedIn", output.linkedinCaption],
+                  ["Instagram", output.instagramCaption],
+                  ["Facebook", output.facebookCaption],
+                  ["Twitter/X", output.twitterPost]
+                ]
+                  .filter(([, value]) => value)
+                  .map(([label, value]) => (
+                    <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 dark:!border-zinc-700 dark:!bg-zinc-900/90" key={label}>
+                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">{label}</p>
+                      <p className="mt-2 text-sm leading-7 text-zinc-800 dark:text-zinc-100">{value}</p>
+                    </div>
+                  ))}
+              </div>
+            </SectionContainer>
+          </div>
+
+          <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
+            <SectionContainer
+              action={(
+                <ActionGroup>
+                  <CopyButton label="Copy Hashtags" text={data.hashtags.join(" ")} />
+                  <SaveToLibraryButton payload={libraryPayload({ type: "carousel_strategy", title: "Image order strategy", content: listValue(output.carouselInsights).join("\n") || listValue(output.suggestedImageOrder).map((item) => `Image ${item}`).join("\n") })} />
+                </ActionGroup>
+              )}
+              icon={Sparkles}
+              title="Suggested order and story flow"
+            >
+              <ListBlock items={listValue(output.carouselInsights)} />
+              <div className="mt-4">
+                <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">Recommended image order</p>
+                <ListBlock items={listValue(output.suggestedImageOrder).map((item) => `Image ${item}`)} numbered />
+              </div>
+            </SectionContainer>
+            <SectionContainer icon={BarChart3} title="Image-by-image insights">
+              <div className="space-y-3">
+                {listValue(output.imageBreakdown).map((item) => (
+                  <div className="rounded-lg border border-zinc-200 bg-white/88 p-4 dark:!border-zinc-700 dark:!bg-zinc-900/90" key={item.order}>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant={item.order === 1 ? "success" : "neutral"}>{`Image ${item.order}`}</Badge>
+                      <Badge variant="brand">{item.role}</Badge>
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-zinc-800 dark:text-zinc-100">{item.summary}</p>
+                    <div className="mt-3 grid gap-3 md:grid-cols-3">
+                      <div>
+                        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">Strengths</p>
+                        <ListBlock items={item.strengths} />
+                      </div>
+                      <div>
+                        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">Weaknesses</p>
+                        <ListBlock items={item.weaknesses} />
+                      </div>
+                      <div>
+                        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">Recommendations</p>
+                        <ListBlock items={item.recommendations} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </SectionContainer>
+          </div>
+        </>
+      )}
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
         <SectionContainer icon={Users} title="Who this is for">
@@ -338,14 +442,24 @@ const ResultsPanel = ({ analysis }) => {
 
       <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
         <SectionContainer icon={MonitorPlay} title="Media preview">
-          <ProtectedMedia
-            alt={fileName}
-            className="w-full"
-            controls
-            file={file}
-            mediaClassName="aspect-video w-full object-contain"
-            placeholderClassName="aspect-video text-sm"
-          />
+          {isMultiImage ? (
+            <ProtectedMedia
+              alt={fileName}
+              className="w-full"
+              file={mediaFiles[0] || file}
+              mediaClassName="aspect-video w-full object-contain"
+              placeholderClassName="aspect-video text-sm"
+            />
+          ) : (
+            <ProtectedMedia
+              alt={fileName}
+              className="w-full"
+              controls
+              file={file}
+              mediaClassName="aspect-video w-full object-contain"
+              placeholderClassName="aspect-video text-sm"
+            />
+          )}
         </SectionContainer>
 
         <SectionContainer
